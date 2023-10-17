@@ -1,12 +1,15 @@
 package pt.ipleiria.estg.dei.horadapapa;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
+import pt.ipleiria.estg.dei.horadapapa.utilities.API;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,6 +22,8 @@ public class LoginActivity extends AppCompatActivity {
 
         etUsername = findViewById(R.id.editText_username);
         etPassword = findViewById(R.id.editText_password);
+
+        Singleton.getInstance(this);
     }
 
     private boolean isUsernameValid(String content) {
@@ -46,8 +51,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        //Comunicação com a API (ongoing)
+        //API.userLogin(this, username, password);
+        //finish();
+
         //TODO: Verificar se o user existe, através da API
-        if (true)
+        if (username == "admin" && password == "admin")
         {
             Intent activity = new Intent(this, MenuActivity.class);
             startActivity(activity);

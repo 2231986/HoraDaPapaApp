@@ -9,7 +9,7 @@ import com.android.volley.toolbox.Volley;
 
 public class Singleton {
     private static Singleton singleton_instance = null;
-    private static RequestQueue volleyQueue = null;
+    public static RequestQueue volleyQueue = null;
 
     public static synchronized Singleton getInstance(Context context) {
         if (singleton_instance == null) {
