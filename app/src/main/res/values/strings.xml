@@ -6,4 +6,11 @@
     <string name="btn_AppConfig">Configurações da APP</string>
     <string name="text_username">Username</string>
     <string name="text_password">Password</string>
+    <string name="navMeal">Meal</string>
+    <string name="navFavourites">Favourites</string>
+    <string name="navInvoice">Invoices</string>
+    <string name="menu_reach_out">Reach out!</string>
+    <string name="navEmail">Email</string>
+    <string name="navigation_drawer_open">Open Drawer\n</string>
+    <string name="navigation_drawer_close">Close Drawer</string>
 </resources>
