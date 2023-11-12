@@ -13,4 +13,10 @@
     <string name="navEmail">Email</string>
     <string name="navigation_drawer_open">Open Drawer\n</string>
     <string name="navigation_drawer_close">Close Drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tvTitle">Title</string>
+    <string name="tvDescription">Description</string>
+    <string name="tvPrice">Price</string>
+    <string name="btnAdd">ADD(1)</string>
 </resources>
