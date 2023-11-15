@@ -45,7 +45,7 @@
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickButtonLogin"
+        android:onClick="onClickCheckLogin"
         android:text="@string/btn_login" />
 
     <Button
