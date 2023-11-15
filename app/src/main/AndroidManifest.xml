@@ -15,6 +15,9 @@
         android:theme="@style/Theme.HoraDaPapaApp"
         tools:targetApi="31">
         <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".ConsultarFaturas"
             android:exported="false" />
         <activity

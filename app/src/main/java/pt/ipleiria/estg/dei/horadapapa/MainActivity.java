@@ -62,4 +62,9 @@ public class MainActivity extends AppCompatActivity {
     public void onClickAppConfig(View view) {
         //TODO: Abrir menu de configurações!
     }
+
+    public void onClickSignUp(View view) {
+        Intent activity = new Intent(this, SignUpActivity.class);
+        startActivity(activity);
+    }
 }

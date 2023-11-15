@@ -19,4 +19,9 @@
     <string name="tvDescription">Description</string>
     <string name="tvPrice">Price</string>
     <string name="btnAdd">ADD(1)</string>
+    <string name="textPassword">Password\n</string>
+    <string name="txtEmail">Email</string>
+    <string name="txtName">Name</string>
+    <string name="txtSurname">Surname</string>
+    <string name="txtNIF">NIF</string>
 </resources>
