@@ -15,9 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HoraDaPapaApp"
         tools:targetApi="31"
-        android:usesCleartextTraffic="true"
+        android:usesCleartextTraffic="true">
+    <!--Clear texttraffic não vem de origem está aqui para permitir pedidos HTTP-->
 
-    >
+
+
 
         <activity
             android:name=".SignUpActivity"
@@ -38,7 +40,7 @@
             android:name=".EmentaActivity"
             android:exported="false" />
         <activity
-            android:name=".APIActivity"
+            android:name=".APIConfActivity"
             android:exported="false" />
         <activity
             android:name=".MenuActivity"
