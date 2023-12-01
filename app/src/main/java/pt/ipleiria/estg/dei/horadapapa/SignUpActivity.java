@@ -47,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
         // Volley POST request to your API endpoint with this user data
         // localhost refers to the device itself, not the server where your backend is hosted. You should use the server's IP address or domain name instead of localhost.
         //Aqui o meu localhost é o meu ip, rede onde estou ligado, onde o apache é hosted
-        String signUpUrl = "http://192.168.137.235:8888/HoraDaPapa/backend/web/api/user/register";
+        String signUpUrl = "http://10.0.2.2:8888/HoraDaPapa/backend/web/api/user/register";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, signUpUrl,
                 response -> {
                     // Handle successful registration
