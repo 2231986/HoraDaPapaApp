@@ -13,6 +13,9 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText etUsername, etPassword;
 
-    String credentials = "MarrianaPonte" + ":" + "12345678";
-    String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
 
 
 
@@ -56,10 +57,14 @@ public class MainActivity extends AppCompatActivity {
         String password = etPassword.getText().toString();
 
 
+
         if (!isUsernameValid(username) || !isPasswordValid(password)) {
             Toast.makeText(this, "Dados de acesso inválidos!", Toast.LENGTH_SHORT).show();
             return;
         }
+        String credentials = username + ":" + password;
+        String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+
 
         // Make a Volley POST request to your API endpoint for user authentication
         String loginUrl = "http://10.0.2.2:8888/HoraDaPapa/backend/web/api/user/login"; // Replace with your actual login endpoint
@@ -68,7 +73,26 @@ public class MainActivity extends AppCompatActivity {
                     // Handle successful login response from the server
 
                     //fazer parse json, e ver se tem propiedade, sucesso e token e guardar token na shared preference
-                    if (response.contains("Success")) {
+                    JSONObject jsonResponse = null;
+
+                    try {
+                        jsonResponse = new JSONObject(response);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+                    String status = jsonResponse.optString("status");
+
+                    if (status.equals("success")) {
+
+
+                        // Save the token to SharedPreferences for later use
+
+                        JSONObject dataObject = jsonResponse.optJSONObject("data");
+                        String token = dataObject.optString("token");
+
+                        //saveTokenToSharedPreferences(token);
                         // If login is successful, navigate to MenuActivity
                         Intent intent = new Intent(this, MenuActivity.class);
                         startActivity(intent);
@@ -120,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
             Intent activity = new Intent(this, MenuActivity.class);
             startActivity(activity);
         }*/
+    }
+
+    private void saveTokenToSharedPreferences(String token) {
+        // Save token to SharedPreferences
+        // Modify this method to save the token securely in SharedPreferences for future use
     }
 
     public void onClickButtonLogin(View view) {
