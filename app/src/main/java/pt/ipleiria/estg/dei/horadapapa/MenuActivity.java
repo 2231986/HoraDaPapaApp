@@ -9,9 +9,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,6 +23,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
+
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +41,33 @@ public class MenuActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         fragmentManager = getSupportFragmentManager();
 
-        //navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+        navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
 
 
 
     }
 
-    /*public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
         if (item.getItemId()==R.id.navMeal){
-            //System.out.println("---> Nav Estático");
-            //fragment = new EstaticoFragment();
-            //fragment = new PlateListFragment();
+            //Intent intent = new Intent(this, MealListActivity.class);
+            //startActivity(intent);
+            //finish();
+            fragment = new MealListFragment();
             setTitle(item.getTitle());
+        }
+        else if(item.getItemId()== R.id.navFavourites) {
+            fragment = new FavouritesListFragment();
+            setTitle(item.getTitle());
+        }
+        else if(item.getItemId()== R.id.navInvoice) {
+            fragment = new InvoicesListFragment();
+            setTitle(item.getTitle());
+        }
+
+        else if(item.getItemId()==R.id.navEmail) {
+            enviarEmail();
         }
 
         if (fragment != null){
@@ -59,5 +76,26 @@ public class MenuActivity extends AppCompatActivity {
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }*/
+    }
+
+    public void enviarEmail(){
+        String subject = "PSI 2023/2024";
+        String message = "Olá" + email + ", isto é uma mensagem de teste, enviado na app";
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }else {
+            Toast.makeText(this, "Erro no email", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void goToCartView(View view) {
+        Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+        startActivity(intent);
+    }
 }

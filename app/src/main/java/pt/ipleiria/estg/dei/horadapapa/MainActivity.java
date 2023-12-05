@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         // If login is successful, navigate to MenuActivity
                         Intent intent = new Intent(this, MenuActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         // Handle unsuccessful login (invalid credentials, etc.)
                         Toast.makeText(this, "Login failed!", Toast.LENGTH_SHORT).show();
@@ -157,11 +158,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickAppConfig(View view) {
-        //TODO: Abrir menu de configurações!
+        Intent intent = new Intent(this, APIConfActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void onClickSignUp(View view) {
         Intent activity = new Intent(this, SignUpActivity.class);
         startActivity(activity);
+        finish();
     }
 }

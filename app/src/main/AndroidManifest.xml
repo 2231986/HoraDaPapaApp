@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,31 +14,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HoraDaPapaApp"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true">
-    <!--Clear texttraffic não vem de origem está aqui para permitir pedidos HTTP-->
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".PlateDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InvoicesListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FavouritesListActivity"
+            android:exported="false" />
 
 
-
-
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" /> <!-- Clear texttraffic não vem de origem está aqui para permitir pedidos HTTP -->
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
-        <activity
-            android:name=".ConsultarFaturas"
-            android:exported="false" />
-        <activity
-            android:name=".EmitirFaturaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FavoritosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PratosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EmentaActivity"
-            android:exported="false" />
+
+
         <activity
             android:name=".APIConfActivity"
             android:exported="false" />
@@ -46,11 +42,17 @@
             android:name=".MenuActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
+            android:name=".MealListActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.HoraDaPapaApp.NoActionBar"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

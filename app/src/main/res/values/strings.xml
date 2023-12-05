@@ -24,4 +24,6 @@
     <string name="txtName">Name</string>
     <string name="txtSurname">Surname</string>
     <string name="txtNIF">NIF</string>
+    <string name="Cart">Go to cart</string>
+    <string name="Purchase">"Purchase "</string>
 </resources>

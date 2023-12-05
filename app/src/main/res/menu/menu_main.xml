@@ -13,15 +13,17 @@
             android:icon="@drawable/ic_meal"
             android:id="@+id/navMeal"/>
         <item
+            android:id="@+id/navFavourites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:title="@string/navFavourites"
-            android:icon="@drawable/ic_favourite_empty"/>
+            android:icon="@drawable/ic_favourite_empty"
+            android:title="@string/navFavourites" />
         <item
+            android:id="@+id/navInvoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:title="@string/navInvoice"
-            android:icon="@drawable/ic_invoice"/>
+            android:icon="@drawable/ic_invoice"
+            android:title="@string/navInvoice" />
     </group>
     <item
         android:layout_width="wrap_content"
@@ -31,10 +33,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <item
+                android:id="@+id/navEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:title="@string/navEmail"
-                android:icon="@drawable/ic_email"/>
+                android:icon="@drawable/ic_email"
+                android:title="@string/navEmail" />
         </menu>
     </item>
 </menu>
