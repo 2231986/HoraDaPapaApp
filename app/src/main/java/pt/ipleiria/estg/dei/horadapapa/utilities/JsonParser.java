@@ -10,7 +10,7 @@ public class JsonParser {
         try {
             jsonObject = new JSONObject(response);
 
-            if (jsonObject.getString("status") == "success") {
+            if (jsonObject.getString("status").contains("success")) {
                 return jsonObject.getJSONObject("data");
             } else {
                 return jsonObject.getJSONObject("errors");

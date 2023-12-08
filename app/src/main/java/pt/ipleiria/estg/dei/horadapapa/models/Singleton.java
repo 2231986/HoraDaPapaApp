@@ -76,14 +76,16 @@ public class Singleton
                     if (userToken == null) {
                         BetterToast(context, "Ocorreu um erro!");
                     }
+                    else
+                    {
+                        AppPreferences appPreferences = new AppPreferences(context);
+                        appPreferences.setToken(userToken);
 
-                    AppPreferences appPreferences = new AppPreferences(context);
-                    appPreferences.setToken(userToken);
+                        BetterToast(context, "Login efetuado com sucesso!");
 
-                    BetterToast(context, "Login efetuado com sucesso!");
-
-                    Intent intent = new Intent(context, MenuActivity.class);
-                    context.startActivity(intent);
+                        Intent intent = new Intent(context, MenuActivity.class);
+                        context.startActivity(intent);
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override

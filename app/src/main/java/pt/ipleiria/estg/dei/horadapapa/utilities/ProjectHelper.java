@@ -34,7 +34,7 @@ public class ProjectHelper {
         {
             try
             {
-                if (jsonObject.getString("status") == "success")
+                if (jsonObject.getString("status").contains("success"))
                 {
                     String msgContent = jsonObject.getString("message");
                     Toast.makeText(context, msgContent, Toast.LENGTH_SHORT).show();
