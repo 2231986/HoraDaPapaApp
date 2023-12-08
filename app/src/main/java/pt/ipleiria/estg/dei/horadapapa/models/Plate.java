@@ -36,7 +36,7 @@ public class Plate {
         this.price = price;
     }
 
-    public String getTitle() {
+    public CharSequence getTitle() {
         return title;
     }
 

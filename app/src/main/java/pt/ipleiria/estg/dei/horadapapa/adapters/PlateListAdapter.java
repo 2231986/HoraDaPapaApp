@@ -1,15 +1,22 @@
 package pt.ipleiria.estg.dei.horadapapa.adapters;
 
+import static java.security.AccessController.getContext;
+import static pt.ipleiria.estg.dei.horadapapa.PlateDetailsActivity.ID_PLATE;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import pt.ipleiria.estg.dei.horadapapa.PlateDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 
@@ -23,6 +30,7 @@ public class PlateListAdapter extends BaseAdapter {
     public PlateListAdapter(Context context, ArrayList<Plate> plates) {
         this.context = context;
         this.plates = plates;
+        this.layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -42,20 +50,34 @@ public class PlateListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (layoutInflater==null)
-            layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(view == null )
-            view = layoutInflater.inflate(R.layout.fragment_plate,null);
+        ViewHolderLista viewHolderLista;
 
-        ViewHolderLista viewHolderLista = (ViewHolderLista)  view.getTag();
-        if(viewHolderLista == null) {
+        if (view == null) {
+            view = layoutInflater.inflate(R.layout.fragment_plate, null);
             viewHolderLista = new ViewHolderLista(view);
             view.setTag(viewHolderLista);
+        } else {
+            viewHolderLista = (ViewHolderLista) view.getTag();
         }
-        viewHolderLista.update(plates.get(i));
 
+        // Assuming this is where you set the click listener for the PlateFragment
+        final Plate currentPlate = plates.get(i);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle click here, for example, start PlateDetailsActivity
+
+                Toast.makeText(context, "AQUI", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, PlateDetailsActivity.class);
+                intent.putExtra(ID_PLATE, currentPlate.getId());
+                context.startActivity(intent);
+            }
+        });
+
+        viewHolderLista.update(plates.get(i));
         return view;
     }
+
 
     private class ViewHolderLista{
         private TextView tvTitle, tvDesc, tvPrice;

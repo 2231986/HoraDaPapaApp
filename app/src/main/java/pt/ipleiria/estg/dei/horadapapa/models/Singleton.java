@@ -146,8 +146,12 @@ public class Singleton
     }
 
     private void generateData() {
-        plates = new ArrayList<>();
-        plates.add(new Plate(1, R.drawable.droid, 12, "Bolonhesa", "Massa com carne"));
+        plates=new ArrayList<>();
+        plates.add(new Plate(1, R.drawable.droid,12,"Bolonhesa","Massa com carne"));
+        plates.add(new Plate(2, R.drawable.droid,12,"Bolonhesa","Massa com carne"));
+        plates.add(new Plate(3, R.drawable.droid,12,"Bolonhesa","Massa com carne"));
+
+
     }
 
     public ArrayList<Plate> getPlates() {
