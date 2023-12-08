@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class PlateDetailsActivity extends AppCompatActivity {
+    public static final String ID_PLATE = "ID_PLATE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

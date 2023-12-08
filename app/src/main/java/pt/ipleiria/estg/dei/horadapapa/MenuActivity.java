@@ -19,6 +19,9 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MenuActivity extends AppCompatActivity {
 
+    public static final int ADD=100, EDIT= 200, DELETE= 300;
+
+
     private DrawerLayout drawerLayout;
 
     private FragmentManager fragmentManager;
