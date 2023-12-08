@@ -24,7 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="80dp" />
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="API Host" />
+
     <EditText
+        android:id="@+id/et_ApiHost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -34,9 +41,10 @@
         android:layout_height="40dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnAppConfigSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:onClick="appConfigSave"
+        android:text="Gravar" />
 </LinearLayout>

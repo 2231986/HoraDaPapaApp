@@ -1,13 +1,13 @@
 package pt.ipleiria.estg.dei.horadapapa;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
+import pt.ipleiria.estg.dei.horadapapa.models.User;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -36,45 +37,17 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void onClickSignUp(View view) {
-
-        //ir buscar texto inserido
+        String username = editTextName.getText().toString();
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
-        String name = editTextName.getText().toString();
+
+        //TODO: acabar de implementar outros campos
         String surname = editTextSurname.getText().toString();
         String nif = editTextNIF.getText().toString();
 
-        // Volley POST request to your API endpoint with this user data
-        // localhost refers to the device itself, not the server where your backend is hosted. You should use the server's IP address or domain name instead of localhost.
-        //Aqui o meu localhost é o meu ip, rede onde estou ligado, onde o apache é hosted
-        String signUpUrl = "http://10.0.2.2:8888/HoraDaPapa/backend/web/api/user/register";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, signUpUrl,
-                response -> {
-                    // Handle successful registration
-                    // Maybe navigate to the login screen
-                    Toast.makeText(this, "Signed up!", Toast.LENGTH_SHORT).show();
-                    Intent activity = new Intent(this, MainActivity.class);
-                    startActivity(activity);
-                },
-                error -> {
-                    // Handle error
-                    Log.e("SignUpError", error.toString());
+        User user = new User(username, password);
+        user.setEmail(email);
 
-                }) {
-            @Override
-            // Creating a map to send as parameters in the POST request
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", name);
-                params.put("email", email);
-                params.put("password", password);
-                // Add other user data here
-
-                return params;
-            }
-        };
-
-        // Add the request to the RequestQueue
-        Singleton.getInstance(this).volleyQueue.add(stringRequest);
+        Singleton.getInstance(this).requestUserRegister(this, user);
     }
-    }
+}
