@@ -1,8 +1,14 @@
 package pt.ipleiria.estg.dei.horadapapa;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +45,13 @@ public class PlateDetailsActivity extends AppCompatActivity {
         floatingActionButton=findViewById(R.id.floatingActionButton);
         
         loadPlate();
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(PlateDetailsActivity.this, "ADD 1", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadPlate() {
