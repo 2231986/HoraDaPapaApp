@@ -14,6 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.PlateDetailsActivity;
@@ -94,8 +97,12 @@ public class PlateListAdapter extends BaseAdapter {
         public void update (Plate plate){
             tvTitle.setText(plate.getTitle());
             tvDesc.setText(plate.getDescription());
-            tvPrice.setText(""+plate.getPrice());//Concatenar uma string porque value é integer
-            imgCapa.setImageResource(plate.getCapa());
+            tvPrice.setText(plate.getPrice());
+            Glide.with(context)
+                    .load(plate.getImage())
+                    .placeholder(R.drawable.img)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgCapa);
         }
     }
 }

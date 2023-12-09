@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
@@ -17,7 +20,6 @@ import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PlateFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class PlateFragment extends Fragment {
@@ -38,18 +40,22 @@ public class PlateFragment extends Fragment {
         tvDesc=view.findViewById(R.id.textView2);
         tvPrice=view.findViewById(R.id.textView3);
         imgCapa=view.findViewById(R.id.imageView);
-        LoadPlate();
+        //LoadPlate();
         return view;
     }
 
-    private void LoadPlate() {
-        ArrayList<Plate> plates = Singleton.getInstance(getContext()).getPlates();
-        if (plates.size()>0){
-            Plate plate = plates.get(0);
-            tvTitle.setText(plate.getTitle());
-            tvDesc.setText(plate.getDescription());
-            tvPrice.setText(""+plate.getPrice()); //Concatenar uma string porque value é integer
-            imgCapa.setImageResource(plate.getCapa());
-        }
-    }
+//    private void LoadPlate() {
+//        ArrayList<Plate> plates = Singleton.getInstance(getContext()). requestPlateGetAll(getContext());
+//        if (plates.size()>0){
+//            Plate plate = plates.get(0);
+//            tvTitle.setText(plate.getTitle());
+//            tvDesc.setText(plate.getDescription());
+//            tvPrice.setText(plate.getPrice());
+//            Glide.with(this)
+//                    .load(plate.getImage())
+//                    .placeholder(R.drawable.img)
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .into(imgCapa);
+//        }
+//    }
 }

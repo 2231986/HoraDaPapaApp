@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/text_username" />
+        android:text="admin" />
 
     <EditText
         android:id="@+id/editText_password"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="@string/text_password" />
+        android:text="12345678" />
 
     <Button
         android:id="@+id/button_login"

@@ -14,11 +14,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,34 +26,41 @@ import java.util.Map;
 
 import pt.ipleiria.estg.dei.horadapapa.MainActivity;
 import pt.ipleiria.estg.dei.horadapapa.MenuActivity;
-import pt.ipleiria.estg.dei.horadapapa.R;
+import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.JsonParser;
 
 public class Singleton
 {
     public static String ApiHost = "10.0.2.2:80";
-    public static RequestQueue volleyQueue = null;
+    private static RequestQueue volleyQueue = null;
     private static Singleton singleton_instance = null;
-    private ArrayList<Plate> plates;
+    private static DB_Helper myDatabase;
 
-    private Singleton() {
-        generateData();
+    private PlatesListener platesListener;
+    public void setProdutoListener(PlatesListener platesListener) {
+        this.platesListener = platesListener;
     }
 
-    public static synchronized Singleton getInstance(Context context) {
+    private Singleton(Context context)
+    {
+        AppPreferences appPreferences = new AppPreferences(context);
+        String apiHost = appPreferences.getApiIP();
+
+        if (apiHost != null && !apiHost.isEmpty())
+        {
+            Singleton.ApiHost = apiHost;
+        }
+
+        volleyQueue = Volley.newRequestQueue(context);
+        myDatabase = new DB_Helper(context);
+    }
+
+    public static synchronized Singleton getInstance(Context context)
+    {
         if (singleton_instance == null)
         {
-            AppPreferences appPreferences = new AppPreferences(context);
-            String apiHost = appPreferences.getApiIP();
-
-            if (apiHost != null && !apiHost.isEmpty())
-            {
-                Singleton.ApiHost = apiHost;
-            }
-
-            singleton_instance = new Singleton();
-            volleyQueue = Volley.newRequestQueue(context);
+            singleton_instance = new Singleton(context);
         }
 
         return singleton_instance;
@@ -147,17 +154,50 @@ public class Singleton
         Singleton.getInstance(context).volleyQueue.add(stringRequest);
     }
 
-    private void generateData() {
-        plates=new ArrayList<>();
-        plates.add(new Plate(1, R.drawable.droid,12,"Bolonhesa","Massa com carne"));
-        plates.add(new Plate(2, R.drawable.droid,12,"Bolonhesa","Massa com carne"));
-        plates.add(new Plate(3, R.drawable.droid,12,"Bolonhesa","Massa com carne"));
+    public void requestPlateGetAll(Context context) {
+        if(!isConnected(context)){
+            BetterToast(context,"Sem internet!");
 
+            ArrayList<Plate> plates = myDatabase.getPlates();
 
-    }
+            if (platesListener != null){
+                platesListener.onRefreshPlates(plates);
+            }else{
+                BetterToast(context,"Ocorreu um erro ao colocar no Listener!");
+            }
+        }else {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateGetAll, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    ArrayList<Plate> plates = JsonParser.parseJsonPlates(response);
+                    myDatabase.setPlates(plates);
 
-    public ArrayList<Plate> getPlates() {
-        return plates;
+                    if (platesListener != null) {
+                        platesListener.onRefreshPlates(plates);
+                    } else {
+                        BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    BetterToast(context, "Ocorreu um erro!");
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+
+            volleyQueue.add(jsonArrayRequest);
+        }
     }
 
     private static class Route
@@ -165,5 +205,6 @@ public class Singleton
         public static String ApiPath = "http://" + ApiHost + "/HoraDaPapa/backend/web/api/";
         public static String UserLogin = ApiPath + "user/login"; //GET - Faz login
         public static String UserRegister = ApiPath + "user/register"; //POST - Regista o utilizador
+        public static String PlateGetAll = ApiPath + "plates"; //GET - Obtem todos os pratos
     }
 }

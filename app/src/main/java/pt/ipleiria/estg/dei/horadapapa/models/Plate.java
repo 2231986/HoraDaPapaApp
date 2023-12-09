@@ -1,15 +1,33 @@
 package pt.ipleiria.estg.dei.horadapapa.models;
 
-public class Plate {
-    private int id, capa, price;
-    private String title, description;
+import android.database.Cursor;
 
-    public Plate(int id, int capa, int price, String title, String description) {
-        this.id = id;
-        this.capa = capa;
-        this.price = price;
-        this.title = title;
-        this.description = description;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Plate {
+    private int id;
+    private String title, image, price,description;
+
+    public Plate(JSONObject jsonObject)
+    {
+        try {
+            this.id = jsonObject.getInt("id");
+            this.image = jsonObject.getString("image");
+            this.price = jsonObject.getString("price");
+            this.title = jsonObject.getString("title");
+            this.description = jsonObject.getString("description");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Plate(Cursor cursor) {
+        this.id = cursor.getInt(0);
+        this.image = cursor.getString(1);
+        this.price = cursor.getString(2);
+        this.title = cursor.getString(3);
+        this.description = cursor.getString(4);
     }
 
     public int getId() {
@@ -20,23 +38,23 @@ public class Plate {
         this.id = id;
     }
 
-    public int getCapa() {
-        return capa;
+    public String getImage() {
+        return image;
     }
 
-    public void setCapa(int capa) {
-        this.capa = capa;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public CharSequence getTitle() {
+    public String getTitle() {
         return title;
     }
 

@@ -1,11 +1,13 @@
 package pt.ipleiria.estg.dei.horadapapa;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
@@ -27,7 +29,8 @@ public class PlateDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_plate_details);
 
         int id = getIntent().getIntExtra(ID_PLATE,0);
-        plate = Singleton.getInstance(this).getPlates().get(id);
+        //TODO: tem de se implementar ou listener ou metodos na bd para obter os dados
+        //plate = Singleton.getInstance(this).requestPlateGetAll(this).get(id);
 
         etTitle = findViewById(R.id.etTitle);
         etDesc = findViewById(R.id.etDesc);
@@ -42,7 +45,10 @@ public class PlateDetailsActivity extends AppCompatActivity {
         etTitle.setText(plate.getTitle());
         etDesc.setText(plate.getDescription());
         etPrice.setText(plate.getPrice()+"");
-        imgCover.setImageResource(plate.getCapa());
-
+        Glide.with(this)
+                .load(plate.getImage())
+                .placeholder(R.drawable.img)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgCover);
     }
 }
