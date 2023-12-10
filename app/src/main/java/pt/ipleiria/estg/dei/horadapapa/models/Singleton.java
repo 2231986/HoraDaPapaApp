@@ -147,6 +147,9 @@ public class Singleton
                 params.put("username", user.getUsername());
                 params.put("password", user.getPassword());
                 params.put("email", user.getEmail());
+                params.put("name", user.getName());
+                params.put("surname", user.getSurname());
+                params.put("nif", user.getNif());
                 return params;
             }
         };

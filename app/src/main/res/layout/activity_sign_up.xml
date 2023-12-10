@@ -7,63 +7,119 @@
     tools:context=".SignUpActivity"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_Username"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/droid" />
+        android:layout_weight="0"
+        android:text="@string/text_username" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/et_Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0"
         android:ems="10"
-        android:inputType="textEmailAddress"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/tv_Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:text="@string/txtEmail" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/et_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0"
         android:ems="10"
-        android:inputType="textPassword"
-        tools:text="@string/textPassword" />
+        android:inputType="textEmailAddress" />
 
-    <EditText
-        android:id="@+id/editTextText"
+    <TextView
+        android:id="@+id/tv_Password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0"
+        android:text="@string/textPassword" />
+
+    <EditText
+        android:id="@+id/et_Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/tv_Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:text="@string/txtName" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/et_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:ems="10"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/tv_Surname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="text"
+        android:layout_weight="0"
         android:text="@string/txtSurname" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/et_Surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:ems="10"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/tv_NIF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="text"
+        android:layout_weight="0"
         android:text="@string/txtNIF" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/et_NIF"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button"
-        android:onClick="onClickSignUp"/>
+        android:layout_weight="0"
+        android:ems="10"
+        android:inputType="text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_Signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:onClick="onClickSignUp"
+            android:text="Criar utilizador" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
 </LinearLayout>

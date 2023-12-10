@@ -83,7 +83,7 @@ public class ProjectHelper {
             return true;
     }
 
-    public boolean isEmailValid(String email){
+    public static boolean isEmailValid(String email){
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 

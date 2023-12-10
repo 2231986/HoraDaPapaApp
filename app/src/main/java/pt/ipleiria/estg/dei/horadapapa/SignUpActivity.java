@@ -1,52 +1,74 @@
 package pt.ipleiria.estg.dei.horadapapa;
 
-import android.content.Intent;
+import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 import pt.ipleiria.estg.dei.horadapapa.models.User;
+import pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText editTextEmail, editTextPassword, editTextName, editTextSurname, editTextNIF;
+    private EditText etUsername, etEmail, etPassword, etName, etSurname, etNIF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        // Initcialização te textfieds ou edittextfields
-        editTextEmail = findViewById(R.id.editTextTextEmailAddress);
-        editTextPassword = findViewById(R.id.editTextTextPassword);
-        editTextName = findViewById(R.id.editTextText);
-        editTextSurname = findViewById(R.id.editTextText2);
-        editTextNIF = findViewById(R.id.editTextText3);
-
+        etUsername = findViewById(R.id.et_Username);
+        etEmail = findViewById(R.id.et_Email);
+        etPassword = findViewById(R.id.et_Password);
+        etName = findViewById(R.id.et_Name);
+        etSurname = findViewById(R.id.et_Surname);
+        etNIF = findViewById(R.id.et_NIF);
     }
 
     public void onClickSignUp(View view) {
-        String username = editTextName.getText().toString();
-        String email = editTextEmail.getText().toString();
-        String password = editTextPassword.getText().toString();
+        String username = etUsername.getText().toString();
+        String email = etEmail.getText().toString();
+        String password = etPassword.getText().toString();
+        String name = etName.getText().toString();
+        String surname = etSurname.getText().toString();
+        String nif = etNIF.getText().toString();
 
-        //TODO: acabar de implementar outros campos
-        String surname = editTextSurname.getText().toString();
-        String nif = editTextNIF.getText().toString();
+        //Guard clauses
+        if (!ProjectHelper.isUsernameValid(username)) {
+            etUsername.setError("Invalid Username");
+            BetterToast(getBaseContext(),"Invalid Username");
+            return;
+        }
 
-        User user = new User(username, password);
+        if (!ProjectHelper.isEmailValid(email)) {
+            etEmail.setError("Invalid Email");
+            BetterToast(getBaseContext(),"Invalid Email");
+            return;
+        }
+
+        if (!ProjectHelper.isPasswordValid(password)) {
+            etPassword.setError("Invalid Password");
+            BetterToast(getBaseContext(),"Invalid Password");
+            return;
+        }
+
+        if (!nif.isEmpty() && !ProjectHelper.isNifValid(nif)) {
+            etNIF.setError("Invalid NIF");
+            BetterToast(getBaseContext(),"Invalid NIF");
+            return;
+        }
+
+        User user = new User();
+        user.setUsername(username);
         user.setEmail(email);
+        user.setPassword(password);
+        user.setName(name);
+        user.setSurname(surname);
+        user.setNif(nif);
 
         Singleton.getInstance(this).requestUserRegister(this, user);
     }
