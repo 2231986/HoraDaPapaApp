@@ -43,19 +43,4 @@ public class PlateFragment extends Fragment {
         //LoadPlate();
         return view;
     }
-
-//    private void LoadPlate() {
-//        ArrayList<Plate> plates = Singleton.getInstance(getContext()). requestPlateGetAll(getContext());
-//        if (plates.size()>0){
-//            Plate plate = plates.get(0);
-//            tvTitle.setText(plate.getTitle());
-//            tvDesc.setText(plate.getDescription());
-//            tvPrice.setText(plate.getPrice());
-//            Glide.with(this)
-//                    .load(plate.getImage())
-//                    .placeholder(R.drawable.img)
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .into(imgCapa);
-//        }
-//    }
 }

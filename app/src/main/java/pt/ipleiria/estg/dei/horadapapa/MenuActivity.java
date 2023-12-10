@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
+
 public class MenuActivity extends AppCompatActivity {
 
     public static final int ADD=100, EDIT= 200, DELETE= 300;
@@ -100,5 +102,16 @@ public class MenuActivity extends AppCompatActivity {
     public void goToCartView(View view) {
         Intent intent = new Intent(getApplicationContext(), CartActivity.class);
         startActivity(intent);
+    }
+
+    public void onClickAddRequest(View view) {
+      int mealID = 0, plateID = 0, quantity = 0;
+      String observation = "";
+
+      //TODO: implementar a obtenção dos dados para fazer o request
+
+      Singleton.getInstance(this).requestRequestPlate(this, mealID, plateID, quantity, observation);
+
+      Toast.makeText(this, "TESTE: O pedido foi feito!", Toast.LENGTH_SHORT).show();
     }
 }

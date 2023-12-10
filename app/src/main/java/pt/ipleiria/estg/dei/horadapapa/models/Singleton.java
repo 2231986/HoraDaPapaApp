@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
 
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -16,16 +18,21 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import pt.ipleiria.estg.dei.horadapapa.MainActivity;
+import pt.ipleiria.estg.dei.horadapapa.MealListFragment;
 import pt.ipleiria.estg.dei.horadapapa.MenuActivity;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
@@ -213,6 +220,62 @@ public class Singleton
         return myDatabase.getPlate(id);
     }
 
+    /**
+     * Pede um prato
+     */
+    public void requestRequestPlate(Context context, int mealID, int plateID, int quantity, String observation) {
+        if (mealID == 0) {
+            BetterToast(context, "refeição inválida!");
+        }
+
+        if (plateID == 0) {
+            BetterToast(context, "prato inválido!");
+        }
+
+        if (quantity == 0) {
+            BetterToast(context, "quantidade inválida!");
+        }
+
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+        } else {
+            JSONObject requestBody = new JSONObject();
+
+            try {
+                if (quantity > 0){
+                    requestBody.put("quantity", quantity);
+                }
+                if (observation != null && !observation.isEmpty()){
+                    requestBody.put("observation", observation);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    Route.RequestPlate(mealID, plateID),
+                    requestBody,
+                    response -> {
+                        // TODO: Implement response
+                    },
+                    error -> BetterToast(context, "Ocorreu um erro!")) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+
+            volleyQueue.add(jsonObjectRequest);
+        }
+    }
+
+
     public ArrayList<Plate> filterPlatesByContent(String keyword) {
         ArrayList<Plate> plates = myDatabase.getPlates();
 
@@ -233,9 +296,19 @@ public class Singleton
 
     private static class Route
     {
+        // Private constructor to prevent instantiation
+        private Route() {
+            throw new AssertionError("Route class should not be instantiated.");
+        }
+
         public static String ApiPath = "http://" + ApiHost + "/HoraDaPapa/backend/web/api/";
         public static String UserLogin = ApiPath + "user/login"; //GET - Faz login
         public static String UserRegister = ApiPath + "user/register"; //POST - Regista o utilizador
         public static String PlateGetAll = ApiPath + "plates"; //GET - Obtem todos os pratos
+
+        public static String RequestPlate(int mealID, int plateID){
+            String endpoint = ApiPath + "requests/meal/{0}/plate/{1}";
+            return MessageFormat.format(endpoint, mealID + "", plateID + "");
+        }
     }
 }

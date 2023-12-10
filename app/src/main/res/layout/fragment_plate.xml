@@ -71,12 +71,22 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/btn_addRequest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="75dp"
                     android:backgroundTint="@color/green"
-                    android:text="@string/btnAdd" />
+                    android:onClick="onClickAddRequest"
+                    android:text="Pedir" />
+
+                <EditText
+                    android:id="@+id/et_RequestQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="numberSigned"
+                    android:text="1" />
 
             </LinearLayout>
 
