@@ -213,6 +213,24 @@ public class Singleton
         return myDatabase.getPlate(id);
     }
 
+    public ArrayList<Plate> filterPlatesByContent(String keyword) {
+        ArrayList<Plate> plates = myDatabase.getPlates();
+
+        if (keyword == null || keyword.isEmpty()) {
+            return plates;
+        }
+
+        ArrayList<Plate> filteredPlates = new ArrayList<>();
+
+        for (Plate plate : plates) {
+            if (plate.getTitle().contains(keyword) || plate.getDescription().contains(keyword)) {
+                filteredPlates.add(plate);
+            }
+        }
+
+        return filteredPlates;
+    }
+
     private static class Route
     {
         public static String ApiPath = "http://" + ApiHost + "/HoraDaPapa/backend/web/api/";
