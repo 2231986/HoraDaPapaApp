@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.horadapapa.models;
 import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.isConnected;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
@@ -90,8 +91,10 @@ public class Singleton
 
                         BetterToast(context, "Login efetuado com sucesso!");
 
+                        //TODO: Vai ter de se substituir o Intent por um Listener!
                         Intent intent = new Intent(context, MenuActivity.class);
                         context.startActivity(intent);
+                        ((Activity) context).finish();
                     }
                 }
             }, new Response.ErrorListener() {
@@ -118,8 +121,11 @@ public class Singleton
                 response -> {
                     if (response.contains("success")) {
                         BetterToast(context, "Signed up!");
+
+                        //TODO: Vai ter de se substituir o Intent por um Listener!
                         Intent activity = new Intent(context, MainActivity.class);
                         context.startActivity(activity);
+                        ((Activity) context).finish();
                     } else {
                         BetterToast(context, response);
                     }

@@ -29,12 +29,14 @@ public class MainActivity extends AppCompatActivity {
         String password = etPassword.getText().toString();
 
         if (!ProjectHelper.isUsernameValid(username)) {
+            etUsername.setError("Username inválido!");
             ProjectHelper.BetterToast(this, "Username inválido!");
             return;
         }
 
         if (!ProjectHelper.isPasswordValid(password)) {
-            ProjectHelper.BetterToast(this, "Password inválido!");
+            etPassword.setError("Password inválida!");
+            ProjectHelper.BetterToast(this, "Password inválida!");
             return;
         }
 
@@ -46,9 +48,10 @@ public class MainActivity extends AppCompatActivity {
     public void onClickAppConfig(View view) { //Abre a Activity para configurar a aplicação
         Intent intent = new Intent(this, APIConfActivity.class);
         startActivity(intent);
+        finish();
     }
 
-    public void onClickSignUp(View view) { //Abre a Activity para registar o cliente
+    public void onClickSignUpActivity(View view) { //Abre a Activity para registar o cliente
         Intent activity = new Intent(this, SignUpActivity.class);
         startActivity(activity);
         finish();

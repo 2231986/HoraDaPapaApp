@@ -2,6 +2,7 @@ package pt.ipleiria.estg.dei.horadapapa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.MqttHandler;
+import pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper;
 
 public class APIConfActivity extends AppCompatActivity {
 
@@ -56,6 +58,10 @@ public class APIConfActivity extends AppCompatActivity {
             appPreferences.setMqttIP(mqttHost);
         }
 
+        ProjectHelper.BetterToast(this, "Dados guardados!");
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 }
