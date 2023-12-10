@@ -33,7 +33,7 @@ import pt.ipleiria.estg.dei.horadapapa.utilities.JsonParser;
 public class Singleton
 {
     public static String ApiHost = "10.0.2.2:8888";
-    public static RequestQueue volleyQueue = null;
+    private static RequestQueue volleyQueue = null;
     private static Singleton singleton_instance = null;
     private static DB_Helper myDatabase;
 
