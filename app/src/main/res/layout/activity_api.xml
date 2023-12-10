@@ -35,6 +35,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MQTT Host" />
+
+    <EditText
+        android:id="@+id/et_MqttHost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <View
         android:id="@+id/view5"
         android:layout_width="match_parent"

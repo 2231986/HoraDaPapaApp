@@ -8,6 +8,7 @@ public class AppPreferences
     private static final String PREFERENCES_NAME = "User_Preferences";
     private static final String USER_TOKEN = "UserToken";
     private static final String API_HOST = "ApiIP";
+    private static final String MQTT_HOST = "MqttIP";
 
     private SharedPreferences sharedPreferences;
 
@@ -38,6 +39,18 @@ public class AppPreferences
     public String getApiIP()
     {
         return sharedPreferences.getString(API_HOST, null);
+    }
+
+    public void setMqttIP(String host)
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(MQTT_HOST, host);
+        editor.apply();
+    }
+
+    public String getMqttIP()
+    {
+        return sharedPreferences.getString(MQTT_HOST, null);
     }
 
     public void clearPreferences()

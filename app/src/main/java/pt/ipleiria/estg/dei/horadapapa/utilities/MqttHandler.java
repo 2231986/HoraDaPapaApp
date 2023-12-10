@@ -14,19 +14,31 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
+
 public class MqttHandler {
 
-    private static final String TAG = "MqttHandler";
+    private static final String TAG = "MQTT: ";
 
     //TODO: adicionar o ip correto
-    private static final String MQTT_BROKER_URI = "tcp://my_mosquitto_broker_ip:1883";
-    private static final String CLIENT_ID = "android-client";
+    public static String MQTT_BROKER_URI = "tcp://my_mosquitto_broker_ip:1883";
+    private String ClientID;
 
     private final MqttAndroidClient mqttAndroidClient;
 
-    public MqttHandler(Context context) {
-        String clientId = CLIENT_ID + System.currentTimeMillis();
-        mqttAndroidClient = new MqttAndroidClient(context, MQTT_BROKER_URI, clientId);
+    public MqttHandler(Context context, String clientID) {
+
+        this.ClientID = clientID;
+
+        AppPreferences appPreferences = new AppPreferences(context);
+        String mqttHost = appPreferences.getMqttIP();
+
+        if (mqttHost != null && !mqttHost.isEmpty())
+        {
+            this.MQTT_BROKER_URI = mqttHost;
+        }
+
+        mqttAndroidClient = new MqttAndroidClient(context, MQTT_BROKER_URI, this.ClientID);
 
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setCleanSession(true);
@@ -35,12 +47,12 @@ public class MqttHandler {
             mqttAndroidClient.connect(mqttConnectOptions, null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    BetterToast(context, "Successfully connected to the broker");
+                    BetterToast(context, TAG + "Successfully connected to the broker");
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    BetterToast(context, "Failed to connect to the broker");
+                    BetterToast(context, TAG + "Failed to connect to the broker");
                 }
             });
         } catch (MqttException e) {
@@ -50,18 +62,18 @@ public class MqttHandler {
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
-                BetterToast(context, "Connection lost");
+                BetterToast(context, TAG + "Connection lost");
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage message) {
                 String payload = new String(message.getPayload());
-                BetterToast(context, "Received message on topic " + topic + ": " + payload);
+                BetterToast(context, TAG + "Received message on topic " + topic + ": " + payload);
             }
 
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
-                BetterToast(context, "Message delivery complete");
+                BetterToast(context, TAG + "Message delivery complete");
             }
         });
     }
