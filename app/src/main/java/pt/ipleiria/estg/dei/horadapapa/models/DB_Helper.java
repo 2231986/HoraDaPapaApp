@@ -16,6 +16,8 @@ public class DB_Helper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
 
     private static final String TABLE_PLATE = "plate";
+    private static final String[] TABLE_PLATE_FIELDS = {"id", "title", "description", "price", "image"};
+
 
     public DB_Helper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -45,7 +47,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     public ArrayList<Plate> getPlates(){
         ArrayList<Plate> plates = new ArrayList<>();
 
-        Cursor cursor = db.query(TABLE_PLATE, new String[]{"id", "title", "description", "price", "image"},
+        Cursor cursor = db.query(TABLE_PLATE, TABLE_PLATE_FIELDS,
         null, null, null, null, "id");
 
         if(cursor.moveToFirst()){
@@ -78,5 +80,21 @@ public class DB_Helper extends SQLiteOpenHelper {
 
             db.insert(TABLE_PLATE, null, values);
         }
+    }
+
+    public Plate getPlate(int id){
+        Plate plate = null;
+
+        Cursor cursor = db.query(TABLE_PLATE, TABLE_PLATE_FIELDS,
+                null, null, null, null, "id");
+
+        if(cursor.moveToFirst()){
+
+            plate = new Plate(cursor);
+
+            cursor.close();
+        }
+
+        return plate;
     }
 }

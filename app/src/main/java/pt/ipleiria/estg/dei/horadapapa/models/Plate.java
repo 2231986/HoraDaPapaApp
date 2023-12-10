@@ -13,7 +13,7 @@ public class Plate {
     {
         try {
             this.id = jsonObject.getInt("id");
-            this.image = jsonObject.getString("image");
+            this.image = jsonObject.getString("image_name");
             this.price = jsonObject.getString("price");
             this.title = jsonObject.getString("title");
             this.description = jsonObject.getString("description");
@@ -23,11 +23,11 @@ public class Plate {
     }
 
     public Plate(Cursor cursor) {
-        this.id = cursor.getInt(0);
-        this.image = cursor.getString(1);
-        this.price = cursor.getString(2);
-        this.title = cursor.getString(3);
-        this.description = cursor.getString(4);
+        this.id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+        this.image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
+        this.price = cursor.getString(cursor.getColumnIndexOrThrow("price"));
+        this.title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+        this.description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
     }
 
     public int getId() {

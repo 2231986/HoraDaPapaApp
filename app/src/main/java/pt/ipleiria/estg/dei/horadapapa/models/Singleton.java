@@ -209,6 +209,10 @@ public class Singleton
         }
     }
 
+    public Plate dbGetPlate(int id){
+        return myDatabase.getPlate(id);
+    }
+
     private static class Route
     {
         public static String ApiPath = "http://" + ApiHost + "/HoraDaPapa/backend/web/api/";
