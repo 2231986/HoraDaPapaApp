@@ -17,38 +17,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".InvoiceDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".PlateDetailsActivity"
-            android:exported="false"
-            />
-
-
+            android:exported="false" />
         <activity
             android:name=".CartActivity"
             android:exported="false" /> <!-- Clear texttraffic não vem de origem está aqui para permitir pedidos HTTP -->
-
         <activity
             android:name=".SignUpActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
-
-
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".APIConfActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
-
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MenuActivity"
             android:exported="false"
-            android:theme="@style/Theme.HoraDaPapaApp.NoActionBar"/>
-
+            android:theme="@style/Theme.HoraDaPapaApp.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.HoraDaPapaApp.NoActionBar"
-
-            >
+            android:theme="@style/Theme.HoraDaPapaApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

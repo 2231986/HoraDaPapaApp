@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.horadapapa;
 import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -20,6 +21,8 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        Log.d("Lifecycle", "onCreate() called");
+
 
         etUsername = findViewById(R.id.et_Username);
         etEmail = findViewById(R.id.et_Email);
@@ -71,5 +74,41 @@ public class SignUpActivity extends AppCompatActivity {
         user.setNif(nif);
 
         Singleton.getInstance(this).requestUserRegister(this, user);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("Lifecycle", "onStart() called");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Lifecycle", "onResume() called");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Lifecycle", "onPause() called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("Lifecycle", "onStop() called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Lifecycle", "onDestroy() called");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d("BackButton", "Back button pressed in SignUpActivity");
     }
 }

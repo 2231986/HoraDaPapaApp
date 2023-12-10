@@ -26,4 +26,9 @@
     <string name="txtNIF">NIF</string>
     <string name="Cart">Go to cart</string>
     <string name="Purchase">"Purchase "</string>
+    <string name="invoiceTitle">Hora da Papa</string>
+    <string name="invoice_meal_id">meal_id</string>
+    <string name="invoicePrice">Price</string>
+    <string name="invoiceDate">Date</string>
+    <string name="invoiceDetailsButton">See details</string>
 </resources>
