@@ -8,12 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
+import pt.ipleiria.estg.dei.horadapapa.models.Plate;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FavouritesListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavouritesListFragment extends Fragment {
+public class FavouritesListFragment extends Fragment implements FavoritesListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,5 +65,10 @@ public class FavouritesListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favourites_list, container, false);
+    }
+
+    @Override
+    public void onRefreshFavorites(ArrayList<Plate> list) {
+        //TODO:Implementar evento!
     }
 }

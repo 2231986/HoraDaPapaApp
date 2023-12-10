@@ -275,6 +275,83 @@ public class Singleton
         }
     }
 
+    /**
+     * Adiciona um prato como favorito, se já o for remove dos favoritos
+     */
+    public void requestPlateHasFavorite(Context context, int plateID) {
+        if (plateID == 0) {
+            BetterToast(context, "prato inválido!");
+        }
+
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+        } else {
+            JSONObject requestBody = new JSONObject();
+
+            try {
+                requestBody.put("plateID", plateID);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    Route.PlateFavorite,
+                    requestBody,
+                    response -> {
+                        // TODO: Implement response
+                    },
+                    error -> BetterToast(context, "Ocorreu um erro!")) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+
+            volleyQueue.add(jsonObjectRequest);
+        }
+    }
+
+
+    public void requestFavoritesGetAll(Context context) {
+        if(!isConnected(context)){
+            BetterToast(context,"Sem internet!");
+
+            ArrayList<Plate> plates = myDatabase.getPlates();
+
+            if (platesListener != null){
+                platesListener.onRefreshPlates(plates);
+            }else{
+                BetterToast(context,"Ocorreu um erro ao colocar no Listener!");
+            }
+        }else {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateFavorite, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    // TODO: Implement response, vai ter de fazer um listener para os favoritos como se fez para os pratos
+                }
+            }, error -> BetterToast(context, "Ocorreu um erro!")) {
+                @Override
+                public Map<String, String> getHeaders() {
+
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+
+            volleyQueue.add(jsonArrayRequest);
+        }
+    }
+
 
     public ArrayList<Plate> filterPlatesByContent(String keyword) {
         ArrayList<Plate> plates = myDatabase.getPlates();
@@ -301,14 +378,14 @@ public class Singleton
             throw new AssertionError("Route class should not be instantiated.");
         }
 
-        public static String ApiPath = "http://" + ApiHost + "/HoraDaPapa/backend/web/api/";
+        private static String ApiPath = "http://" + ApiHost + "/HoraDaPapa/backend/web/api/";
         public static String UserLogin = ApiPath + "user/login"; //GET - Faz login
         public static String UserRegister = ApiPath + "user/register"; //POST - Regista o utilizador
         public static String PlateGetAll = ApiPath + "plates"; //GET - Obtem todos os pratos
-
         public static String RequestPlate(int mealID, int plateID){
             String endpoint = ApiPath + "requests/meal/{0}/plate/{1}";
             return MessageFormat.format(endpoint, mealID + "", plateID + "");
         }
+        public static String PlateFavorite = ApiPath + "favorites"; //POST - Regista ou remove o favorito
     }
 }
