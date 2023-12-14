@@ -34,6 +34,7 @@ import java.util.Map;
 import pt.ipleiria.estg.dei.horadapapa.MainActivity;
 import pt.ipleiria.estg.dei.horadapapa.MealListFragment;
 import pt.ipleiria.estg.dei.horadapapa.MenuActivity;
+import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.JsonParser;
@@ -48,6 +49,11 @@ public class Singleton
     private PlatesListener platesListener;
     public void setProdutoListener(PlatesListener platesListener) {
         this.platesListener = platesListener;
+    }
+
+    private FavoritesListener favoritesListener;
+    public void setFavoritesListener(FavoritesListener favoritesListener) {
+        this.favoritesListener = favoritesListener;
     }
 
     private Singleton(Context context)
@@ -333,7 +339,13 @@ public class Singleton
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateFavorite, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    // TODO: Implement response, vai ter de fazer um listener para os favoritos como se fez para os pratos
+                    ArrayList<Plate> plates = JsonParser.parseJsonPlates(response);
+
+                    if (plates != null) {
+                        favoritesListener.onRefreshFavorites(plates);
+                    } else {
+                        BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+                    }
                 }
             }, error -> BetterToast(context, "Ocorreu um erro!")) {
                 @Override

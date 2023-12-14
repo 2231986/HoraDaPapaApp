@@ -45,7 +45,6 @@ public class MealListFragment extends Fragment implements PlatesListener {
         Log.d("MealListFragment", "onCreateView called");
 
         lvPlates = view.findViewById(R.id.lvPlates);
-
         Singleton.getInstance(getContext()).setProdutoListener(this);
         Singleton.getInstance(getContext()).requestPlateGetAll(getContext());
 

@@ -7,11 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import pt.ipleiria.estg.dei.horadapapa.adapters.PlateListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
+import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +22,8 @@ import pt.ipleiria.estg.dei.horadapapa.models.Plate;
  * create an instance of this fragment.
  */
 public class FavouritesListFragment extends Fragment implements FavoritesListener {
+
+    private ListView lvFavorites;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,6 +59,7 @@ public class FavouritesListFragment extends Fragment implements FavoritesListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -61,14 +67,21 @@ public class FavouritesListFragment extends Fragment implements FavoritesListene
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favourites_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_favourites_list, container, false);
+
+        lvFavorites = view.findViewById(R.id.lvFavorites);
+        Singleton.getInstance(getContext()).setFavoritesListener(this);
+        Singleton.getInstance(getContext()).requestFavoritesGetAll(getContext());
+
+        return view;
     }
 
     @Override
     public void onRefreshFavorites(ArrayList<Plate> list) {
-        //TODO:Implementar evento!
+        if (list != null) {
+            lvFavorites.setAdapter(new PlateListAdapter(getContext(), list));
+        }
     }
 }
