@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickAppConfig(View view) { //Abre a Activity para configurar a aplicação
-        Intent intent = new Intent(this, APIConfActivity.class);
+        Intent intent = new Intent(this, APPConfingActivity.class);
         startActivity(intent);
     }
 

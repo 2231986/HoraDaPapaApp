@@ -2,25 +2,23 @@ package pt.ipleiria.estg.dei.horadapapa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.MqttHandler;
 import pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper;
 
-public class APIConfActivity extends AppCompatActivity {
+public class APPConfingActivity extends AppCompatActivity {
 
     private EditText et_ApiHost, et_MqttHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_api);
+        setContentView(R.layout.activity_app_config);
         Log.d("Lifecycle", "onCreate() called");
 
 
@@ -101,7 +99,7 @@ public class APIConfActivity extends AppCompatActivity {
 
         appPreferences.clearPreferences();
 
-        ProjectHelper.BetterToast(this, "Dados apagados!");
+        ProjectHelper.BetterToast(this, "Dados repostos!");
 
         finish();
     }
