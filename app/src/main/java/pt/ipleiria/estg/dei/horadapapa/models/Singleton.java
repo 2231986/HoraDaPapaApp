@@ -41,7 +41,6 @@ import pt.ipleiria.estg.dei.horadapapa.utilities.JsonParser;
 
 public class Singleton
 {
-    public static String ApiHost = "10.0.2.2:8888";
     private static RequestQueue volleyQueue = null;
     private static Singleton singleton_instance = null;
     private static DB_Helper myDatabase;
@@ -58,14 +57,6 @@ public class Singleton
 
     private Singleton(Context context)
     {
-        AppPreferences appPreferences = new AppPreferences(context);
-        String apiHost = appPreferences.getApiIP();
-
-        if (apiHost != null && !apiHost.isEmpty())
-        {
-            Singleton.ApiHost = apiHost;
-        }
-
         volleyQueue = Volley.newRequestQueue(context);
         myDatabase = new DB_Helper(context);
     }
@@ -88,7 +79,7 @@ public class Singleton
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
         } else {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, Route.UserLogin, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, Route.UserLogin(context), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
 
@@ -130,7 +121,7 @@ public class Singleton
 
     public void requestUserRegister(final Context context, User user) {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Route.UserRegister,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Route.UserRegister(context),
                 response -> {
                     if (response.contains("success")) {
                         BetterToast(context, "Signed up!");
@@ -186,7 +177,7 @@ public class Singleton
                 BetterToast(context,"Ocorreu um erro ao colocar no Listener!");
             }
         }else {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateGetAll, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateGetAll(context), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     ArrayList<Plate> plates = JsonParser.parseJsonPlates(response);
@@ -258,7 +249,7 @@ public class Singleton
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    Route.RequestPlate(mealID, plateID),
+                    Route.RequestPlate(context, mealID, plateID),
                     requestBody,
                     response -> {
                         // TODO: Implement response
@@ -300,7 +291,7 @@ public class Singleton
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    Route.PlateFavorite,
+                    Route.PlateFavorite(context),
                     requestBody,
                     response -> {
                         // TODO: Implement response
@@ -334,7 +325,7 @@ public class Singleton
                 BetterToast(context,"Ocorreu um erro ao colocar no Listener!");
             }
         }else {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateFavorite, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateFavorite(context), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     ArrayList<Plate> plates = JsonParser.parseJsonPlates(response);
@@ -388,14 +379,29 @@ public class Singleton
             throw new AssertionError("Route class should not be instantiated.");
         }
 
-        private static String ApiPath = "http://" + ApiHost + "/HoraDaPapa/backend/web/api/";
-        public static String UserLogin = ApiPath + "user/login"; //GET - Faz login
-        public static String UserRegister = ApiPath + "user/register"; //POST - Regista o utilizador
-        public static String PlateGetAll = ApiPath + "plates"; //GET - Obtem todos os pratos
-        public static String RequestPlate(int mealID, int plateID){
-            String endpoint = ApiPath + "requests/meal/{0}/plate/{1}";
+        private static String ApiHost(Context context) {
+            AppPreferences appPreferences = new AppPreferences(context);
+            return appPreferences.getApiIP();
+        }
+        private static String ApiPath(Context context) {
+            return  "http://" + ApiHost(context) + "/HoraDaPapa/backend/web/api/";
+        }
+
+        public static String UserLogin(Context context) {
+            return ApiPath(context) + "user/login"; //GET - Faz login
+        }
+        public static String UserRegister(Context context) {
+            return ApiPath(context) + "user/register"; //POST - Regista o utilizador
+        }
+        public static String PlateGetAll(Context context) {
+            return ApiPath(context) + "plates"; //GET - Obtem todos os pratos
+        }
+        public static String RequestPlate(Context context, int mealID, int plateID){
+            String endpoint = ApiPath(context) + "requests/meal/{0}/plate/{1}";
             return MessageFormat.format(endpoint, mealID + "", plateID + "");
         }
-        public static String PlateFavorite = ApiPath + "favorites"; //POST - Regista ou remove o favorito
+        public static String PlateFavorite(Context context) {
+            return ApiPath(context) + "favorites"; //POST - Regista ou remove o favorito
+        }
     }
 }

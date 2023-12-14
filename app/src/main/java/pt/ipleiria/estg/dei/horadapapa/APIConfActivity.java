@@ -28,12 +28,7 @@ public class APIConfActivity extends AppCompatActivity {
 
         et_ApiHost = findViewById(R.id.et_ApiHost);
         String apiHost = appPreferences.getApiIP();
-
-        if (apiHost != null && !apiHost.isEmpty()){
-            et_ApiHost.setText(apiHost);
-        }else {
-            et_ApiHost.setText(Singleton.ApiHost);
-        }
+        et_ApiHost.setText(apiHost);
 
         et_MqttHost = findViewById(R.id.et_MqttHost);
         String mqttHost = appPreferences.getMqttIP();
@@ -99,5 +94,15 @@ public class APIConfActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Log.d("BackButton", "Back button pressed in SignUpActivity");
+    }
+
+    public void appConfigReset(View view) {
+        AppPreferences appPreferences = new AppPreferences(this);
+
+        appPreferences.clearPreferences();
+
+        ProjectHelper.BetterToast(this, "Dados apagados!");
+
+        finish();
     }
 }

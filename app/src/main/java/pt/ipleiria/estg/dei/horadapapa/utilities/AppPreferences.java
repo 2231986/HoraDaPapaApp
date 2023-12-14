@@ -38,7 +38,7 @@ public class AppPreferences
 
     public String getApiIP()
     {
-        return sharedPreferences.getString(API_HOST, null);
+        return sharedPreferences.getString(API_HOST, "10.0.2.2:80");
     }
 
     public void setMqttIP(String host)
