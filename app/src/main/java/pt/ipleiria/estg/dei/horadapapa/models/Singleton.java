@@ -271,9 +271,9 @@ public class Singleton
     }
 
     /**
-     * Adiciona um prato como favorito, se já o for remove dos favoritos
+     * Adiciona um prato como favorito
      */
-    public void requestPlateHasFavorite(Context context, int plateID) {
+    public void requestPlateAddFavorite(Context context, int plateID) {
         if (plateID == 0) {
             BetterToast(context, "prato inválido!");
         }
@@ -281,18 +281,9 @@ public class Singleton
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
         } else {
-            JSONObject requestBody = new JSONObject();
-
-            try {
-                requestBody.put("plateID", plateID);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    Route.PlateFavorite(context),
-                    requestBody,
+                    Route.PlateFavorite(context, plateID),null,
                     response -> {
                         // TODO: Implement response
                     },
@@ -312,18 +303,42 @@ public class Singleton
         }
     }
 
+    /**
+     * Remove um prato como favorito
+     */
+    public void requestPlateRemoveFavorite(Context context, int plateID) {
+        if (plateID == 0) {
+            BetterToast(context, "prato inválido!");
+        }
+
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+        } else {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.DELETE,
+                    Route.PlateFavorite(context, plateID),null,
+                    response -> {
+                        // TODO: Implement response
+                    },
+                    error -> BetterToast(context, "Ocorreu um erro!")) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+
+            volleyQueue.add(jsonObjectRequest);
+        }
+    }
 
     public void requestFavoritesGetAll(Context context) {
         if(!isConnected(context)){
             BetterToast(context,"Sem internet!");
-
-            ArrayList<Plate> plates = myDatabase.getPlates();
-
-            if (platesListener != null){
-                platesListener.onRefreshPlates(plates);
-            }else{
-                BetterToast(context,"Ocorreu um erro ao colocar no Listener!");
-            }
         }else {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateFavorite(context), null, new Response.Listener<JSONArray>() {
                 @Override
@@ -401,7 +416,21 @@ public class Singleton
             return MessageFormat.format(endpoint, mealID + "", plateID + "");
         }
         public static String PlateFavorite(Context context) {
-            return ApiPath(context) + "favorites"; //POST - Regista ou remove o favorito
+            return PlateFavorite(context, 0);
+        }
+        public static String PlateFavorite(Context context, int plateID) {
+            String endpoint = "";
+
+            if (plateID == 0){
+                endpoint = ApiPath(context) + "favorites"; //GET - Obtem todos os favoritos
+            }
+            else
+            {
+                endpoint = ApiPath(context) + "requests/plates/{0}/favorite";
+                endpoint = MessageFormat.format(endpoint, plateID + ""); //POST - Regista ou remove o favorito
+            }
+
+            return endpoint;
         }
     }
 }
