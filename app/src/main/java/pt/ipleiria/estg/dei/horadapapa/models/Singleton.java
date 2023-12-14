@@ -136,8 +136,6 @@ public class Singleton
                         BetterToast(context, "Signed up!");
 
                         //TODO: Vai ter de se substituir o Intent por um Listener!
-                        Intent activity = new Intent(context, MainActivity.class);
-                        context.startActivity(activity);
                         ((Activity) context).finish();
                     } else {
                         BetterToast(context, response);

@@ -48,12 +48,10 @@ public class MainActivity extends AppCompatActivity {
     public void onClickAppConfig(View view) { //Abre a Activity para configurar a aplicação
         Intent intent = new Intent(this, APIConfActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void onClickSignUpActivity(View view) { //Abre a Activity para registar o cliente
         Intent activity = new Intent(this, SignUpActivity.class);
         startActivity(activity);
-        finish();
     }
 }

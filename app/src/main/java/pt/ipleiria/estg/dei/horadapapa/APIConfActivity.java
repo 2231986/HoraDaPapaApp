@@ -63,8 +63,6 @@ public class APIConfActivity extends AppCompatActivity {
 
         ProjectHelper.BetterToast(this, "Dados guardados!");
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
     @Override
