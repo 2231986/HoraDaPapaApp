@@ -70,6 +70,13 @@ public class MenuActivity extends AppCompatActivity {
             fragment = new InvoicesListFragment();
             setTitle(item.getTitle());
         }
+        else if (item.getItemId()== R.id.navTable) {
+            //fragment = new InvoicesListFragment();
+            //new Intent(getApplicationContext(), TableActivity.class);
+            Intent intent = new Intent(this, TableActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         else if(item.getItemId()==R.id.navEmail) {
             enviarEmail();

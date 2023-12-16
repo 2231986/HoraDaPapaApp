@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
     public void onClickAppConfig(View view) { //Abre a Activity para configurar a aplicação
         Intent intent = new Intent(this, APPConfingActivity.class);
         startActivity(intent);
+/*<<<<<<< Updated upstream
+=======
+        //finish();
+>>>>>>> Stashed changes*/
     }
 
     public void onClickSignUpActivity(View view) { //Abre a Activity para registar o cliente

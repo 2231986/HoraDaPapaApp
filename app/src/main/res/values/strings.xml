@@ -32,4 +32,9 @@
     <string name="invoiceDate">Date</string>
     <string name="invoiceDetailsButton">See details</string>
     <string name="txt_Search">Search</string>
+    <string name="txt_Table">Table</string>
+    <string name="btn_StartMeal">Start Meal</string>
+    <string name="txt_table_name">Hora da Papa</string>
+    <string name="txt_table">Choose your table!</string>
+    <string name="txt_StartMeal">Start Meal</string>
 </resources>
