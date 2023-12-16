@@ -59,6 +59,7 @@ public class MenuActivity extends AppCompatActivity {
             //Intent intent = new Intent(this, MealListActivity.class);
             //startActivity(intent);
             //finish();
+
             fragment = new MealListFragment();
             setTitle(item.getTitle());
         }
@@ -71,11 +72,23 @@ public class MenuActivity extends AppCompatActivity {
             setTitle(item.getTitle());
         }
         else if (item.getItemId()== R.id.navTable) {
-            //fragment = new InvoicesListFragment();
-            //new Intent(getApplicationContext(), TableActivity.class);
-            Intent intent = new Intent(this, TableActivity.class);
+
+            /*Intent intent = new Intent(this, TableActivity.class);
             startActivity(intent);
-            finish();
+            finish();*/
+
+            fragment = new TableListFragment();
+            setTitle(item.getTitle());
+
+            /*
+            MESMO METODO QUE EM MEAL_LIST_FRAGMENT, também faz o mesmo que acima
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contentLayout, new TableListFragment()) // Make sure R.id.fragment_container is the correct container ID
+                    .addToBackStack(null) // Optionally, add to the back stack if needed
+                    .commit();
+
+            */
         }
 
         else if(item.getItemId()==R.id.navEmail) {

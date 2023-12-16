@@ -37,4 +37,6 @@
     <string name="txt_table_name">Hora da Papa</string>
     <string name="txt_table">Choose your table!</string>
     <string name="txt_StartMeal">Start Meal</string>
+    <string name="tv_StartMeal">Start Meal</string>
+    <string name="btt_StartMeal">Start Meal</string>
 </resources>
