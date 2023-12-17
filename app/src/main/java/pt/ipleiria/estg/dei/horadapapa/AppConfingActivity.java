@@ -11,7 +11,7 @@ import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.MqttHandler;
 import pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper;
 
-public class APPConfingActivity extends AppCompatActivity {
+public class AppConfingActivity extends AppCompatActivity {
 
     private EditText et_ApiHost, et_MqttHost;
 

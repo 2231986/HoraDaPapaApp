@@ -34,6 +34,7 @@ import java.util.Map;
 import pt.ipleiria.estg.dei.horadapapa.MainActivity;
 import pt.ipleiria.estg.dei.horadapapa.MealListFragment;
 import pt.ipleiria.estg.dei.horadapapa.MenuActivity;
+import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
@@ -53,6 +54,11 @@ public class Singleton
     private FavoritesListener favoritesListener;
     public void setFavoritesListener(FavoritesListener favoritesListener) {
         this.favoritesListener = favoritesListener;
+    }
+
+    private DinnersListener dinnersListener;
+    public void setDinnersListener(DinnersListener dinnersListener) {
+        this.dinnersListener = dinnersListener;
     }
 
     private Singleton(Context context)
@@ -127,11 +133,6 @@ public class Singleton
                         BetterToast(context, "Signed up!");
 
                         //TODO: Vai ter de se substituir o Intent por um Listener!
-/*<<<<<<< Updated upstream
-=======
-                        Intent activity = new Intent(context, MainActivity.class);
-                        //context.startActivity(activity);
->>>>>>> Stashed changes*/
                         ((Activity) context).finish();
                     } else {
                         BetterToast(context, response);
@@ -373,6 +374,67 @@ public class Singleton
         }
     }
 
+    public void requestDinnerGetAll(Context context) {
+        if(!isConnected(context)){
+            BetterToast(context,"Sem internet!");
+        }else {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.Dinner(context), null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    ArrayList<Dinner> dinners = JsonParser.parseJsonDinners(response);
+
+                    if (dinners != null) {
+                        dinnersListener.onRefreshDinners(dinners);
+                    } else {
+                        BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+                    }
+                }
+            }, error -> BetterToast(context, "Ocorreu um erro!")) {
+                @Override
+                public Map<String, String> getHeaders() {
+
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+
+            volleyQueue.add(jsonArrayRequest);
+        }
+    }
+
+    public void requestDinnerStart(Context context, int dinnerID) {
+        if (dinnerID == 0) {
+            BetterToast(context, "prato inválido!");
+        }
+
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+        } else {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    Route.Dinner(context, dinnerID),null,
+                    response -> {
+                        // TODO: Implement response
+                    },
+                    error -> BetterToast(context, "Ocorreu um erro!")) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+
+            volleyQueue.add(jsonObjectRequest);
+        }
+    }
 
     public ArrayList<Plate> filterPlatesByContent(String keyword) {
         ArrayList<Plate> plates = myDatabase.getPlates();
@@ -390,111 +452,5 @@ public class Singleton
         }
 
         return filteredPlates;
-    }
-
-    private static class Route
-    {
-        // Private constructor to prevent instantiation
-        private Route() {
-            throw new AssertionError("Route class should not be instantiated.");
-        }
-
-        private static String ApiHost(Context context) {
-            AppPreferences appPreferences = new AppPreferences(context);
-            return appPreferences.getApiIP();
-        }
-        private static String ApiPath(Context context) {
-            return  "http://" + ApiHost(context) + "/HoraDaPapa/backend/web/api/";
-        }
-
-        public static String UserLogin(Context context) {
-            return ApiPath(context) + "user/login"; //GET - Faz login
-        }
-        public static String UserRegister(Context context) {
-            return ApiPath(context) + "user/register"; //POST - Regista o utilizador
-        }
-        public static String PlateGetAll(Context context) {
-            return ApiPath(context) + "plates"; //GET - Obtem todos os pratos
-        }
-        public static String RequestPlate(Context context, int mealID, int plateID){
-            String endpoint = ApiPath(context) + "meals/{0}/plate/{1}";
-            return MessageFormat.format(endpoint, mealID + "", plateID + ""); //POST - Adiciona um prato à refeição
-        }
-        public static String MealInvoice(Context context, int mealID){
-            String endpoint = ApiPath(context) + "meals/{0}/invoice";
-            return MessageFormat.format(endpoint, mealID + ""); //POST - Obtem a fatura da meal
-        }
-        public static String MealRequests(Context context, int mealID){
-            String endpoint = ApiPath(context) + "meals/{0}/requests";
-            return MessageFormat.format(endpoint, mealID + ""); //GET - Obtem os pedidos de uma refeição
-        }
-        public static String PlateFavorite(Context context) {
-            return PlateFavorite(context, 0);
-        }
-        public static String PlateFavorite(Context context, int plateID) {
-            String endpoint = "";
-
-            if (plateID == 0){
-                endpoint = ApiPath(context) + "favorites"; //GET - Obtem todos os favoritos
-            }
-            else
-            {
-                endpoint = ApiPath(context) + "plates/{0}/favorite";
-                endpoint = MessageFormat.format(endpoint, plateID + ""); //POST - Regista ou remove o favorito
-            }
-
-            return endpoint;
-        }
-        public static String Dinner(Context context) {
-            return PlateFavorite(context, 0);
-        }
-        public static String Dinner(Context context, int dinnerID) {
-            String endpoint = "";
-
-            if (dinnerID == 0){
-                endpoint = ApiPath(context) + "dinners/clean"; //GET - Obtem todos as mesas
-            }
-            else
-            {
-                endpoint = ApiPath(context) + "dinners/{0}/start";
-                endpoint = MessageFormat.format(endpoint, dinnerID + ""); //POST - Regista uma refeição
-            }
-
-            return endpoint;
-        }
-        public static String Helpticket(Context context) {
-            return PlateFavorite(context, 0);
-        }
-        public static String Helpticket(Context context, int helpticketID) {
-            String endpoint = "";
-
-            if (helpticketID == 0){
-                endpoint = ApiPath(context) + "helptickets"; //GET - Obtem todos as mesas
-            }
-            else
-            {
-                endpoint = ApiPath(context) + "helptickets/{0}";
-                endpoint = MessageFormat.format(endpoint, helpticketID + ""); //CRUD
-            }
-
-            return endpoint;
-        }
-        public static String Review(Context context) {
-            return PlateFavorite(context, 0);
-        }
-        public static String Review(Context context, int reviewID) {
-            String endpoint = "";
-
-            if (reviewID == 0){
-                endpoint = ApiPath(context) + "reviews"; //GET - Obtem todos as mesas
-            }
-            else
-            {
-                endpoint = ApiPath(context) + "reviews/{0}";
-                endpoint = MessageFormat.format(endpoint, reviewID + ""); //CRUD
-            }
-
-            return endpoint;
-        }
     }
 }

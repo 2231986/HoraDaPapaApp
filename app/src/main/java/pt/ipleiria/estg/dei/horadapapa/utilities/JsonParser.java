@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import pt.ipleiria.estg.dei.horadapapa.models.Dinner;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 
 public class JsonParser {
@@ -39,22 +40,41 @@ public class JsonParser {
         return tokenValue;
     }
 
-    public static ArrayList<Plate> parseJsonPlates(JSONArray platesJsonList) {
-        ArrayList<Plate> plateList = new ArrayList<Plate>();
+    public static ArrayList<Plate> parseJsonPlates(JSONArray jsonList) {
+        ArrayList<Plate> returnList = new ArrayList<>();
 
         try {
-            for (int i = 0; i < platesJsonList.length(); i++) {
-                JSONObject plateObject = platesJsonList.getJSONObject(i);
+            for (int i = 0; i < jsonList.length(); i++) {
+                JSONObject obj = jsonList.getJSONObject(i);
 
-                Plate plate = new Plate(plateObject);
+                Plate item = new Plate(obj);
 
-                plateList.add(plate);
+                returnList.add(item);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return plateList;
+        return returnList;
+    }
+
+    public static ArrayList<Dinner> parseJsonDinners(JSONArray jsonList) {
+        ArrayList<Dinner> returnList = new ArrayList<>();
+
+        try {
+            for (int i = 0; i < jsonList.length(); i++) {
+                JSONObject obj = jsonList.getJSONObject(i);
+
+                Dinner item = new Dinner(obj);
+
+                returnList.add(item);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return returnList;
     }
 }
