@@ -50,6 +50,10 @@ public class Plate {
         return price;
     }
 
+    public String getPriceFormatted() {
+      return price + " €"; //TODO: trocar na API de String para Double
+    }
+
     public void setPrice(String price) {
         this.price = price;
     }

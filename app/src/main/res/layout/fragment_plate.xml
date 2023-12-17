@@ -76,7 +76,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="75dp"
                     android:backgroundTint="@color/green"
-                    android:onClick="onClickAddRequest"
                     android:text="Pedir" />
 
                 <EditText

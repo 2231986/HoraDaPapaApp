@@ -74,7 +74,7 @@ public class TableListFragment extends Fragment implements DinnersListener {
                 // Perform actions with the selected dinner ID
                 Toast.makeText(getContext(), "Selected Dinner ID: " + selectedDinnerId, Toast.LENGTH_SHORT).show();
 
-                // Example: Request to start a meal with the selected dinner ID
+                //Faz um request à API para começar a refeição
                 Singleton.getInstance(getContext()).requestDinnerStart(getContext(), selectedDinnerId);
 
                 // MealListFragment é instanciada e guardada como fragment b (destino)
@@ -99,14 +99,8 @@ public class TableListFragment extends Fragment implements DinnersListener {
     @Override
     public void onRefreshDinners(ArrayList<Dinner> list) {
         if (list != null) {
-            // Clear existing data
             spinnerAdapter.clear();
-
-            // Add new data
             spinnerAdapter.addAll(list);
-
-            // Notify the adapter that the data set has changed
-            spinnerAdapter.notifyDataSetChanged();
         }
     }
 }

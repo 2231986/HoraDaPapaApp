@@ -7,8 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
-
-import androidx.fragment.app.Fragment;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NoConnectionError;
@@ -26,13 +25,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import pt.ipleiria.estg.dei.horadapapa.MainActivity;
-import pt.ipleiria.estg.dei.horadapapa.MealListFragment;
 import pt.ipleiria.estg.dei.horadapapa.MenuActivity;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
@@ -45,6 +41,8 @@ public class Singleton
     private static RequestQueue volleyQueue = null;
     private static Singleton singleton_instance = null;
     private static DB_Helper myDatabase;
+
+    private static int currentMealID = 0; //Guarda o ID da Meal atual
 
     private PlatesListener platesListener;
     public void setProdutoListener(PlatesListener platesListener) {
@@ -186,7 +184,7 @@ public class Singleton
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateGetAll(context), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    ArrayList<Plate> plates = JsonParser.parseJsonPlates(response);
+                    ArrayList<Plate> plates = JsonParser.parseGenericList(response, Plate.class);
                     myDatabase.setPlates(plates);
 
                     if (platesListener != null) {
@@ -224,17 +222,20 @@ public class Singleton
     /**
      * Pede um prato
      */
-    public void requestRequestPlate(Context context, int mealID, int plateID, int quantity, String observation) {
-        if (mealID == 0) {
+    public void requestRequestPlate(Context context, int plateID, int quantity, String observation) {
+        if (currentMealID == 0) {
             BetterToast(context, "refeição inválida!");
+            return;
         }
 
         if (plateID == 0) {
             BetterToast(context, "prato inválido!");
+            return;
         }
 
         if (quantity == 0) {
             BetterToast(context, "quantidade inválida!");
+            return;
         }
 
         if (!isConnected(context)) {
@@ -255,9 +256,10 @@ public class Singleton
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    Route.RequestPlate(context, mealID, plateID),
+                    Route.RequestPlate(context, currentMealID, plateID),
                     requestBody,
                     response -> {
+                        Toast.makeText(context, "O pedido foi feito!", Toast.LENGTH_SHORT).show();
                         // TODO: Implement response
                     },
                     error -> BetterToast(context, "Ocorreu um erro!")) {
@@ -282,6 +284,7 @@ public class Singleton
     public void requestPlateAddFavorite(Context context, int plateID) {
         if (plateID == 0) {
             BetterToast(context, "prato inválido!");
+            return;
         }
 
         if (!isConnected(context)) {
@@ -315,6 +318,7 @@ public class Singleton
     public void requestPlateRemoveFavorite(Context context, int plateID) {
         if (plateID == 0) {
             BetterToast(context, "prato inválido!");
+            return;
         }
 
         if (!isConnected(context)) {
@@ -349,7 +353,7 @@ public class Singleton
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateFavorite(context), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    ArrayList<Plate> plates = JsonParser.parseJsonPlates(response);
+                    ArrayList<Plate> plates = JsonParser.parseGenericList(response, Plate.class);
 
                     if (plates != null) {
                         favoritesListener.onRefreshFavorites(plates);
@@ -381,7 +385,7 @@ public class Singleton
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.Dinner(context), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    ArrayList<Dinner> dinners = JsonParser.parseJsonDinners(response);
+                    ArrayList<Dinner> dinners = JsonParser.parseGenericList(response, Dinner.class);
 
                     if (dinners != null) {
                         dinnersListener.onRefreshDinners(dinners);
@@ -408,17 +412,21 @@ public class Singleton
 
     public void requestDinnerStart(Context context, int dinnerID) {
         if (dinnerID == 0) {
-            BetterToast(context, "prato inválido!");
+            BetterToast(context, "Mesa inválida!");
+            return;
         }
 
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
         } else {
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+            JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.POST,
                     Route.Dinner(context, dinnerID),null,
                     response -> {
-                        // TODO: Implement response
+                        Meal meal = JsonParser.parseGenericObject(response, Meal.class);
+                        if (meal != null){
+                            currentMealID = meal.getId();
+                        }
                     },
                     error -> BetterToast(context, "Ocorreu um erro!")) {
                 @Override
@@ -432,7 +440,7 @@ public class Singleton
                 }
             };
 
-            volleyQueue.add(jsonObjectRequest);
+            volleyQueue.add(request);
         }
     }
 

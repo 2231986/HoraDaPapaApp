@@ -59,7 +59,7 @@ public class PlateDetailsActivity extends AppCompatActivity {
     private void loadPlate() {
         etTitle.setText(plate.getTitle());
         etDesc.setText(plate.getDescription());
-        etPrice.setText(plate.getPrice());
+        etPrice.setText(plate.getPriceFormatted());
         Glide.with(this)
                 .load(plate.getImage())
                 .placeholder(R.drawable.img)

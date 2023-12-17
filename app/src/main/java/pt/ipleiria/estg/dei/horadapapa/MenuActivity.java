@@ -45,12 +45,9 @@ public class MenuActivity extends AppCompatActivity {
         toggle.syncState();
         drawerLayout.addDrawerListener(toggle);
         fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.contentLayout, new TableListFragment()).commit();
 
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
-
-
-
-
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -122,16 +119,5 @@ public class MenuActivity extends AppCompatActivity {
     public void goToCartView(View view) {
         Intent intent = new Intent(getApplicationContext(), CartActivity.class);
         startActivity(intent);
-    }
-
-    public void onClickAddRequest(View view) {
-      int mealID = 0, plateID = 0, quantity = 0;
-      String observation = "";
-
-      //TODO: implementar a obtenção dos dados para fazer o request
-
-      Singleton.getInstance(this).requestRequestPlate(this, mealID, plateID, quantity, observation);
-
-      Toast.makeText(this, "TESTE: O pedido foi feito!", Toast.LENGTH_SHORT).show();
     }
 }

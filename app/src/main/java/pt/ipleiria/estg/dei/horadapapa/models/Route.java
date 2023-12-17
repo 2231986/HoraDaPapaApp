@@ -31,7 +31,7 @@ public class Route
         return ApiPath(context) + "plates"; //GET - Obtem todos os pratos
     }
     public static String RequestPlate(Context context, int mealID, int plateID){
-        String endpoint = ApiPath(context) + "meals/{0}/plate/{1}";
+        String endpoint = ApiPath(context) + "requests/meal/{0}/plate/{1}";
         return MessageFormat.format(endpoint, mealID + "", plateID + ""); //POST - Adiciona um prato à refeição
     }
     public static String MealInvoice(Context context, int mealID){

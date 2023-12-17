@@ -40,38 +40,29 @@ public class JsonParser {
         return tokenValue;
     }
 
-    public static ArrayList<Plate> parseJsonPlates(JSONArray jsonList) {
-        ArrayList<Plate> returnList = new ArrayList<>();
-
+    public static <T> T parseGenericObject(JSONObject jsonObject, Class<T> type) {
         try {
-            for (int i = 0; i < jsonList.length(); i++) {
-                JSONObject obj = jsonList.getJSONObject(i);
-
-                Plate item = new Plate(obj);
-
-                returnList.add(item);
-            }
-
-        } catch (JSONException e) {
+            return type.getDeclaredConstructor(JSONObject.class).newInstance(jsonObject);
+        } catch (ReflectiveOperationException e) {
             e.printStackTrace();
         }
 
-        return returnList;
+        return null;
     }
 
-    public static ArrayList<Dinner> parseJsonDinners(JSONArray jsonList) {
-        ArrayList<Dinner> returnList = new ArrayList<>();
+    public static <T> ArrayList<T> parseGenericList(JSONArray jsonList, Class<T> type) {
+        ArrayList<T> returnList = new ArrayList<>();
 
         try {
             for (int i = 0; i < jsonList.length(); i++) {
                 JSONObject obj = jsonList.getJSONObject(i);
 
-                Dinner item = new Dinner(obj);
+                T item = type.getDeclaredConstructor(JSONObject.class).newInstance(obj);
 
                 returnList.add(item);
             }
 
-        } catch (JSONException e) {
+        } catch (JSONException | ReflectiveOperationException e) {
             e.printStackTrace();
         }
 
