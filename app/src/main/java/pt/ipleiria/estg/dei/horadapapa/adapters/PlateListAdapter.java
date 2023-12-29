@@ -1,6 +1,6 @@
 package pt.ipleiria.estg.dei.horadapapa.adapters;
 
-import static pt.ipleiria.estg.dei.horadapapa.PlateDetailsActivity.ID_PLATE;
+import static pt.ipleiria.estg.dei.horadapapa.activities.PlateDetailsActivity.ID_PLATE;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
-import pt.ipleiria.estg.dei.horadapapa.PlateDetailsActivity;
+import pt.ipleiria.estg.dei.horadapapa.activities.PlateDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;

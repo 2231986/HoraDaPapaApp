@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa;
+package pt.ipleiria.estg.dei.horadapapa.activities;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
+import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.adapters.DinnerSpinnerAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Dinner;
@@ -78,7 +79,7 @@ public class TableListFragment extends Fragment implements DinnersListener {
                 Singleton.getInstance(getContext()).requestDinnerStart(getContext(), selectedDinnerId);
 
                 // MealListFragment é instanciada e guardada como fragment b (destino)
-                MealListFragment fragmentB = new MealListFragment();
+                PlateListFragment fragmentB = new PlateListFragment();
 
                 // Chamada do Fragment manager
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();

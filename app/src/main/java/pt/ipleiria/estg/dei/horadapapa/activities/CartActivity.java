@@ -1,10 +1,13 @@
-package pt.ipleiria.estg.dei.horadapapa;
+package pt.ipleiria.estg.dei.horadapapa.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import pt.ipleiria.estg.dei.horadapapa.R;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
 
 public class CartActivity extends AppCompatActivity {
 

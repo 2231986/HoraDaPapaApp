@@ -18,24 +18,24 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".InvoiceDetailsActivity"
+            android:name=".activities.invoice.InvoiceDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".PlateDetailsActivity"
+            android:name=".activities.PlateDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".CartActivity"
+            android:name=".activities.CartActivity"
             android:exported="false" /> <!-- Clear texttraffic não vem de origem está aqui para permitir pedidos HTTP -->
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activities.extra.SignUpActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".AppConfingActivity"
+            android:name=".activities.extra.AppConfingActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".MenuActivity"
+            android:name=".activities.extra.MenuActivity"
             android:exported="false"
             android:theme="@style/Theme.HoraDaPapaApp.NoActionBar" />
         <activity

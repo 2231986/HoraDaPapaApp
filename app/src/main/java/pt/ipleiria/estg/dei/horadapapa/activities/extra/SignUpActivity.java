@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa;
+package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
 import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 
@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 import pt.ipleiria.estg.dei.horadapapa.models.User;
 import pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper;

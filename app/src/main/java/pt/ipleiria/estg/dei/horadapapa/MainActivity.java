@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.AppConfingActivity;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.SignUpActivity;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 import pt.ipleiria.estg.dei.horadapapa.models.User;
 import pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper;

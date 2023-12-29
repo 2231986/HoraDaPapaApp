@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa;
+package pt.ipleiria.estg.dei.horadapapa.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 import pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper;

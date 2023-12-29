@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa;
+package pt.ipleiria.estg.dei.horadapapa.activities.invoice;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import pt.ipleiria.estg.dei.horadapapa.R;
 
 /**
  * A simple {@link Fragment} subclass.

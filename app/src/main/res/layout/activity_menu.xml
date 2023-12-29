@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuActivity"
+    tools:context=".activities.extra.MenuActivity"
     android:id="@+id/drawerLayout"
     tools:openDrawer="start"
     android:fitsSystemWindows="true"
     >
 
-    <include layout="@layout/app_bar_main"
+    <include layout="@layout/extra_app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -20,7 +20,7 @@
         android:id="@+id/navView"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
+        app:headerLayout="@layout/extra_nav_header_main"
         app:menu="@menu/menu_main" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

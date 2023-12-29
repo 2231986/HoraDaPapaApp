@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa;
+package pt.ipleiria.estg.dei.horadapapa.activities;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.adapters.PlateListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;

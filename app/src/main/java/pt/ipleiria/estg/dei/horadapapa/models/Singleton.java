@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import pt.ipleiria.estg.dei.horadapapa.MenuActivity;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
@@ -45,7 +45,7 @@ public class Singleton
     private static int currentMealID = 0; //Guarda o ID da Meal atual
 
     private PlatesListener platesListener;
-    public void setProdutoListener(PlatesListener platesListener) {
+    public void setPlatesListener(PlatesListener platesListener) {
         this.platesListener = platesListener;
     }
 
@@ -186,6 +186,55 @@ public class Singleton
                 public void onResponse(JSONArray response) {
                     ArrayList<Plate> plates = JsonParser.parseGenericList(response, Plate.class);
                     myDatabase.setPlates(plates);
+
+                    if (platesListener != null) {
+                        platesListener.onRefreshPlates(plates);
+                    } else {
+                        BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    BetterToast(context, "Ocorreu um erro!");
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+
+            volleyQueue.add(jsonArrayRequest);
+        }
+    }
+
+    public void requestMealRequests(Context context) {
+        if (currentMealID == 0) {
+            BetterToast(context, "refeição inválida!");
+            return;
+        }
+
+        if(!isConnected(context)){
+            BetterToast(context,"Sem internet!");
+        }else {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.MealRequests(context, currentMealID), null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    ArrayList<PlateRequest> requests = JsonParser.parseGenericList(response, PlateRequest.class);
+                    ArrayList<Plate> plates = new ArrayList<>();
+
+                    for (PlateRequest request : requests) {
+                        int plateId = request.getPlateId();
+                        Plate plate = dbGetPlate(plateId);
+                        plates.add(plate);
+                    }
 
                     if (platesListener != null) {
                         platesListener.onRefreshPlates(plates);

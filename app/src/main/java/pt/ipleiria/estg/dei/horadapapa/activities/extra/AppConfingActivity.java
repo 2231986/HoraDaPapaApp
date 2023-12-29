@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa;
+package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.MqttHandler;
 import pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper;

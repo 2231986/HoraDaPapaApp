@@ -15,6 +15,11 @@
             />
 
         <item
+            android:id="@+id/navPlate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="Plates" />
+        <item
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:title="@string/navMeal"
@@ -26,6 +31,11 @@
             android:layout_height="wrap_content"
             android:icon="@drawable/ic_favourite_empty"
             android:title="@string/navFavourites" />
+        <item
+            android:id="@+id/navReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="Reviews" />
         <item
             android:id="@+id/navInvoice"
             android:layout_width="wrap_content"

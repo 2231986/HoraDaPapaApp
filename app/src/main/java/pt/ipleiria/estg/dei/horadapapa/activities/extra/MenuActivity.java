@@ -1,4 +1,9 @@
-package pt.ipleiria.estg.dei.horadapapa;
+package pt.ipleiria.estg.dei.horadapapa.activities.extra;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -9,19 +14,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
 import com.google.android.material.navigation.NavigationView;
 
-import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
+import pt.ipleiria.estg.dei.horadapapa.R;
+import pt.ipleiria.estg.dei.horadapapa.activities.FavouritesListFragment;
+import pt.ipleiria.estg.dei.horadapapa.activities.MealListFragment;
+import pt.ipleiria.estg.dei.horadapapa.activities.PlateListFragment;
+import pt.ipleiria.estg.dei.horadapapa.activities.ReviewListFragment;
+import pt.ipleiria.estg.dei.horadapapa.activities.TableListFragment;
+import pt.ipleiria.estg.dei.horadapapa.activities.invoice.InvoicesListFragment;
 
 public class MenuActivity extends AppCompatActivity {
 
-    public static final int ADD=100, EDIT= 200, DELETE= 300;
+    public static final int ADD = 100, EDIT = 200, DELETE = 300;
 
 
     private DrawerLayout drawerLayout;
@@ -52,47 +57,30 @@ public class MenuActivity extends AppCompatActivity {
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
-        if (item.getItemId()==R.id.navMeal){
-            //Intent intent = new Intent(this, MealListActivity.class);
-            //startActivity(intent);
-            //finish();
 
+        if (item.getItemId() == R.id.navMeal) {
             fragment = new MealListFragment();
             setTitle(item.getTitle());
-        }
-        else if(item.getItemId()== R.id.navFavourites) {
+        } else if (item.getItemId() == R.id.navPlate) {
+            fragment = new PlateListFragment();
+            setTitle(item.getTitle());
+        } else if (item.getItemId() == R.id.navReview) {
+            fragment = new ReviewListFragment();
+            setTitle(item.getTitle());
+        } else if (item.getItemId() == R.id.navFavourites) {
             fragment = new FavouritesListFragment();
             setTitle(item.getTitle());
-        }
-        else if(item.getItemId()== R.id.navInvoice) {
+        } else if (item.getItemId() == R.id.navInvoice) {
             fragment = new InvoicesListFragment();
             setTitle(item.getTitle());
-        }
-        else if (item.getItemId()== R.id.navTable) {
-
-            /*Intent intent = new Intent(this, TableActivity.class);
-            startActivity(intent);
-            finish();*/
-
+        } else if (item.getItemId() == R.id.navTable) {
             fragment = new TableListFragment();
             setTitle(item.getTitle());
-
-            /*
-            MESMO METODO QUE EM MEAL_LIST_FRAGMENT, também faz o mesmo que acima
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.contentLayout, new TableListFragment()) // Make sure R.id.fragment_container is the correct container ID
-                    .addToBackStack(null) // Optionally, add to the back stack if needed
-                    .commit();
-
-            */
-        }
-
-        else if(item.getItemId()==R.id.navEmail) {
+        } else if (item.getItemId() == R.id.navEmail) {
             enviarEmail();
         }
 
-        if (fragment != null){
+        if (fragment != null) {
             fragmentManager.beginTransaction().replace(R.id.contentLayout, fragment).commit();
         }
 
@@ -100,7 +88,7 @@ public class MenuActivity extends AppCompatActivity {
         return true;
     }
 
-    public void enviarEmail(){
+    public void enviarEmail() {
         String subject = "PSI 2023/2024";
         String message = "Olá" + email + ", isto é uma mensagem de teste, enviado na app";
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -109,15 +97,10 @@ public class MenuActivity extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, message);
 
-        if (intent.resolveActivity(getPackageManager()) != null){
+        if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
-        }else {
+        } else {
             Toast.makeText(this, "Erro no email", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void goToCartView(View view) {
-        Intent intent = new Intent(getApplicationContext(), CartActivity.class);
-        startActivity(intent);
     }
 }
