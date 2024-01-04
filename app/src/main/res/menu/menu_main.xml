@@ -18,7 +18,9 @@
             android:id="@+id/navPlate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:title="Plates" />
+            android:title="Plates"
+            android:icon="@drawable/ic_plate"
+            />
         <item
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +37,8 @@
             android:id="@+id/navReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:title="Reviews" />
+            android:title="Reviews"
+            android:icon="@drawable/ic_review" />
         <item
             android:id="@+id/navInvoice"
             android:layout_width="wrap_content"
