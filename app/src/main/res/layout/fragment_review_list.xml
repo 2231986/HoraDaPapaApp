@@ -3,29 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MealListFragment">
+    tools:context=".activities.ReviewListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
-
-    <ListView
-        android:id="@+id/lvPlates"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true"
-        />
+        android:orientation="vertical">
 
+        <View
+            android:id="@+id/view9"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp" />
 
-    <!--
-        <Button
-            android:id="@+id/button4"
+        <TextView
+            android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
-            android:layout_gravity="bottom"
-            android:onClick="goToCartView"/>
-            -->
+            android:layout_gravity="center"
+            android:text="@string/tv_choose_plate"
+            android:textStyle="bold" />
 
-    </FrameLayout>
+        <View
+            android:id="@+id/view7"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_plate"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinner_SelectTable"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:spinnerMode="dropdown" />
+
+        <View
+            android:id="@+id/view11"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <Button
+            android:id="@+id/btn_StartMeal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/review_btn" />
+
+
+    </LinearLayout>
+
+</FrameLayout>

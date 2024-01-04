@@ -62,7 +62,7 @@ public class MenuActivity extends AppCompatActivity {
             fragment = new MealListFragment();
             setTitle(item.getTitle());
         } else if (item.getItemId() == R.id.navPlate) {
-            fragment = new PlateListFragment();
+            fragment = new ReviewListFragment();
             setTitle(item.getTitle());
         } else if (item.getItemId() == R.id.navReview) {
             fragment = new ReviewListFragment();
