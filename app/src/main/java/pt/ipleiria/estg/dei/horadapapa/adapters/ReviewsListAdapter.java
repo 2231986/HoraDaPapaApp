@@ -85,19 +85,20 @@ public class ReviewsListAdapter extends BaseAdapter {
 
     private class ViewHolderLista {
         private final TextView tvDesc;
-        private final TextView tvPrice;
+        private final TextView tvValue;
 
         public ViewHolderLista(View view) {
-            tvDesc = view.findViewById(R.id.textView2);
-            tvPrice = view.findViewById(R.id.textView3);
+            tvDesc = view.findViewById(R.id.textView12);
+            tvValue = view.findViewById(R.id.textView15);
             //imgCapa = view.findViewById(R.id.imageView);
 
         }
 
         public void update(Review review) {
             tvDesc.setText(review.getDescription());
-            tvPrice.setText(review.getValue());
-            Glide.with(context);
+            tvValue.setText(String.valueOf(review.getValue()));
+
+            //Glide.with(context);
                     //.load(plate.getImage())
                     //.placeholder(R.drawable.img)
                     //.diskCacheStrategy(DiskCacheStrategy.ALL)
