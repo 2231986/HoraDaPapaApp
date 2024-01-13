@@ -6,9 +6,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import pt.ipleiria.estg.dei.horadapapa.models.Dinner;
-import pt.ipleiria.estg.dei.horadapapa.models.Plate;
-
 public class JsonParser {
     private static JSONObject parseRequest(String response) {
         JSONObject jsonObject = null;

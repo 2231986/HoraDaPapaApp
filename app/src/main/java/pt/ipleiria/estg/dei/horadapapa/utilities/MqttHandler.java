@@ -14,8 +14,6 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
-
 public class MqttHandler {
 
     private static final String TAG = "MQTT: ";
