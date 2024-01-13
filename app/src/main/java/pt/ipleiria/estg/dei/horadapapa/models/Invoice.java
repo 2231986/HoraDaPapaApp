@@ -1,9 +1,12 @@
 package pt.ipleiria.estg.dei.horadapapa.models;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Meal {
+import java.util.ArrayList;
+
+public class Invoice {
     public int getId() {
         return id;
     }
@@ -12,31 +15,40 @@ public class Meal {
         this.id = id;
     }
 
-    public int getDinnerID() {
-        return dinnerID;
+    private int id;
+
+    public String getPrice() {
+        return price;
     }
 
-    public void setDinnerID(int dinnerID) {
-        this.dinnerID = dinnerID;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public boolean isCheckout() {
-        return checkout;
+    public ArrayList<PlateRequest> getPlateRequests() {
+        return PlateRequests;
     }
 
-    public void setCheckout(boolean checkout) {
-        this.checkout = checkout;
+    public void setPlateRequests(ArrayList<PlateRequest> plateRequests) {
+        PlateRequests = plateRequests;
     }
 
-    private int id, dinnerID;
-    private boolean checkout;
+    private String price;
+    private ArrayList<PlateRequest> PlateRequests;
 
-    public Meal(JSONObject jsonObject)
+    public Invoice(JSONObject jsonObject)
     {
         try {
             this.id = jsonObject.getInt("id");
-            this.dinnerID = jsonObject.getInt("id");
-            this.checkout = jsonObject.getBoolean("checkout");
+            this.price = jsonObject.getString("price");
+
+            JSONArray requestsArray = jsonObject.getJSONArray("requests");
+
+            for (int i = 0; i < requestsArray.length(); i++) {
+                JSONObject requestObject = requestsArray.getJSONObject(i);
+
+                this.PlateRequests.add(new PlateRequest(requestObject));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -1,8 +1,18 @@
 package pt.ipleiria.estg.dei.horadapapa.models;
 
+import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
+
 import android.content.Context;
 
+import com.android.volley.VolleyError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 
@@ -21,6 +31,39 @@ public class Route
         return  "http://" + ApiHost(context) + "/HoraDaPapa/backend/web/api/";
     }
 
+    public static Map<String, String> GetAuthorizationBearerHeader(Context context)
+    {
+        AppPreferences appPreferences = new AppPreferences(context);
+        String bearerToken = appPreferences.getToken();
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + bearerToken);
+
+        return headers;
+    }
+
+    public static void HandleApiError( Context context, VolleyError error)
+    {
+        if (error.networkResponse != null && error.networkResponse.data != null) {
+            try {
+                // Parse the error response JSON
+                String errorResponse = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                JSONObject errorJson = new JSONObject(errorResponse);
+
+                // Extract the error message from the JSON
+                String errorMessage = errorJson.optString("message", "Unknown Error");
+                BetterToast(context, errorMessage);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                BetterToast(context, "Error parsing JSON response");
+            }
+        } else {
+            // If networkResponse or data is null, display a generic error message
+            BetterToast(context, "Network error or no response");
+        }
+    }
+
     public static String UserLogin(Context context) {
         return ApiPath(context) + "user/login"; //GET - Faz login
     }
@@ -37,6 +80,23 @@ public class Route
     public static String MealInvoice(Context context, int mealID){
         String endpoint = ApiPath(context) + "meals/{0}/invoice";
         return MessageFormat.format(endpoint, mealID + ""); //POST - Obtem a fatura da meal
+    }
+    public static String Invoice(Context context) {
+        return Invoice(context, 0);
+    }
+    public static String Invoice(Context context, int invoiceID) {
+        String endpoint = "";
+
+        if (invoiceID == 0){
+            endpoint = ApiPath(context) + "invoices"; //GET - Obtem todas as faturas
+        }
+        else
+        {
+            endpoint = ApiPath(context) + "invoices/{0}";
+            endpoint = MessageFormat.format(endpoint, invoiceID + ""); //CRUD
+        }
+
+        return endpoint;
     }
     public static String MealRequests(Context context, int mealID){
         String endpoint = ApiPath(context) + "meals/{0}/requests";

@@ -1,40 +1,31 @@
-package pt.ipleiria.estg.dei.horadapapa.activities;
+package pt.ipleiria.estg.dei.horadapapa.activities.invoice;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SearchView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
-import pt.ipleiria.estg.dei.horadapapa.adapters.PlateListAdapter;
-import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
-import pt.ipleiria.estg.dei.horadapapa.models.Plate;
+import pt.ipleiria.estg.dei.horadapapa.adapters.InvoiceListAdapter;
+import pt.ipleiria.estg.dei.horadapapa.listeners.InvoicesListener;
+import pt.ipleiria.estg.dei.horadapapa.models.Invoice;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PlateListFragment#newInstance} factory method to
+ * Use the {@link InvoicesListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PlateListFragment extends Fragment implements PlatesListener {
+public class InvoicesListFragment extends Fragment implements InvoicesListener {
 
-    private SearchView searchView;
+    private ListView lvInvoices;
 
-
-    private ListView lvPlates;
-
-    public PlateListFragment() {
+    public InvoicesListFragment() {
         // Required empty public constructor
     }
 
@@ -42,52 +33,22 @@ public class PlateListFragment extends Fragment implements PlatesListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_plate_list, container, false);
-        setHasOptionsMenu(true);
-        Log.d("MealListFragment", "onCreateView called");
+        View view = inflater.inflate(R.layout.fragment_invoices_list, container, false);
 
-        lvPlates = view.findViewById(R.id.lvPlates);
-        Singleton.getInstance(getContext()).setPlatesListener(this);
-        Singleton.getInstance(getContext()).requestPlateGetAll(getContext());
+        //setHasOptionsMenu(true);
+
+        lvInvoices = view.findViewById(R.id.lvInvoices);
+        Singleton.getInstance(getContext()).setInvoicesListener(this);
+        Singleton.getInstance(getContext()).requestInvoiceGetAll(getContext());
 
         return view;
     }
 
     @Override
-    public void onRefreshPlates(ArrayList<Plate> list) {
+    public void onRefreshInvoices(ArrayList<Invoice> list) {
         if (list != null) {
-            lvPlates.setAdapter(new PlateListAdapter(getContext(), list));
+            lvInvoices.setAdapter(new InvoiceListAdapter(getContext(), list));
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
-        MenuItem itemPesquisa = menu.findItem(R.id.itemSearch);
-        searchView = (SearchView) itemPesquisa.getActionView();
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                // Call function from Singleton and pass the entered text
-                ArrayList<Plate> filteredPlates = Singleton.getInstance(getContext()).filterPlatesByContent(newText);
-
-                // Update your ListView with the filtered plates
-                if (filteredPlates != null) {
-                    lvPlates.setAdapter(new PlateListAdapter(getContext(), filteredPlates));
-                }
-                return false;
-            }
-        });
-
-
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
 }
