@@ -1,6 +1,6 @@
 package pt.ipleiria.estg.dei.horadapapa.adapters;
 
-import static pt.ipleiria.estg.dei.horadapapa.activities.PlateDetailsActivity.ID_PLATE;
+import static pt.ipleiria.estg.dei.horadapapa.activities.invoice.InvoiceDetailsActivity.ID_INVOICE;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,24 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
-import pt.ipleiria.estg.dei.horadapapa.activities.PlateDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.activities.invoice.InvoiceDetailsActivity;
-import pt.ipleiria.estg.dei.horadapapa.activities.invoice.InvoiceFragment;
 import pt.ipleiria.estg.dei.horadapapa.models.Invoice;
-import pt.ipleiria.estg.dei.horadapapa.models.Plate;
-import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
 public class InvoiceListAdapter extends BaseAdapter {
 
@@ -70,8 +59,8 @@ public class InvoiceListAdapter extends BaseAdapter {
 
         view.setOnClickListener(v -> {
             Toast.makeText(context, "Detalhe aberto!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(context, InvoiceFragment.class);
-            intent.putExtra(ID_PLATE, currentInvoice.getId());
+            Intent intent = new Intent(context, InvoiceDetailsActivity.class);
+            intent.putExtra(ID_INVOICE, currentInvoice.getId());
             context.startActivity(intent);
         });
 

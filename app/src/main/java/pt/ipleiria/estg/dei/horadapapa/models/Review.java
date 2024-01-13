@@ -8,7 +8,10 @@ import org.json.JSONObject;
 public class Review {
 
 
-    private int id, value;
+    private int id;
+    private int value;
+
+    private int plate_id;
     private String description;
 
     public Review(JSONObject jsonObject) {
@@ -23,14 +26,22 @@ public class Review {
 
     public Review(Cursor cursor) {
         this.id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+        this.plate_id = cursor.getInt(cursor.getColumnIndexOrThrow("plate_id"));
         this.description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
         this.value = cursor.getInt(cursor.getColumnIndexOrThrow("value"));
-
     }
 
     public int getId() {return id;}
 
     public void setId(int id) {this.id = id;}
+
+    public int getPlate_id() {
+        return plate_id;
+    }
+
+    public void setPlate_id(int plate_id) {
+        this.plate_id = plate_id;
+    }
 
     public int getValue() {return value;}
 

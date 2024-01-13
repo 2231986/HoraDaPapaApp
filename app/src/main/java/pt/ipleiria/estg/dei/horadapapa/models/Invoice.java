@@ -1,5 +1,7 @@
 package pt.ipleiria.estg.dei.horadapapa.models;
 
+import android.database.Cursor;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,16 +27,16 @@ public class Invoice {
         this.price = price;
     }
 
-    public ArrayList<PlateRequest> getPlateRequests() {
+    public ArrayList<InvoiceRequest> getPlateRequests() {
         return PlateRequests;
     }
 
-    public void setPlateRequests(ArrayList<PlateRequest> plateRequests) {
+    public void setPlateRequests(ArrayList<InvoiceRequest> plateRequests) {
         PlateRequests = plateRequests;
     }
 
     private String price;
-    private ArrayList<PlateRequest> PlateRequests;
+    private ArrayList<InvoiceRequest> PlateRequests;
 
     public Invoice(JSONObject jsonObject)
     {
@@ -47,10 +49,15 @@ public class Invoice {
             for (int i = 0; i < requestsArray.length(); i++) {
                 JSONObject requestObject = requestsArray.getJSONObject(i);
 
-                this.PlateRequests.add(new PlateRequest(requestObject));
+                this.PlateRequests.add(new InvoiceRequest(requestObject));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public Invoice(Cursor cursor) {
+        this.id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+        this.price = cursor.getString(cursor.getColumnIndexOrThrow("price"));
     }
 }

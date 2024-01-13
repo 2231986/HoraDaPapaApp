@@ -234,6 +234,9 @@ public class Singleton {
     public Plate dbGetPlate(int id) {
         return myDatabase.getPlate(id);
     }
+    public Invoice dbGetInvoice(int id) {
+        return myDatabase.getInvoices().get(id);
+    }
 
     /**
      * Pede um prato
@@ -323,15 +326,20 @@ public class Singleton {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
 
-            //TODO: Adicionar cache
+            ArrayList<Invoice> invoices = myDatabase.getInvoices();
 
+            if (invoicesListener != null) {
+                invoicesListener.onRefreshInvoices(invoices);
+            } else {
+                BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+            }
         } else {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateGetAll(context), null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.Invoice(context), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     ArrayList<Invoice> invoices = JsonParser.parseGenericList(response, Invoice.class);
 
-                    //TODO:Adicionar à bd para fazer cache
+                    myDatabase.setInvoices(invoices);
 
                     if (invoicesListener != null) {
                         invoicesListener.onRefreshInvoices(invoices);
