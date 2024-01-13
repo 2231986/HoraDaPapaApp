@@ -56,7 +56,7 @@ public class ReviewListFragment extends Fragment implements ReviewsListener {
     @Override
     public void onRefreshReviews(ArrayList<Review> list) {
         if (list != null) {
-            lvPlates.setAdapter(new ReviewsListAdapter(getContext(), list));
+            lvReviews.setAdapter(new ReviewsListAdapter(getContext(), list));
         }
     }
 
@@ -84,7 +84,7 @@ public class ReviewListFragment extends Fragment implements ReviewsListener {
 
                 // Update your ListView with the filtered plates
                 if (filteredPlates != null) {
-                    lvPlates.setAdapter(new PlateListAdapter(getContext(), filteredPlates));
+                    lvReviews.setAdapter(new PlateListAdapter(getContext(), filteredPlates));
                 }
                 return false;
             }
