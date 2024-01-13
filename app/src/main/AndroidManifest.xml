@@ -16,13 +16,17 @@
         android:theme="@style/Theme.HoraDaPapaApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".activities.extra.ReviewDetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".activities.invoice.InvoiceDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".activities.PlateDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".activities.CartActivity"
             android:exported="false" /> <!-- Clear texttraffic não vem de origem está aqui para permitir pedidos HTTP -->
