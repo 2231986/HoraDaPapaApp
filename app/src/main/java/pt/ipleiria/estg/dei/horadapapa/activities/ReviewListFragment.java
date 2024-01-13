@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.horadapapa.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +15,13 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.adapters.PlateListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.adapters.ReviewsListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.ReviewsListener;
@@ -34,6 +39,9 @@ public class ReviewListFragment extends Fragment implements ReviewsListener {
     private SearchView searchView;
     private ListView lvReviews;
 
+    private FloatingActionButton fabadd;
+
+
     public ReviewListFragment() {
         // Required empty public constructor
     }
@@ -50,6 +58,14 @@ public class ReviewListFragment extends Fragment implements ReviewsListener {
         Singleton.getInstance(getContext()).setReviewsListener(this);
         Singleton.getInstance(getContext()).requestReviewGetAll(getContext());
 
+        fabadd = view.findViewById(R.id.fabReviewAdd);
+        fabadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ReviewDetailsActivity.class);
+                startActivityForResult(intent, MenuActivity.ADD);
+            }
+        });
         return view;
     }
 
