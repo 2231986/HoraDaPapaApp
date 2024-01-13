@@ -18,6 +18,10 @@ public class DB_Helper extends SQLiteOpenHelper {
     private static final String TABLE_PLATE = "plate";
     private static final String[] TABLE_PLATE_FIELDS = {"id", "title", "description", "price", "image"};
 
+    private static final String TABLE_REVIEW = "review";
+
+    private static final String [] TABLE_REVIEW_FIELDS = {"id", "description","value"};
+
 
     public DB_Helper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -96,5 +100,39 @@ public class DB_Helper extends SQLiteOpenHelper {
         }
 
         return plate;
+    }
+
+    public ArrayList<Review> getReviews() {
+        ArrayList<Review> reviews = new ArrayList<>();
+
+        Cursor cursor = db.query(TABLE_REVIEW, TABLE_REVIEW_FIELDS,
+                null, null, null, null, "id");
+
+        if(cursor.moveToFirst()){
+            do {
+                Review review = new Review(cursor);
+
+
+                reviews.add(review);
+
+            }while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return reviews;
+    }
+
+    public void setReviews(ArrayList<Review> reviews) {
+        //db.delete(TABLE_REVIEW, null, null);
+
+        for(Review review : reviews)
+        {
+            ContentValues values = new ContentValues();
+            values.put("id", review.getId());
+            values.put("description", review.getDescription());
+            values.put("value", review.getValue());
+            db.insert(TABLE_REVIEW, null, values);
+        }
     }
 }

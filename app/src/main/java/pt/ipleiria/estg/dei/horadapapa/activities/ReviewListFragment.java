@@ -18,8 +18,10 @@ import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.adapters.PlateListAdapter;
-import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
+import pt.ipleiria.estg.dei.horadapapa.adapters.ReviewsListAdapter;
+import pt.ipleiria.estg.dei.horadapapa.listeners.ReviewsListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
+import pt.ipleiria.estg.dei.horadapapa.models.Review;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
 /**
@@ -27,12 +29,10 @@ import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
  * Use the {@link ReviewListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ReviewListFragment extends Fragment implements PlatesListener {
+public class ReviewListFragment extends Fragment implements ReviewsListener {
 
     private SearchView searchView;
-
-
-    private ListView lvPlates;
+    private ListView lvReviews;
 
     public ReviewListFragment() {
         // Required empty public constructor
@@ -42,23 +42,27 @@ public class ReviewListFragment extends Fragment implements PlatesListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_plate_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_review_list, container, false);
         setHasOptionsMenu(true);
-        Log.d("MealListFragment", "onCreateView called");
+        Log.d("ReviewListFragment", "onCreateView called");
 
-        lvPlates = view.findViewById(R.id.lvPlates);
-        Singleton.getInstance(getContext()).setPlatesListener(this);
-        Singleton.getInstance(getContext()).requestPlateGetAll(getContext());
+        lvReviews = view.findViewById(R.id.lvReviews);
+        Singleton.getInstance(getContext()).setReviewsListener(this);
+        Singleton.getInstance(getContext()).requestReviewGetAll(getContext());
 
         return view;
     }
 
     @Override
-    public void onRefreshPlates(ArrayList<Plate> list) {
+    public void onRefreshReviews(ArrayList<Review> list) {
         if (list != null) {
-            lvPlates.setAdapter(new PlateListAdapter(getContext(), list));
+            lvPlates.setAdapter(new ReviewsListAdapter(getContext(), list));
         }
     }
+
+
+
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {

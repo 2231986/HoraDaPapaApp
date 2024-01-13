@@ -29,10 +29,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import pt.ipleiria.estg.dei.horadapapa.activities.ReviewListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
+import pt.ipleiria.estg.dei.horadapapa.listeners.ReviewsListener;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.JsonParser;
 
@@ -58,6 +60,12 @@ public class Singleton
     public void setDinnersListener(DinnersListener dinnersListener) {
         this.dinnersListener = dinnersListener;
     }
+
+    private ReviewsListener reviewsListener;
+    public void setReviewsListener(ReviewsListener reviewsListener) {
+        this.reviewsListener = reviewsListener;
+    }
+
 
     private Singleton(Context context)
     {
@@ -509,5 +517,50 @@ public class Singleton
         }
 
         return filteredPlates;
+    }
+
+    public void requestReviewGetAll(Context context) {
+        if(!isConnected(context)){
+            BetterToast(context,"Sem internet!");
+
+            ArrayList<Review> reviews = myDatabase.getReviews();
+
+            if (reviewsListener != null){
+                reviewsListener.onRefreshReviews(reviews);
+            }else{
+                BetterToast(context,"Ocorreu um erro ao colocar no Listener!");
+            }
+        }else {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.Review(context), null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    ArrayList<Review> reviews = JsonParser.parseGenericList(response, Review.class);
+                    myDatabase.setReviews(reviews);
+
+                    if (reviewsListener != null) {
+                        reviewsListener.onRefreshReviews(reviews);
+                    } else {
+                        BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    BetterToast(context, "Ocorreu um erro!");
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+            volleyQueue.add(jsonArrayRequest);
+        }
     }
 }

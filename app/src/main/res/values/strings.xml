@@ -39,4 +39,7 @@
     <string name="txt_StartMeal">Start Meal</string>
     <string name="tv_StartMeal">Start Meal</string>
     <string name="btt_StartMeal">Start Meal</string>
+    <string name="tvReview_ID">ID</string>
+    <string name="tvReviewDesc">Description</string>
+    <string name="tvReviewValue">Value</string>
 </resources>
