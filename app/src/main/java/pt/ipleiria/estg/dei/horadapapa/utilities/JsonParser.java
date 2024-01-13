@@ -1,5 +1,7 @@
 package pt.ipleiria.estg.dei.horadapapa.utilities;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,6 +63,7 @@ public class JsonParser {
 
         } catch (JSONException | ReflectiveOperationException e) {
             e.printStackTrace();
+            Log.e("JsonParser", "Error: parseGenericList", e);
         }
 
         return returnList;

@@ -419,16 +419,37 @@ public class Singleton {
     public void requestFavoritesGetAll(Context context) {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
+
+            ArrayList<Plate> plates = myDatabase.getFavorites();
+
+            if (favoritesListener != null) {
+                favoritesListener.onRefreshFavorites(plates);
+            } else {
+                BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+            }
         } else {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateFavorite(context), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    ArrayList<Plate> plates = JsonParser.parseGenericList(response, Plate.class);
+                    ArrayList<Favorite> favorites = JsonParser.parseGenericList(response, Favorite.class);
 
-                    if (plates != null) {
-                        favoritesListener.onRefreshFavorites(plates);
-                    } else {
-                        BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+                    myDatabase.setFavorites(favorites);
+
+                    if (favorites.size() > 0)
+                    {
+                        ArrayList<Plate> plates = myDatabase.getFavorites();
+
+                        if (plates.size() > 0) {
+                            favoritesListener.onRefreshFavorites(plates);
+                        }
+                        else
+                        {
+                            BetterToast(context, "Os pratos ainda não foram carregados!");
+                        }
+                    }
+                    else
+                    {
+                        BetterToast(context, "Sem favoritos!");
                     }
                 }
             }, error -> Route.HandleApiError(context, error)) {

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class DB_Helper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "horadapapa";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String TABLE_PLATE = "plate";
     private static final String[] TABLE_PLATE_FIELDS = {"id", "title", "description", "price", "image"};
     private static final String TABLE_INVOICE = "invoice";
@@ -20,6 +20,9 @@ public class DB_Helper extends SQLiteOpenHelper {
     private static final String[] TABLE_INVOICE_REQUESTS_FIELDS = {"id", "invoice_id", "plate_id"};
     private static final String TABLE_REVIEW = "review";
     private static final String[] TABLE_REVIEW_FIELDS = {"id", "plate_id", "description", "value"};
+    private static final String TABLE_FAVORITES = "favorites";
+    private static final String[] TABLE_FAVORITES_FIELDS = {"id", "plate_id"};
+
     private final SQLiteDatabase db;
 
 
@@ -34,6 +37,7 @@ public class DB_Helper extends SQLiteOpenHelper {
         createTableInvoices(db);
         createTableInvoiceRequests(db);
         createTableReviews(db);
+        createTableFavorites(db);
     }
 
     private void createTablePlates(SQLiteDatabase db) {
@@ -70,12 +74,20 @@ public class DB_Helper extends SQLiteOpenHelper {
         db.execSQL(command);
     }
 
+    private void createTableFavorites(SQLiteDatabase db) {
+        String command = "CREATE TABLE " + TABLE_FAVORITES + " (" +
+                "id INTEGER PRIMARY KEY, " +
+                "plate_id INTEGER NOT NULL);";
+        db.execSQL(command);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLATE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVOICE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVOICE_REQUESTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REVIEW);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
         onCreate(db);
     }
 
@@ -197,7 +209,6 @@ public class DB_Helper extends SQLiteOpenHelper {
         }
     }
 
-
     public Plate getPlate(int id) {
         Plate plate = null;
 
@@ -244,6 +255,47 @@ public class DB_Helper extends SQLiteOpenHelper {
             values.put("description", review.getDescription());
             values.put("value", review.getValue());
             db.insert(TABLE_REVIEW, null, values);
+        }
+    }
+
+    public ArrayList<Plate> getFavorites() {
+        ArrayList<Favorite> favorites = new ArrayList<>();
+
+        Cursor cursor = db.query(TABLE_FAVORITES, TABLE_FAVORITES_FIELDS,
+                null, null, null, null, "id");
+
+        if (cursor.moveToFirst()) {
+            do {
+                Favorite favorite = new Favorite(cursor);
+
+                favorites.add(favorite);
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        ArrayList<Plate> plates = new ArrayList<>();
+
+        for (Favorite favorite: favorites) {
+            Plate plate = getPlate(favorite.getPlate_id());
+
+            if (plate != null){
+                plates.add(plate);
+            }
+        }
+
+        return plates;
+    }
+
+    public void setFavorites(ArrayList<Favorite> favorites) {
+        db.delete(TABLE_FAVORITES, null, null);
+
+        for (Favorite favorite : favorites) {
+            ContentValues values = new ContentValues();
+            values.put("id", favorite.getId());
+            values.put("plate_id", favorite.getPlate_id());
+            db.insert(TABLE_FAVORITES, null, values);
         }
     }
 }
