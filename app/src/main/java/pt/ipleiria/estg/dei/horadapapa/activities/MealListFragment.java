@@ -10,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
+import pt.ipleiria.estg.dei.horadapapa.MainActivity;
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.adapters.PlateListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
@@ -42,11 +46,20 @@ public class MealListFragment extends Fragment implements PlatesListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_plate_list, container, false);
+        View view = inflater.inflate(R.layout.activity_cart, container, false);
         setHasOptionsMenu(true);
-        Log.d("MealListFragment", "onCreateView called");
 
-        lvPlates = view.findViewById(R.id.lvPlates);
+        FloatingActionButton fab = view.findViewById(R.id.btnCartPay);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Singleton.getInstance(getContext()).requestMealInvoice(getContext());
+
+                Toast.makeText(getContext(), "Fatura Criada", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        lvPlates = view.findViewById(R.id.lvCartPlates);
         Singleton.getInstance(getContext()).setPlatesListener(this);
         Singleton.getInstance(getContext()).requestMealRequests(getContext());
 

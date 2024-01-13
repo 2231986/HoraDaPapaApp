@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -320,6 +321,62 @@ public class Singleton
                         // TODO: Implement response
                     },
                     error -> BetterToast(context, "Ocorreu um erro!")) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    String bearerToken = appPreferences.getToken();
+
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                    return headers;
+                }
+            };
+
+            volleyQueue.add(jsonObjectRequest);
+        }
+    }
+
+    public void requestMealInvoice(Context context) {
+        if (currentMealID == 0) {
+            BetterToast(context, "refeição inválida!");
+            return;
+        }
+
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+        } else {
+            JSONObject requestBody = new JSONObject();
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    Route.MealInvoice(context, currentMealID),
+                    requestBody,
+                    response -> {
+                        Toast.makeText(context, "O pedido foi feito!", Toast.LENGTH_SHORT).show();
+                        // TODO: Implement response
+                    },
+                    error -> {
+                        // Handle error response
+
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            try {
+                                // Parse the error response JSON
+                                String errorResponse = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                                JSONObject errorJson = new JSONObject(errorResponse);
+
+                                // Extract the error message from the JSON
+                                String errorMessage = errorJson.optString("message", "Unknown Error");
+                                BetterToast(context, errorMessage);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                BetterToast(context, "Error parsing JSON response");
+                            }
+                        } else {
+                            // If networkResponse or data is null, display a generic error message
+                            BetterToast(context, "Network error or no response");
+                        }
+                    }) {
                 @Override
                 public Map<String, String> getHeaders() {
                     AppPreferences appPreferences = new AppPreferences(context);

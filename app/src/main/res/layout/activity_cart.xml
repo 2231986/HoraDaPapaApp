@@ -7,14 +7,21 @@
     tools:context=".activities.CartActivity"
     android:orientation="vertical">
 
-    <ListView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:onClick="Purchase"
-        android:text="@string/Purchase" />
+        <ListView
+            android:id="@+id/lvCartPlates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnCartPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:clickable="true"
+            android:src="@android:drawable/ic_input_add" />
+    </FrameLayout>
 </LinearLayout>
