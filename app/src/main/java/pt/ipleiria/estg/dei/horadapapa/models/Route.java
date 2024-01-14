@@ -161,6 +161,7 @@ public class Route
 
         if (reviewID == 0){
             endpoint = ApiPath(context) + "reviews"; //GET - Obtem todos as mesas
+            
         }
         else
         {

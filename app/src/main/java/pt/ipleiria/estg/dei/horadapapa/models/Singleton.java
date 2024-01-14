@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -569,4 +570,67 @@ public class Singleton {
             volleyQueue.add(jsonArrayRequest);
         }
     }
+
+    public void requestReviewAdd(Context context, int plate_id, int value, String description) {
+
+        // Log the received values
+        Log.d("ReviewDetailsActivity", "Plate ID: " + plate_id);
+        Log.d("ReviewDetailsActivity", "Rating: " + value);
+        Log.d("ReviewDetailsActivity", "Description: " + description);
+
+        if (plate_id == 0) {
+            BetterToast(context, "Prato inválido!");
+            return;
+        }
+
+        if (description == "") {
+            BetterToast(context, "Descrição vazia!");
+            return;
+        }
+
+        if (value == 0) {
+            BetterToast(context, "Rating inválido!");
+            return;
+        }
+
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+        } else {
+            JSONObject requestBody = new JSONObject();
+
+            try {
+                if (plate_id > 0) {
+                    requestBody.put("plate_id", plate_id);
+                }
+                if (value > 0) {
+                    requestBody.put("value", value);
+                }
+                if (description != null && !description.isEmpty()) {
+                    requestBody.put("description", description);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    Route.Review(context),
+                    requestBody,
+                    response -> {
+                        Toast.makeText(context, "Your review was submitted!!", Toast.LENGTH_SHORT).show();
+                        // TODO: Implement response
+                    },
+                    error -> Route.HandleApiError(context, error)) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    return Route.GetAuthorizationBearerHeader(context);
+                }
+            };
+
+            volleyQueue.add(jsonObjectRequest);
+        }
+    }
+
+
+
 }

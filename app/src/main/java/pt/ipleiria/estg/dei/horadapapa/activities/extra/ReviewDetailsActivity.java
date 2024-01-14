@@ -1,5 +1,7 @@
 package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -7,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,6 +29,11 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
     PlateSpinnerAdapter spinnerAdapter;
 
     Plate selectedPlate;
+
+    private EditText txtDescription;
+
+    private RatingBar stars;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,19 +62,49 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         Singleton.getInstance(getApplicationContext()).setPlatesListener(this);
         Singleton.getInstance(getApplicationContext()).requestPlateGetAll(getApplicationContext());
 
-        /*Button btnStartMeal = view.findViewById(R.id.btn_StartMeal);
-        btnStartMeal.setOnClickListener(v -> {
-            // Check if a dinner is selected
-            if (selectedDinner != null) {
+
+
+
+
+
+
+        /*EditText editTextDescription = findViewById(R.id.editTextDescription);
+        String description = editTextDescription.getText().toString();
+
+        RatingBar ratingBar = findViewById(R.id.ratingBar);
+        int value = (int) ratingBar.getRating();*/
+
+
+
+        Button btnStartReview = findViewById(R.id.btnSubmitReview);
+        btnStartReview.setOnClickListener(v -> {
+            // Check if a plate is selected
+            if (selectedPlate != null) {
                 // Use selectedDinner.getId() or any other relevant method
-                int selectedDinnerId = selectedDinner.getId();
+                int selectedPlateId = selectedPlate.getId();
+
+                //Descriçao
+                txtDescription = findViewById(R.id.editTextDescription);
+                String description = txtDescription.getText().toString();
+
+                //Rating
+                stars = findViewById(R.id.ratingBar);
+                // Get the float value from the RatingBar
+                float rating = stars.getRating();
+                // Convert the float rating to an integer using Math.round()
+                int value = Math.round(rating);
+
+
+                //Faz um request à API para guardar review
+                //Singleton.getInstance(getContext()).requestReviewAdd(getContext(), selectedPlateId);
+
+                Singleton.getInstance(getApplicationContext()).requestReviewAdd(this, selectedPlateId, value, description);
+
 
                 // Perform actions with the selected dinner ID
-                Toast.makeText(getContext(), "Selected Dinner ID: " + selectedDinnerId, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Review for " + selectedPlateId + " sent!", Toast.LENGTH_SHORT).show();
 
-                //Faz um request à API para começar a refeição
-                Singleton.getInstance(getContext()).requestDinnerStart(getContext(), selectedDinnerId);
-
+                /*
                 // MealListFragment é instanciada e guardada como fragment b (destino)
                 PlateListFragment fragmentB = new PlateListFragment();
 
@@ -77,10 +116,12 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
                         .replace(R.id.contentLayout, fragmentB) // É aqui que se dá a substituição
                         .addToBackStack(null) // Opcional: adiciona a transição em memória
                         .commit();
+
+                 */
             } else {
-                Toast.makeText(getContext(), "Please select a dinner before starting a meal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please select a plate before sending a review!", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
     }
 
     @Override
