@@ -9,7 +9,7 @@
 
     <!-- Spinner for plate selection -->
     <Spinner
-        android:id="@+id/spinnerPlate"
+        android:id="@+id/reviewSpinnerPlate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -20,7 +20,7 @@
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerPlate"
+        android:layout_below="@id/reviewSpinnerPlate"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:hint="Enter your review description..."
