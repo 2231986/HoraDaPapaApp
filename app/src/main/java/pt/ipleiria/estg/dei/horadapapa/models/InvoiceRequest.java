@@ -22,25 +22,17 @@ public class InvoiceRequest {
         return plate_id;
     }
 
-    public void setPlate_id(int plate_id) {
-        this.plate_id = plate_id;
+    public int getMeal_id() {
+        return meal_id;
     }
 
-    public int getInvoice_id() {
-        return invoice_id;
-    }
+    int meal_id;
 
-    public void setInvoice_id(int invoice_id) {
-        this.invoice_id = invoice_id;
-    }
-
-    int invoice_id;
-
-    public InvoiceRequest(JSONObject jsonObject) {
+    public InvoiceRequest(int mealID, JSONObject jsonObject) {
         try {
             this.id = jsonObject.getInt("id");
             this.plate_id = jsonObject.getInt("plate_id");
-            this.invoice_id = jsonObject.getInt("invoice_id");
+            this.meal_id = mealID;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -49,6 +41,6 @@ public class InvoiceRequest {
     public InvoiceRequest(Cursor cursor) {
         this.id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
         this.plate_id = cursor.getInt(cursor.getColumnIndexOrThrow("plate_id"));
-        this.invoice_id = cursor.getInt(cursor.getColumnIndexOrThrow("invoice_id"));
+        this.meal_id = cursor.getInt(cursor.getColumnIndexOrThrow("meal_id"));
     }
 }

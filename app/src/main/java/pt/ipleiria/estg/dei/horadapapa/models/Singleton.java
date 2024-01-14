@@ -235,7 +235,14 @@ public class Singleton {
         return myDatabase.getPlate(id);
     }
     public Invoice dbGetInvoice(int id) {
-        return myDatabase.getInvoices().get(id);
+        ArrayList<Invoice> invoices = myDatabase.getInvoices();
+
+        for (Invoice invoice:invoices) {
+            if (invoice.getId() == id)
+                return invoice;
+        }
+
+        return null;
     }
 
     /**
