@@ -11,13 +11,13 @@ import java.util.ArrayList;
 public class DB_Helper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "horadapapa";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 6;
     private static final String TABLE_PLATE = "plate";
     private static final String[] TABLE_PLATE_FIELDS = {"id", "title", "description", "price", "image"};
     private static final String TABLE_INVOICE = "invoice";
-    private static final String[] TABLE_INVOICE_FIELDS = {"id", "price"};
+    private static final String[] TABLE_INVOICE_FIELDS = {"id", "meal_id", "price"};
     private static final String TABLE_INVOICE_REQUESTS = "invoice_requests";
-    private static final String[] TABLE_INVOICE_REQUESTS_FIELDS = {"id", "invoice_id", "plate_id"};
+    private static final String[] TABLE_INVOICE_REQUESTS_FIELDS = {"id", "meal_id", "plate_id"};
     private static final String TABLE_REVIEW = "review";
     private static final String[] TABLE_REVIEW_FIELDS = {"id", "plate_id", "description", "value"};
     private static final String TABLE_FAVORITES = "favorites";
@@ -53,6 +53,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     private void createTableInvoices(SQLiteDatabase db) {
         String command = "CREATE TABLE " + TABLE_INVOICE + " (" +
                 "id INTEGER PRIMARY KEY, " +
+                "meal_id INTEGER, " +
                 "price TEXT NOT NULL);";
         db.execSQL(command);
     }
@@ -60,7 +61,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     private void createTableInvoiceRequests(SQLiteDatabase db) {
         String command = "CREATE TABLE " + TABLE_INVOICE_REQUESTS + " (" +
                 "id INTEGER PRIMARY KEY, " +
-                "invoice_id INTEGER NOT NULL, " +
+                "meal_id INTEGER NOT NULL, " +
                 "plate_id INTEGER NOT NULL);";
         db.execSQL(command);
     }
@@ -136,7 +137,7 @@ public class DB_Helper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Invoice invoice = new Invoice(cursor);
-                invoice.setPlateRequests(getInvoiceRequests(invoice));
+                invoice.setInvoiceRequests(getInvoiceRequests(invoice));
 
                 invoices.add(invoice);
 
@@ -151,8 +152,8 @@ public class DB_Helper extends SQLiteOpenHelper {
     private ArrayList<InvoiceRequest> getInvoiceRequests(Invoice invoice) {
         ArrayList<InvoiceRequest> requests = new ArrayList<>();
 
-        String selection = "invoice_id = ?";
-        String[] selectionArgs = {String.valueOf(invoice.getId())};
+        String selection = "meal_id = ?";
+        String[] selectionArgs = {String.valueOf(invoice.getMeal_id())};
 
         Cursor cursor = db.query(TABLE_INVOICE_REQUESTS, TABLE_INVOICE_REQUESTS_FIELDS,
                 selection, selectionArgs, null, null, "id");
@@ -179,6 +180,7 @@ public class DB_Helper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
 
             values.put("id", invoice.getId());
+            values.put("meal_id", invoice.getMeal_id());
             values.put("price", invoice.getPrice());
 
             db.insert(TABLE_INVOICE, null, values);
@@ -189,11 +191,11 @@ public class DB_Helper extends SQLiteOpenHelper {
 
     private void setInvoicesRequests(Invoice invoice) {
         // Delete only the rows where invoice_id matches the specified invoice's id
-        String whereClause = "invoice_id = ?";
+        String whereClause = "meal_id = ?";
         String[] whereArgs = {String.valueOf(invoice.getId())};
         db.delete(TABLE_INVOICE_REQUESTS, whereClause, whereArgs);
 
-        ArrayList<InvoiceRequest> requests = invoice.getPlateRequests();
+        ArrayList<InvoiceRequest> requests = invoice.getInvoiceRequests();
 
         if (requests != null)
         {
@@ -201,7 +203,7 @@ public class DB_Helper extends SQLiteOpenHelper {
                 ContentValues values = new ContentValues();
 
                 values.put("id", request.getId());
-                values.put("invoice_id", invoice.getId());
+                values.put("meal_id", invoice.getMeal_id());
                 values.put("plate_id", request.getPlate_id());
 
                 db.insert(TABLE_INVOICE_REQUESTS, null, values);

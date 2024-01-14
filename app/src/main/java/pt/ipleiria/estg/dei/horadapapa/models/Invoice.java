@@ -18,7 +18,10 @@ public class Invoice {
     }
 
     private int id;
-
+    public String getMeal_id() {
+        return price;
+    }
+    private int meal_id;
     public String getPrice() {
         return price;
     }
@@ -27,29 +30,31 @@ public class Invoice {
         this.price = price;
     }
 
-    public ArrayList<InvoiceRequest> getPlateRequests() {
-        return PlateRequests;
+    public ArrayList<InvoiceRequest> getInvoiceRequests() {
+        return invoiceRequests;
     }
 
-    public void setPlateRequests(ArrayList<InvoiceRequest> plateRequests) {
-        PlateRequests = plateRequests;
+    public void setInvoiceRequests(ArrayList<InvoiceRequest> invoiceRequests) {
+        this.invoiceRequests = invoiceRequests;
     }
 
     private String price;
-    private ArrayList<InvoiceRequest> PlateRequests;
+    private ArrayList<InvoiceRequest> invoiceRequests;
 
     public Invoice(JSONObject jsonObject)
     {
         try {
             this.id = jsonObject.getInt("id");
             this.price = jsonObject.getString("price");
+            this.invoiceRequests = new ArrayList<>();
 
-            JSONArray requestsArray = jsonObject.getJSONArray("requests");
+            JSONObject mealObject  = jsonObject.getJSONObject("meal");
+            int mealID =  mealObject.getInt("id");
+            JSONArray requestsArray = mealObject.getJSONArray("requests");
 
             for (int i = 0; i < requestsArray.length(); i++) {
                 JSONObject requestObject = requestsArray.getJSONObject(i);
-
-                this.PlateRequests.add(new InvoiceRequest(requestObject));
+                this.invoiceRequests.add(new InvoiceRequest(mealID, requestObject));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -58,6 +63,7 @@ public class Invoice {
 
     public Invoice(Cursor cursor) {
         this.id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+        this.meal_id = cursor.getInt(cursor.getColumnIndexOrThrow("meal_id"));
         this.price = cursor.getString(cursor.getColumnIndexOrThrow("price"));
     }
 }
