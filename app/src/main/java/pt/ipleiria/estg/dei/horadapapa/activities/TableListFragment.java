@@ -1,5 +1,7 @@
 package pt.ipleiria.estg.dei.horadapapa.activities;
 
+import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,16 @@ public class TableListFragment extends Fragment implements DinnersListener {
 
     public TableListFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Singleton.getInstance(getContext()).getCurrentMealID() > 0){
+            spinner_SelectTable.setEnabled(false);
+        }else{
+            spinner_SelectTable.setEnabled(true);
+        }
     }
 
     @Override

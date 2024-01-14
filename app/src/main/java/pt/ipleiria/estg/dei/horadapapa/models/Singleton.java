@@ -42,7 +42,11 @@ public class Singleton {
     private static Singleton singleton_instance = null;
     private static DB_Helper myDatabase;
 
-    private static int currentMealID = 0; //Guarda o ID da Meal atual
+    public int getCurrentMealID() {
+        return currentMealID;
+    }
+
+    private int currentMealID = 0; //Guarda o ID da Meal atual
 
     private PlatesListener platesListener;
     private FavoritesListener favoritesListener;
@@ -309,15 +313,12 @@ public class Singleton {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
         } else {
-            JSONObject requestBody = new JSONObject();
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+            StringRequest jsonObjectRequest = new StringRequest(
                     Request.Method.POST,
                     Route.MealInvoice(context, currentMealID),
-                    requestBody,
                     response -> {
-                        Toast.makeText(context, "O pedido foi feito!", Toast.LENGTH_SHORT).show();
-                        // TODO: Implement response
+                        Toast.makeText(context, "Fatura criada!", Toast.LENGTH_SHORT).show();
+                        currentMealID = 0;
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override

@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
+import pt.ipleiria.estg.dei.horadapapa.activities.invoice.InvoicesListFragment;
 import pt.ipleiria.estg.dei.horadapapa.adapters.PlateListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
@@ -47,13 +49,11 @@ public class MealListFragment extends Fragment implements PlatesListener {
         View view = inflater.inflate(R.layout.activity_cart, container, false);
         setHasOptionsMenu(true);
 
-        FloatingActionButton fab = view.findViewById(R.id.btnCartPay);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab_createPayment = view.findViewById(R.id.btnCartPay);
+        fab_createPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Singleton.getInstance(getContext()).requestMealInvoice(getContext());
-
-                Toast.makeText(getContext(), "Fatura Criada", Toast.LENGTH_SHORT).show();
             }
         });
 
