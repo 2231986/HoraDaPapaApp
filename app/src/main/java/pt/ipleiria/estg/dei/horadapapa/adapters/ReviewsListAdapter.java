@@ -1,15 +1,21 @@
 package pt.ipleiria.estg.dei.horadapapa.adapters;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.models.Review;
 
 public class ReviewsListAdapter extends BaseAdapter {
@@ -54,17 +60,19 @@ public class ReviewsListAdapter extends BaseAdapter {
         } else {
             viewHolderLista = (ViewHolderLista) convertView.getTag();
         }
-/*
-        view.setOnClickListener(new View.OnClickListener() {
+
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Detalhe aberto!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, PlateDetailsActivity.class);
-                intent.putExtra(ID_PLATE, currentPlate.getId());
+                Intent intent = new Intent(context, ReviewDetailsActivity.class);
+                intent.putExtra("PlateId", currentReview.getPlate_id());
+                intent.putExtra("Description", currentReview.getDescription());
+                intent.putExtra("Value", currentReview.getValue());
                 context.startActivity(intent);
             }
         });
-
+/*
         Button btn_addRequest = convertView.findViewById(R.id.btn_addRequest);
         View finalView = convertView;
         btn_addRequest.setOnClickListener(v -> {

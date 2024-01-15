@@ -5,6 +5,7 @@ import static java.security.AccessController.getContext;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,8 +41,23 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_details);
 
-        reviewSpinnerPlate = findViewById(R.id.reviewSpinnerPlate);
+        // Retrieve review details from the intent
+        Intent intent = getIntent();
+        int plateId = intent.getIntExtra("PlateId", 0); // 0 is the default value
+        String descriptionn = intent.getStringExtra("Description");
+        int valuen = intent.getIntExtra("Value", 0); // 0 is the default value
 
+
+        EditText editTextDescription = findViewById(R.id.editTextDescription);
+        editTextDescription.setText(descriptionn);
+
+        // Initialize and set the RatingBar
+        RatingBar starsn = findViewById(R.id.ratingBar);
+        starsn.setRating(valuen);
+
+
+
+        reviewSpinnerPlate = findViewById(R.id.reviewSpinnerPlate);
         spinnerAdapter = new PlateSpinnerAdapter(getApplicationContext(), new ArrayList<>());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         reviewSpinnerPlate.setAdapter(spinnerAdapter);
@@ -62,62 +78,24 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         Singleton.getInstance(getApplicationContext()).setPlatesListener(this);
         Singleton.getInstance(getApplicationContext()).requestPlateGetAll(getApplicationContext());
 
-
-
-
-
-
-
-        /*EditText editTextDescription = findViewById(R.id.editTextDescription);
-        String description = editTextDescription.getText().toString();
-
-        RatingBar ratingBar = findViewById(R.id.ratingBar);
-        int value = (int) ratingBar.getRating();*/
-
-
-
         Button btnStartReview = findViewById(R.id.btnSubmitReview);
         btnStartReview.setOnClickListener(v -> {
-            // Check if a plate is selected
+            // ver se prato foi selecionado
             if (selectedPlate != null) {
-                // Use selectedDinner.getId() or any other relevant method
+                // Use selectedDinner.getId()
                 int selectedPlateId = selectedPlate.getId();
-
                 //Descriçao
                 txtDescription = findViewById(R.id.editTextDescription);
                 String description = txtDescription.getText().toString();
-
                 //Rating
                 stars = findViewById(R.id.ratingBar);
-                // Get the float value from the RatingBar
+                // buscar valor float
                 float rating = stars.getRating();
-                // Convert the float rating to an integer using Math.round()
+                // conversao para int
                 int value = Math.round(rating);
-
-
-                //Faz um request à API para guardar review
-                //Singleton.getInstance(getContext()).requestReviewAdd(getContext(), selectedPlateId);
-
+                //Faz request à API para guardar review
                 Singleton.getInstance(getApplicationContext()).requestReviewAdd(this, selectedPlateId, value, description);
-
-
-                // Perform actions with the selected dinner ID
-                //Toast.makeText(this, "Review for " + selectedPlateId + " sent!", Toast.LENGTH_SHORT).show();
-
-                /*
-                // MealListFragment é instanciada e guardada como fragment b (destino)
-                PlateListFragment fragmentB = new PlateListFragment();
-
-                // Chamada do Fragment manager
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Substituimos o content_layout pelo fragmento que queremos chamar
-                fragmentManager.beginTransaction()
-                        .replace(R.id.contentLayout, fragmentB) // É aqui que se dá a substituição
-                        .addToBackStack(null) // Opcional: adiciona a transição em memória
-                        .commit();
-
-                 */
+                finish();
             } else {
                 Toast.makeText(this, "Please select a plate before sending a review!", Toast.LENGTH_SHORT).show();
             }
