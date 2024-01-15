@@ -96,20 +96,29 @@ public class PlateListAdapter extends BaseAdapter {
         private final TextView tvTitle;
         private final TextView tvDesc;
         private final TextView tvPrice;
-        private final ImageView imgCapa;
+        private final ImageView imgCapa, favoriteStar;
 
         public ViewHolderLista(View view) {
             tvTitle = view.findViewById(R.id.textView);
             tvDesc = view.findViewById(R.id.textView2);
             tvPrice = view.findViewById(R.id.textView3);
             imgCapa = view.findViewById(R.id.imageView);
-
+            favoriteStar = view.findViewById(R.id.plateDetailFavoriteStar);
         }
 
         public void update(Plate plate) {
             tvTitle.setText(plate.getTitle());
             tvDesc.setText(plate.getDescription());
             tvPrice.setText(plate.getPriceFormatted());
+
+            Plate favoritePlate = Singleton.getInstance(context).dbGetFavorite(plate.getId());
+
+            if (favoritePlate != null){
+                favoriteStar.setImageResource(R.drawable.ic_favourite_full);
+            }else{
+                favoriteStar.setImageResource(R.drawable.ic_favourite_empty);
+            }
+
             Glide.with(context)
                     .load(plate.getImage())
                     .placeholder(R.drawable.img)

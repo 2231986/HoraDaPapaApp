@@ -211,22 +211,6 @@ public class DB_Helper extends SQLiteOpenHelper {
         }
     }
 
-    public Plate getPlate(int id) {
-        Plate plate = null;
-
-        Cursor cursor = db.query(TABLE_PLATE, TABLE_PLATE_FIELDS,
-                null, null, null, null, "id");
-
-        if (cursor.moveToFirst()) {
-
-            plate = new Plate(cursor);
-
-            cursor.close();
-        }
-
-        return plate;
-    }
-
     public ArrayList<Review> getReviews() {
         ArrayList<Review> reviews = new ArrayList<>();
 
@@ -280,10 +264,11 @@ public class DB_Helper extends SQLiteOpenHelper {
         ArrayList<Plate> plates = new ArrayList<>();
 
         for (Favorite favorite: favorites) {
-            Plate plate = getPlate(favorite.getPlate_id());
-
-            if (plate != null){
-                plates.add(plate);
+            for (Plate plate:getPlates()) {
+                if (plate.getId() == favorite.getPlate_id())
+                {
+                    plates.add(plate);
+                }
             }
         }
 

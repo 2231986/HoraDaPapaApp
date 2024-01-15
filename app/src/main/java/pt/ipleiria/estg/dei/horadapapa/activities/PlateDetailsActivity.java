@@ -52,7 +52,15 @@ public class PlateDetailsActivity extends AppCompatActivity {
         fabTooglePlateHasFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(PlateDetailsActivity.this, "ADD 1", Toast.LENGTH_SHORT).show();
+                Plate plate = Singleton.getInstance(getApplicationContext()).dbGetFavorite(id);
+                if (plate == null)
+                {
+                    Singleton.getInstance(getApplicationContext()).requestPlateAddFavorite(getApplicationContext(), id);
+                }
+                else
+                {
+                    Singleton.getInstance(getApplicationContext()).requestPlateRemoveFavorite(getApplicationContext(), id);
+                }
             }
         });
     }

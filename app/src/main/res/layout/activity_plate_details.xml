@@ -15,9 +15,16 @@
         <ImageView
             android:id="@+id/imgCover"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="400dp"
             android:src="@drawable/img" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome" />
 
     <EditText
         android:id="@+id/etTitle"
@@ -27,6 +34,12 @@
         android:inputType="text"
         android:text="Name" />
 
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descrição" />
+
     <EditText
         android:id="@+id/etDesc"
         android:layout_width="match_parent"
@@ -34,6 +47,12 @@
         android:ems="10"
         android:inputType="text"
         android:text="Name" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Preço" />
 
     <EditText
         android:id="@+id/etPrice"
@@ -43,10 +62,26 @@
         android:inputType="text"
         android:text="Name" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_TooglePlateHasFavorite"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@android:drawable/ic_input_add" />
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_TooglePlateHasFavorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@android:drawable/ic_input_add" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
 </LinearLayout>

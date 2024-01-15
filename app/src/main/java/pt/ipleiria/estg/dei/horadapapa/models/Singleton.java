@@ -48,11 +48,11 @@ public class Singleton {
 
     private int currentMealID = 0; //Guarda o ID da Meal atual
 
-    private PlatesListener platesListener;
-    private FavoritesListener favoritesListener;
-    private DinnersListener dinnersListener;
-    private ReviewsListener reviewsListener;
-    private InvoicesListener invoicesListener;
+    private PlatesListener platesListener = null;
+    private FavoritesListener favoritesListener = null;
+    private DinnersListener dinnersListener = null;
+    private ReviewsListener reviewsListener = null;
+    private InvoicesListener invoicesListener = null;
 
     private Singleton(Context context) {
         volleyQueue = Volley.newRequestQueue(context);
@@ -236,8 +236,25 @@ public class Singleton {
         }
     }
 
+    public Plate dbGetFavorite(int id) {
+        ArrayList<Plate> items = myDatabase.getFavorites();
+
+        for (Plate item:items) {
+            if (item.getId() == id)
+                return item;
+        }
+
+        return null;
+    }
     public Plate dbGetPlate(int id) {
-        return myDatabase.getPlate(id);
+        ArrayList<Plate> items = myDatabase.getPlates();
+
+        for (Plate item:items) {
+            if (item.getId() == id)
+                return item;
+        }
+
+        return null;
     }
     public Invoice dbGetInvoice(int id) {
         ArrayList<Invoice> invoices = myDatabase.getInvoices();
@@ -379,11 +396,12 @@ public class Singleton {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
         } else {
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+            StringRequest jsonObjectRequest = new StringRequest(
                     Request.Method.POST,
-                    Route.PlateFavorite(context, plateID), null,
+                    Route.PlateFavorite(context, plateID),
                     response -> {
-                        // TODO: Implement response
+                        requestFavoritesGetAll(context);
+                        BetterToast(context, "Favorito adicionado!");
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
@@ -408,11 +426,12 @@ public class Singleton {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
         } else {
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+            StringRequest jsonObjectRequest = new StringRequest(
                     Request.Method.DELETE,
-                    Route.PlateFavorite(context, plateID), null,
+                    Route.PlateFavorite(context, plateID),
                     response -> {
-                        // TODO: Implement response
+                        requestFavoritesGetAll(context);
+                        BetterToast(context, "Favorito removido!");
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
@@ -449,7 +468,9 @@ public class Singleton {
                         ArrayList<Plate> plates = myDatabase.getFavorites();
 
                         if (plates.size() > 0) {
-                            favoritesListener.onRefreshFavorites(plates);
+                            if (favoritesListener != null) {
+                                favoritesListener.onRefreshFavorites(plates);
+                            }
                         }
                         else
                         {
