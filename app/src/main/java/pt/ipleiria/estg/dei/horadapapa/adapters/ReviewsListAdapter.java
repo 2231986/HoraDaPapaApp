@@ -2,6 +2,8 @@ package pt.ipleiria.estg.dei.horadapapa.adapters;
 
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 
+import static pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity.ID_REVIEW;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -66,9 +68,8 @@ public class ReviewsListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Toast.makeText(context, "Detalhe aberto!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, ReviewDetailsActivity.class);
-                intent.putExtra("PlateId", currentReview.getPlate_id());
-                intent.putExtra("Description", currentReview.getDescription());
-                intent.putExtra("Value", currentReview.getValue());
+                intent.putExtra(ID_REVIEW, currentReview.getId());
+
                 context.startActivity(intent);
             }
         });

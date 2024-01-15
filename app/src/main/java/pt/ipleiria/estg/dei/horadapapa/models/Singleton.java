@@ -647,5 +647,14 @@ public class Singleton {
     }
 
 
+    public Review dbGetReview(int id) {
+        ArrayList<Review> items = myDatabase.getReviews();
 
+        for (Review item:items) {
+            if (item.getId() == id)
+                return item;
+        }
+
+        return null;
+    }
 }
