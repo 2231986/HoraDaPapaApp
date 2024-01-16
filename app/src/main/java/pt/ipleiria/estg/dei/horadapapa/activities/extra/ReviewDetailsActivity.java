@@ -124,6 +124,10 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
     }
 
     private void loadReview() {
+        setTitle("Review nº - " + review.getId());
+        reviewSpinnerPlate.setSelection(review.getPlate_id());
+        txtDescription.setText(review.getDescription());
+        stars.setNumStars(review.getValue());
     }
 
     @Override
