@@ -124,7 +124,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
                     // Conversão para int
                     int value = Math.round(rating);
 
-                    // Use the review.getId() directly in the requestReviewEdit method
+                    // Usamos review.getId() diretamente no request
                     Singleton.getInstance(getApplicationContext()).requestReviewEdit(
                             ReviewDetailsActivity.this,
                             review.getId(),

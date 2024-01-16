@@ -690,7 +690,7 @@ public class Singleton {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("description", description);
-                    params.put("value", String.valueOf(value));
+                    params.put("value", String.valueOf(value)); //Quando se usa o volley os parametros ("chave" e "valor") são ambos tratados como uma string, daí estar a fazer a conversão para string.
                     return params;
                 }
             };
