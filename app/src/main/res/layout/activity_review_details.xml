@@ -40,7 +40,7 @@
 
     <!-- Button to submit the review -->
     <Button
-        android:id="@+id/btnSubmitReview"
+        android:id="@+id/btnDeleteReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ratingBar"

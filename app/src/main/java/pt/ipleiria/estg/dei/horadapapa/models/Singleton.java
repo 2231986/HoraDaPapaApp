@@ -659,7 +659,7 @@ public class Singleton {
         return null;
     }
 
-    public void requestReviewEdit(Context context, int value, String description) {
+    public void requestReviewEdit(Context context, int reviewId, int value, String description) {
         if (description.isEmpty()) {
             BetterToast(context, "Descrição vazia!");
             return;
@@ -675,7 +675,7 @@ public class Singleton {
         } else {
             StringRequest jsonObjectRequest = new StringRequest(
                     Request.Method.PUT,
-                    Route.Review(context),
+                    Route.Review(context, reviewId),
                     response -> {
                         Toast.makeText(context, "Your review was updated!", Toast.LENGTH_SHORT).show();
                         // TODO: Implement response
@@ -690,7 +690,7 @@ public class Singleton {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("description", description);
-                    params.put("value", value + "");
+                    params.put("value", String.valueOf(value));
                     return params;
                 }
             };
@@ -698,4 +698,26 @@ public class Singleton {
             volleyQueue.add(jsonObjectRequest);
         }
     }
+    public void requestReviewDelete(final Context context, final int reviewId) {
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+        } else {
+            StringRequest jsonObjectRequest = new StringRequest(
+                    Request.Method.DELETE,
+                    Route.Review(context, reviewId), // Assuming Route.Review is correctly implemented to handle review deletion
+                    response -> {
+                        // Handle successful deletion if needed
+                    },
+                    error -> Route.HandleApiError(context, error)) {
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    return Route.GetAuthorizationBearerHeader(context);
+                }
+            };
+
+            volleyQueue.add(jsonObjectRequest);
+        }
+    }
+
 }
