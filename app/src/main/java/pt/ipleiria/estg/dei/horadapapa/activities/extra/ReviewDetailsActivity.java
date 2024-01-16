@@ -64,6 +64,8 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
 
         if(review !=null) {
             loadReview();
+            stars.setNumStars(10);
+
             Deletebtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -123,7 +125,6 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
 
                     // Conversão para int
                     int value = Math.round(rating);
-
                     // Usamos review.getId() diretamente no request
                     Singleton.getInstance(getApplicationContext()).requestReviewEdit(
                             ReviewDetailsActivity.this,
@@ -163,7 +164,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         setTitle("Review nº - " + review.getId());
         reviewSpinnerPlate.setSelection(review.getPlate_id());
         txtDescription.setText(review.getDescription());
-        stars.setNumStars(review.getValue());
+        stars.setRating(review.getValue());
     }
 
     @Override
