@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.InvoicesListener;
@@ -656,5 +657,45 @@ public class Singleton {
         }
 
         return null;
+    }
+
+    public void requestReviewEdit(Context context, int value, String description) {
+        if (description.isEmpty()) {
+            BetterToast(context, "Descrição vazia!");
+            return;
+        }
+
+        if (value == 0) {
+            BetterToast(context, "Rating inválido!");
+            return;
+        }
+
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+        } else {
+            StringRequest jsonObjectRequest = new StringRequest(
+                    Request.Method.PUT,
+                    Route.Review(context),
+                    response -> {
+                        Toast.makeText(context, "Your review was updated!", Toast.LENGTH_SHORT).show();
+                        // TODO: Implement response
+                    },
+                    error -> Route.HandleApiError(context, error)) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    return Route.GetAuthorizationBearerHeader(context);
+                }
+
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("description", description);
+                    params.put("value", value + "");
+                    return params;
+                }
+            };
+
+            volleyQueue.add(jsonObjectRequest);
+        }
     }
 }

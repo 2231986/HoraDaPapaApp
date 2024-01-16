@@ -95,8 +95,16 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
                 if(review!=null)
                 {
                     //EDITAR
-                    Toast.makeText(ReviewDetailsActivity.this, "TOSTA", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(ReviewDetailsActivity.this, "Processing update", Toast.LENGTH_SHORT).show();
+                    //Descriçao
+                    String description = txtDescription.getText().toString();
+                    // buscar valor float
+                    float rating = stars.getRating();
+                    // conversao para int
+                    int value = Math.round(rating);
+                    //Faz request à API para guardar review
+                    Singleton.getInstance(getApplicationContext()).requestReviewEdit(ReviewDetailsActivity.this, value, description);
+                    finish();
                 } else
                 {
                     //ADICIONAR
