@@ -76,38 +76,4 @@ public class ReviewListFragment extends Fragment implements ReviewsListener {
         }
     }
 
-
-
-
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
-        MenuItem itemPesquisa = menu.findItem(R.id.itemSearch);
-        searchView = (SearchView) itemPesquisa.getActionView();
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                // Call function from Singleton and pass the entered text
-                ArrayList<Plate> filteredPlates = Singleton.getInstance(getContext()).filterPlatesByContent(newText);
-
-                // Update your ListView with the filtered plates
-                if (filteredPlates != null) {
-                    lvReviews.setAdapter(new PlateListAdapter(getContext(), filteredPlates));
-                }
-                return false;
-            }
-        });
-
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
 }
