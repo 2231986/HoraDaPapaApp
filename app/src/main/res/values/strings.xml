@@ -42,4 +42,6 @@
     <string name="tvReview_ID">ID</string>
     <string name="tvReviewDesc">Description</string>
     <string name="tvReviewValue">Value</string>
+    <string name="itxtInvoiceMealID">Meal ID</string>
+    <string name="txtInvoiceID">Invoice ID</string>
 </resources>

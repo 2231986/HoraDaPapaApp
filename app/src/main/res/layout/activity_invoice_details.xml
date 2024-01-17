@@ -15,7 +15,7 @@
         <ListView
             android:id="@+id/lv_InvoiceRequests"
             android:layout_width="match_parent"
-            android:layout_height="600dp">
+            android:layout_height="wrap_content">
 
         </ListView>
 
@@ -28,7 +28,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -41,18 +41,18 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Total Price:"
-                android:layout_gravity="center"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_InvoiceTotalPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="InvoiceTotalPrice"
-                android:layout_gravity="center" />
+                android:text="InvoiceTotalPrice" />
 
         </LinearLayout>
 
@@ -68,16 +68,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="@string/txtInvoiceDate"
+                android:text="@string/txtInvoiceID"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="TextView"
-                android:layout_gravity="center" />
+                android:text="TextView" />
 
         </LinearLayout>
 
@@ -91,18 +91,18 @@
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="//TODO"
                 android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/itxtInvoiceMealID"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="TextView"
-                android:layout_gravity="center" />
+                android:text="TextView" />
         </LinearLayout>
 
     </LinearLayout>
