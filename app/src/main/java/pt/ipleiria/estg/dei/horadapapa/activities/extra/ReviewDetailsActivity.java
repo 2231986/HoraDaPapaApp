@@ -13,9 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -35,6 +38,8 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
     Plate selectedPlate;
 
     private EditText txtDescription;
+
+    private TextView tvplatename;
 
     private RatingBar stars;
 
@@ -56,6 +61,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         review = Singleton.getInstance(getApplicationContext()).dbGetReview(id);
 
 
+        tvplatename = findViewById(R.id.tvplatename);
         Deletebtn = findViewById(R.id.btnDeleteReview);
         txtDescription = findViewById(R.id.editTextDescription);
         stars = findViewById(R.id.ratingBar);
@@ -84,8 +90,10 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
             });
             fabReview.setImageResource(R.drawable.ic_edit);
         }else{
-            setTitle("Adicionar Livro");
+            setTitle("Add Review");
             fabReview.setImageResource(R.drawable.ic_add);
+            Deletebtn.setVisibility(View.GONE);
+            reviewSpinnerPlate.setVisibility(View.GONE);
         }
 
         spinnerAdapter = new PlateSpinnerAdapter(getApplicationContext(), new ArrayList<>());
