@@ -128,6 +128,7 @@ public class Singleton {
 
                     //TODO: Vai ter de se substituir o Intent por um Listener!
                     Intent intent = new Intent(context, MenuActivity.class);
+                    intent.putExtra("username", user.getUsername());
                     context.startActivity(intent);
                     ((Activity) context).finish();
                 }
@@ -300,31 +301,30 @@ public class Singleton {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
         } else {
-            JSONObject requestBody = new JSONObject();
-
-            try {
-                if (quantity > 0) {
-                    requestBody.put("quantity", quantity);
-                }
-                if (observation != null && !observation.isEmpty()) {
-                    requestBody.put("observation", observation);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+            StringRequest jsonObjectRequest = new StringRequest(
                     Request.Method.POST,
                     Route.RequestPlate(context, currentMealID, plateID),
-                    requestBody,
                     response -> {
                         Toast.makeText(context, "O pedido foi feito!", Toast.LENGTH_SHORT).show();
-                        // TODO: Implement response
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
                 public Map<String, String> getHeaders() {
                     return Route.GetAuthorizationBearerHeader(context);
+                }
+
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+
+                    if (quantity > 0) {
+                        params.put("quantity", quantity + "");
+                    }
+                    if (observation != null && !observation.isEmpty()) {
+                        params.put("observation", observation);
+                    }
+
+                    return params;
                 }
             };
 
@@ -375,6 +375,10 @@ public class Singleton {
                 @Override
                 public void onResponse(JSONArray response) {
                     ArrayList<Invoice> invoices = JsonParser.parseGenericList(response, Invoice.class);
+
+                    if (invoices.size() == 0) {
+                        BetterToast(context, "Sem faturas!");
+                    }
 
                     myDatabase.setInvoices(invoices);
 
@@ -593,6 +597,11 @@ public class Singleton {
                 @Override
                 public void onResponse(JSONArray response) {
                     ArrayList<Review> reviews = JsonParser.parseGenericList(response, Review.class);
+
+                    if (reviews.size() == 0) {
+                        BetterToast(context, "Sem avaliações!");
+                    }
+
                     myDatabase.setReviews(reviews);
 
                     if (reviewsListener != null) {

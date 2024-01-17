@@ -23,6 +23,7 @@ import pt.ipleiria.estg.dei.horadapapa.activities.PlateDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
+import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 
 public class PlateListAdapter extends BaseAdapter {
 
@@ -78,12 +79,13 @@ public class PlateListAdapter extends BaseAdapter {
         Button btn_addRequest = view.findViewById(R.id.btn_addRequest);
         View finalView = view;
         btn_addRequest.setOnClickListener(v -> {
-            int plateID = currentPlate.getId(), quantity = 0;
             EditText etRequestQuantity = finalView.findViewById(R.id.et_RequestQuantity);
-            quantity = Integer.parseInt(etRequestQuantity.getText().toString());
+            int quantity = Integer.parseInt(etRequestQuantity.getText().toString());
 
-            String observation = ""; //TODO: Implementar este campo
+            EditText etRequestObs = finalView.findViewById(R.id.et_plateObs);
+            String observation = etRequestObs.getText().toString();
 
+            int plateID = currentPlate.getId();
             Singleton.getInstance(context).requestRequestPlate(context, plateID, quantity, observation);
         });
 
@@ -119,8 +121,10 @@ public class PlateListAdapter extends BaseAdapter {
                 favoriteStar.setImageResource(R.drawable.ic_favourite_empty);
             }
 
+            AppPreferences appPreferences = new AppPreferences(context);
+
             Glide.with(context)
-                    .load(plate.getImage())
+                    .load( "http://" + appPreferences.getApiIP() + plate.getImage())
                     .placeholder(R.drawable.img)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgCapa);

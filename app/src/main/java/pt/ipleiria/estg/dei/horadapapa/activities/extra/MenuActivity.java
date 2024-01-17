@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,9 @@ public class MenuActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
 
-    private String email;
+    private TextView tvUserName;
+
+    private String email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,17 @@ public class MenuActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.contentLayout, new TableListFragment()).commit();
 
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+
+        //TODO: não encontra o ID
+        tvUserName = findViewById(R.id.tv_menuUserName);
+
+        Intent intent = getIntent();
+
+        if (intent.hasExtra("username")) {
+            String username = intent.getStringExtra("username");
+            if (tvUserName != null)
+                tvUserName.setText(tvUserName.getText() + " " + username);
+        }
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

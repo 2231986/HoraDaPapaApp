@@ -49,6 +49,22 @@
                 android:paddingTop="3dp"
                 android:text="@string/tvDescription" />
 
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:paddingTop="3dp"
+                android:text="Observações"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_plateObs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

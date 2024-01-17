@@ -2,9 +2,8 @@ package pt.ipleiria.estg.dei.horadapapa.activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,13 +14,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
+import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper;
 
 public class PlateDetailsActivity extends AppCompatActivity {
     public static final String ID_PLATE = "ID_PLATE";
     Plate plate;
 
-    private EditText etTitle, etDesc, etPrice;
+    private TextView tvTitle, tvDesc, tvPrice;
 
     private ImageView imgCover;
 
@@ -41,9 +41,9 @@ public class PlateDetailsActivity extends AppCompatActivity {
             plate = Singleton.getInstance(this).dbGetPlate(id);
         }
 
-        etTitle = findViewById(R.id.etTitle);
-        etDesc = findViewById(R.id.etDesc);
-        etPrice = findViewById(R.id.etPrice);
+        tvTitle = findViewById(R.id.tvTitle);
+        tvDesc = findViewById(R.id.tvDesc);
+        tvPrice = findViewById(R.id.tvPrice);
         imgCover = findViewById(R.id.imgCover);
         fabTooglePlateHasFavorite = findViewById(R.id.fab_TooglePlateHasFavorite);
 
@@ -66,11 +66,14 @@ public class PlateDetailsActivity extends AppCompatActivity {
     }
 
     private void loadPlate() {
-        etTitle.setText(plate.getTitle());
-        etDesc.setText(plate.getDescription());
-        etPrice.setText(plate.getPriceFormatted());
+        tvTitle.setText(plate.getTitle());
+        tvDesc.setText(plate.getDescription());
+        tvPrice.setText(plate.getPriceFormatted());
+
+        AppPreferences appPreferences = new AppPreferences(this);
+
         Glide.with(this)
-                .load(plate.getImage())
+                .load( "http://" + appPreferences.getApiIP() + plate.getImage())
                 .placeholder(R.drawable.img)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgCover);
