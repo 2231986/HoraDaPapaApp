@@ -3,55 +3,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     tools:context=".activities.TableListFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
 
-        <View
-            android:id="@+id/view9"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
 
         <TextView
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/tv_StartMeal"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="@android:color/black" />
 
-        <View
-            android:id="@+id/view7"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="174dp"
+            android:src="@drawable/baseline_table_restaurant_24" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
         <TextView
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txt_table"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <Spinner
             android:id="@+id/spinner_SelectTable"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="8dp"
             android:spinnerMode="dropdown" />
 
-        <View
-            android:id="@+id/view11"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="16dp" />
 
         <Button
             android:id="@+id/btn_StartMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/btt_StartMeal" />
-
+            android:text="@string/btt_StartMeal"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+             />
 
     </LinearLayout>
 
