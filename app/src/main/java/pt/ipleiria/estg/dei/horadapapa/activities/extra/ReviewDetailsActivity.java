@@ -61,7 +61,6 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         review = Singleton.getInstance(getApplicationContext()).dbGetReview(id);
 
 
-        tvplatename = findViewById(R.id.tvplatename);
         Deletebtn = findViewById(R.id.btnDeleteReview);
         txtDescription = findViewById(R.id.editTextDescription);
         stars = findViewById(R.id.ratingBar);
