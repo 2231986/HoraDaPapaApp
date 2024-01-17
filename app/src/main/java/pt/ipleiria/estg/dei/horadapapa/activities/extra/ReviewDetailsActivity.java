@@ -43,6 +43,8 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
 
     public static final String ID_REVIEW = "ID_REVIEW";
 
+    private Button Deletebtn;
+
 
 
     @Override
@@ -54,7 +56,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         review = Singleton.getInstance(getApplicationContext()).dbGetReview(id);
 
 
-
+        Deletebtn = findViewById(R.id.btnDeleteReview);
         txtDescription = findViewById(R.id.editTextDescription);
         stars = findViewById(R.id.ratingBar);
         fabReview = findViewById(R.id.fabReview);
@@ -62,6 +64,24 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
 
         if(review !=null) {
             loadReview();
+            stars.setNumStars(10);
+
+            Deletebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    // DELETE
+                    Toast.makeText(ReviewDetailsActivity.this, "Processing delete", Toast.LENGTH_SHORT).show();
+
+                    // Use the review.getId() directly in the requestReviewDelete method
+                    Singleton.getInstance(getApplicationContext()).requestReviewDelete(
+                            ReviewDetailsActivity.this,
+                            review.getId()
+                    );
+
+                    finish();
+                }
+            });
             fabReview.setImageResource(R.drawable.ic_edit);
         }else{
             setTitle("Adicionar Livro");
@@ -94,16 +114,25 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
             public void onClick(View v) {
                 if(review!=null)
                 {
-                    //EDITAR
+                    // EDITAR
                     Toast.makeText(ReviewDetailsActivity.this, "Processing update", Toast.LENGTH_SHORT).show();
-                    //Descriçao
+
+                    // Descrição
                     String description = txtDescription.getText().toString();
-                    // buscar valor float
+
+                    // Buscar valor float
                     float rating = stars.getRating();
-                    // conversao para int
+
+                    // Conversão para int
                     int value = Math.round(rating);
-                    //Faz request à API para guardar review
-                    Singleton.getInstance(getApplicationContext()).requestReviewEdit(ReviewDetailsActivity.this, value, description);
+                    // Usamos review.getId() diretamente no request
+                    Singleton.getInstance(getApplicationContext()).requestReviewEdit(
+                            ReviewDetailsActivity.this,
+                            review.getId(),
+                            value,
+                            description
+                    );
+
                     finish();
                 } else
                 {
@@ -135,7 +164,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         setTitle("Review nº - " + review.getId());
         reviewSpinnerPlate.setSelection(review.getPlate_id());
         txtDescription.setText(review.getDescription());
-        stars.setNumStars(review.getValue());
+        stars.setRating(review.getValue());
     }
 
     @Override
