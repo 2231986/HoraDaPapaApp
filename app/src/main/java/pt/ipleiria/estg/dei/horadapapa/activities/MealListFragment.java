@@ -35,6 +35,9 @@ public class MealListFragment extends Fragment implements PlatesListener {
 
     private SearchView searchView;
 
+    private boolean isMealStarted = false; // Variable to track meal status
+
+
 
     private ListView lvPlates;
 
@@ -48,6 +51,8 @@ public class MealListFragment extends Fragment implements PlatesListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_cart, container, false);
         setHasOptionsMenu(true);
+
+
 
         FloatingActionButton fab_createPayment = view.findViewById(R.id.btnCartPay);
         fab_createPayment.setOnClickListener(new View.OnClickListener() {

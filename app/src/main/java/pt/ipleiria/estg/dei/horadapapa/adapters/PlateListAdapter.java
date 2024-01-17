@@ -76,7 +76,26 @@ public class PlateListAdapter extends BaseAdapter {
             }
         });
 
+
+
+
+        EditText et_RequestQuantity = view.findViewById(R.id.et_RequestQuantity);
+        EditText et_plateObs = view.findViewById(R.id.et_plateObs);
+        TextView textView18 = view.findViewById(R.id.textView18);
+
+
+
+
         Button btn_addRequest = view.findViewById(R.id.btn_addRequest);
+        // Hide or show btn_addRequest based on isMealStarted
+        if (Singleton.getInstance(context.getApplicationContext()).getCurrentMealID() > 0) {
+            btn_addRequest.setVisibility(View.VISIBLE);
+        } else {
+           btn_addRequest.setVisibility(View.GONE);
+            et_RequestQuantity.setVisibility(View.GONE);
+            et_plateObs.setVisibility(View.GONE);
+            textView18.setVisibility(View.GONE);
+        }
         View finalView = view;
         btn_addRequest.setOnClickListener(v -> {
             EditText etRequestQuantity = finalView.findViewById(R.id.et_RequestQuantity);
