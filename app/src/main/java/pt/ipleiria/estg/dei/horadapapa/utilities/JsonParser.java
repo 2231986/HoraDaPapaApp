@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import pt.ipleiria.estg.dei.horadapapa.models.LoginInfo;
+
 public class JsonParser {
     private static JSONObject parseRequest(String response) {
         JSONObject jsonObject = null;
@@ -27,16 +29,19 @@ public class JsonParser {
         return jsonObject;
     }
 
-    public static String parseJsonLogin(String response) {
+    public static LoginInfo parseJsonLogin(String response) {
         String tokenValue = null;
+        String userIdValue = null;
 
         try {
-            tokenValue = parseRequest(response).getString("token");
+            JSONObject json = parseRequest(response);
+            tokenValue = json.getString("token");
+            userIdValue = json.getString("userID");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return tokenValue;
+        return new LoginInfo(tokenValue, userIdValue);
     }
 
     public static <T> T parseGenericObject(JSONObject jsonObject, Class<T> type) {

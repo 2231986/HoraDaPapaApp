@@ -7,6 +7,7 @@ public class AppPreferences
 {
     private static final String PREFERENCES_NAME = "User_Preferences";
     private static final String USER_TOKEN = "UserToken";
+    private static final String USER_ID = "0";
     private static final String API_HOST = "ApiIP";
     private static final String MQTT_HOST = "MqttIP";
 
@@ -15,6 +16,18 @@ public class AppPreferences
     public AppPreferences(Context context)
     {
         sharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+    }
+
+    public void setUserID(String token)
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(USER_ID, token);
+        editor.apply();
+    }
+
+    public String getUserID()
+    {
+        return sharedPreferences.getString(USER_ID, null);
     }
 
     public void setToken(String token)

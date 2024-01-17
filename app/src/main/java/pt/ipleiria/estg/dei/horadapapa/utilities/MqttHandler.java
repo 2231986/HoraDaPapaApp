@@ -14,66 +14,67 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class MqttHandler {
 
     private static final String TAG = "MQTT: ";
 
-    //TODO: adicionar o ip correto
-    public static String MQTT_BROKER_URI = "tcp://my_mosquitto_broker_ip:1883";
-    private String ClientID;
+    public static String MQTT_BROKER_URI = "tcp://10.0.2.2:1883";
+    public String ClientID = "0";
 
-    private final MqttAndroidClient mqttAndroidClient;
+    private MqttAndroidClient mqttAndroidClient = null;
 
     public MqttHandler(Context context, String clientID) {
-
         this.ClientID = clientID;
 
         AppPreferences appPreferences = new AppPreferences(context);
         String mqttHost = appPreferences.getMqttIP();
 
-        if (mqttHost != null && !mqttHost.isEmpty())
-        {
-            this.MQTT_BROKER_URI = mqttHost;
+        if (mqttHost != null && !mqttHost.isEmpty()) {
+            MQTT_BROKER_URI = mqttHost;
         }
-
-        mqttAndroidClient = new MqttAndroidClient(context, MQTT_BROKER_URI, this.ClientID);
-
-        MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
-        mqttConnectOptions.setCleanSession(true);
 
         try {
-            mqttAndroidClient.connect(mqttConnectOptions, null, new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    BetterToast(context, TAG + "Successfully connected to the broker");
-                }
+            mqttAndroidClient = new MqttAndroidClient(context, MQTT_BROKER_URI, this.ClientID);
+            if (mqttAndroidClient != null) {
+                MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
+                mqttConnectOptions.setAutomaticReconnect(true);
+                mqttConnectOptions.setCleanSession(true);
 
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    BetterToast(context, TAG + "Failed to connect to the broker");
-                }
-            });
-        } catch (MqttException e) {
-            e.printStackTrace();
+                mqttAndroidClient.connect(mqttConnectOptions, null, new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        BetterToast(context, TAG + "Successfully connected to the broker");
+                    }
+
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        BetterToast(context, TAG + "Failed to connect to the broker");
+                    }
+                });
+
+                mqttAndroidClient.setCallback(new MqttCallback() {
+                    @Override
+                    public void connectionLost(Throwable cause) {
+                        BetterToast(context, TAG + "Connection lost");
+                    }
+
+                    @Override
+                    public void messageArrived(String topic, MqttMessage message) {
+                        String payload = new String(message.getPayload());
+                        BetterToast(context, TAG + "Received message on topic " + topic + ": " + payload);
+                    }
+
+                    @Override
+                    public void deliveryComplete(IMqttDeliveryToken token) {
+                        BetterToast(context, TAG + "Message delivery complete");
+                    }
+                });
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
-        mqttAndroidClient.setCallback(new MqttCallback() {
-            @Override
-            public void connectionLost(Throwable cause) {
-                BetterToast(context, TAG + "Connection lost");
-            }
-
-            @Override
-            public void messageArrived(String topic, MqttMessage message) {
-                String payload = new String(message.getPayload());
-                BetterToast(context, TAG + "Received message on topic " + topic + ": " + payload);
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
-                BetterToast(context, TAG + "Message delivery complete");
-            }
-        });
     }
 
     public void subscribeToTopic(String topic) {

@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,11 +38,13 @@ import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.ReviewsListener;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.JsonParser;
+import pt.ipleiria.estg.dei.horadapapa.utilities.MqttHandler;
 
 public class Singleton {
     private static RequestQueue volleyQueue = null;
     private static Singleton singleton_instance = null;
     private static DB_Helper myDatabase;
+    private MqttHandler mqttAndroidClient;
 
     public int getCurrentMealID() {
         return currentMealID;
@@ -96,34 +99,41 @@ public class Singleton {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
         } else {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, Route.UserLogin(context), new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, Route.UserLogin(context), response -> {
 
-                    String userToken = JsonParser.parseJsonLogin(response);
+                LoginInfo loginInfo = JsonParser.parseJsonLogin(response);
 
-                    if (userToken == null) {
-                        BetterToast(context, "Ocorreu um erro!");
-                    } else {
-                        AppPreferences appPreferences = new AppPreferences(context);
-                        appPreferences.setToken(userToken);
+                if (loginInfo.getToken() == null || loginInfo.getUserId() == null) {
+                    BetterToast(context, "Ocorreu um erro!");
+                } else {
+                    AppPreferences appPreferences = new AppPreferences(context);
+                    appPreferences.setToken(loginInfo.getToken());
+                    appPreferences.setUserID(loginInfo.getUserId());
 
-                        BetterToast(context, "Login efetuado com sucesso!");
+                    BetterToast(context, "Login efetuado com sucesso!");
 
-                        //TODO: Vai ter de se substituir o Intent por um Listener!
-                        Intent intent = new Intent(context, MenuActivity.class);
-                        context.startActivity(intent);
-                        ((Activity) context).finish();
+                    // Initialize MQTT client
+                    try
+                    {
+                        //TODO: Terminar o MQTT
+
+                        //String clientID = loginInfo.getUserId();
+                        //mqttAndroidClient = new MqttHandler(context, clientID);
+                        //mqttAndroidClient.subscribeToTopic("topic_" + clientID);
                     }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
+                    }
+
+                    //TODO: Vai ter de se substituir o Intent por um Listener!
+                    Intent intent = new Intent(context, MenuActivity.class);
+                    context.startActivity(intent);
+                    ((Activity) context).finish();
                 }
-            }, new Response.ErrorListener() {
+            }, error -> BetterToast(context, "Username ou Password errados!")) {
                 @Override
-                public void onErrorResponse(VolleyError error) {
-                    BetterToast(context, "Username ou Password errados!");
-                }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     HashMap<String, String> headers = new HashMap<>();
                     headers.put("Authorization", "Basic " + base64EncodedCredentials);
                     return headers;
