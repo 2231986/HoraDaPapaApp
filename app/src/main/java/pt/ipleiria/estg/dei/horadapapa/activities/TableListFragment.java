@@ -31,6 +31,7 @@ public class TableListFragment extends Fragment implements DinnersListener {
 
     private Spinner spinner_SelectTable;
     private DinnerSpinnerAdapter spinnerAdapter;
+    private Button btnStartMeal;
     private Dinner selectedDinner;  // Change the type to Dinner
 
 
@@ -43,8 +44,10 @@ public class TableListFragment extends Fragment implements DinnersListener {
         super.onResume();
         if (Singleton.getInstance(getContext()).getCurrentMealID() > 0){
             spinner_SelectTable.setEnabled(false);
+            btnStartMeal.setEnabled(false);
         }else{
             spinner_SelectTable.setEnabled(true);
+            btnStartMeal.setEnabled(true);
         }
     }
 
@@ -77,7 +80,7 @@ public class TableListFragment extends Fragment implements DinnersListener {
         Singleton.getInstance(getContext()).requestDinnerGetAll(getContext());
 
         //mapeamento do botão e setup de listener para metodo onClick
-        Button btnStartMeal = view.findViewById(R.id.btn_StartMeal);
+        btnStartMeal = view.findViewById(R.id.btn_StartMeal);
         btnStartMeal.setOnClickListener(v -> {
             // Check if a dinner is selected
             if (selectedDinner != null) {

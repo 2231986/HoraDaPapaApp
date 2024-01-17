@@ -7,30 +7,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
-import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.InvoicesListener;
@@ -44,7 +37,7 @@ public class Singleton {
     private static RequestQueue volleyQueue = null;
     private static Singleton singleton_instance = null;
     private static DB_Helper myDatabase;
-    private MqttHandler mqttAndroidClient;
+    private MqttHandler mosquitto;
 
     public int getCurrentMealID() {
         return currentMealID;
@@ -111,20 +104,6 @@ public class Singleton {
                     appPreferences.setUserID(loginInfo.getUserId());
 
                     BetterToast(context, "Login efetuado com sucesso!");
-
-                    // Initialize MQTT client
-                    try
-                    {
-                        //TODO: Terminar o MQTT
-
-                        //String clientID = loginInfo.getUserId();
-                        //mqttAndroidClient = new MqttHandler(context, clientID);
-                        //mqttAndroidClient.subscribeToTopic("topic_" + clientID);
-                    }
-                    catch (Exception ex)
-                    {
-                        ex.printStackTrace();
-                    }
 
                     //TODO: Vai ter de se substituir o Intent por um Listener!
                     Intent intent = new Intent(context, MenuActivity.class);
@@ -347,6 +326,12 @@ public class Singleton {
                     response -> {
                         Toast.makeText(context, "Fatura criada!", Toast.LENGTH_SHORT).show();
                         currentMealID = 0;
+
+                        try {
+                            mosquitto.disconnect();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
@@ -550,6 +535,20 @@ public class Singleton {
                         Meal meal = JsonParser.parseGenericObject(response, Meal.class);
                         if (meal != null) {
                             currentMealID = meal.getId();
+                        }
+
+                        // Initialize MQTT client
+                        try
+                        {
+                            AppPreferences appPreferences = new AppPreferences(context);
+                            String clientID = appPreferences.getUserID();
+
+                            mosquitto = new MqttHandler(context, clientID);
+                            mosquitto.subscribeToTopic(context,"topic_" + clientID);
+                        }
+                        catch (Exception ex)
+                        {
+                            ex.printStackTrace();
                         }
                     },
                     error -> Route.HandleApiError(context, error)) {
