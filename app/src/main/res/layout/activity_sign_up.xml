@@ -1,125 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".activities.extra.SignUpActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/tv_Username"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/text_username" />
+        android:text="@string/text_username"
+        android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/et_Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:ems="10"
-        android:inputType="text" />
+        android:inputType="text"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/tv_Email"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/txtEmail" />
+        android:text="@string/txtEmail"
+        android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/et_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:ems="10"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/tv_Password"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/textPassword" />
+        android:text="@string/textPassword"
+        android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/et_Password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/tv_Name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/txtName" />
+        android:text="@string/txtName"
+        android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/et_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:ems="10"
-        android:inputType="text" />
+        android:inputType="text"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/tv_Surname"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/txtSurname" />
+        android:text="@string/txtSurname"
+        android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/et_Surname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:ems="10"
-        android:inputType="text" />
+        android:inputType="text"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/tv_NIF"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/txtNIF" />
+        android:text="@string/txtNIF"
+        android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/et_NIF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:ems="10"
-        android:inputType="text" />
+        android:inputType="text"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0"
-        android:orientation="horizontal">
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btn_Signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:onClick="onClickSignUp"
-            android:text="Criar utilizador" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btn_Signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickSignUp"
+        android:text="Criar utilizador" />
 
 </LinearLayout>

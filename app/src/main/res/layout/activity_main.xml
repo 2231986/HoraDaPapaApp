@@ -31,7 +31,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="admin" />
+        android:text="admin"
+        android:gravity="center"/>
 
     <EditText
         android:id="@+id/editText_password"
@@ -39,26 +40,31 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="12345678" />
+        android:text="12345678"
+        android:gravity="center"/>
 
     <Button
         android:id="@+id/button_login"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickButtonLogin"
-        android:text="@string/btn_login" />
-
-    <Button
-        android:id="@+id/button_AppConfig"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickAppConfig"
-        android:text="@string/btn_AppConfig" />
+        android:text="@string/btn_login"
+        android:layout_gravity="center" />
 
     <Button
         android:id="@+id/btn_SignUpActivity"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickSignUpActivity"
-        android:text="Registar" />
+        android:text="Registar"
+        android:layout_gravity="center" />
+
+    <Button
+        android:id="@+id/button_AppConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickAppConfig"
+        android:text="@string/btn_AppConfig"
+        android:layout_gravity="center" />
+
 </LinearLayout>
