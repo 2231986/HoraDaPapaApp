@@ -31,6 +31,13 @@ public class Review {
         this.value = cursor.getInt(cursor.getColumnIndexOrThrow("value"));
     }
 
+    public Review(int idreview, int plateid, String description, int value) {
+        this.id = idreview;
+        this.plate_id = plateid;
+        this.description = description;
+        this.value = value;
+    }
+
     public int getId() {return id;}
 
     public void setId(int id) {this.id = id;}

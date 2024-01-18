@@ -292,4 +292,14 @@ public class DB_Helper extends SQLiteOpenHelper {
 
     }
 
+    public void addReviewDB(Review r) {
+        ContentValues values = new ContentValues();
+
+        values.put("id", r.getId());
+        values.put("plate_id", r.getPlate_id());
+        values.put("description", r.getDescription());
+        values.put("value", r.getValue());
+
+        this.db.insert(TABLE_REVIEW, null, values);
+    }
 }

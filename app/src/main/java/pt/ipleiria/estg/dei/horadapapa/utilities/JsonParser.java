@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.models.LoginInfo;
+import pt.ipleiria.estg.dei.horadapapa.models.Review;
 
 public class JsonParser {
     private static JSONObject parseRequest(String response) {
@@ -72,5 +73,28 @@ public class JsonParser {
         }
 
         return returnList;
+    }
+
+
+    public static Review jsonReviewParser(String response){
+        Review auxReview = null;
+
+        try {
+            JSONObject review = new JSONObject(response);
+
+            int idreview = review.getInt("id");
+            int plateid = review.getInt("plate_id");
+            String description = review.getString("description");
+            int value = review.getInt("value");
+
+
+
+            auxReview = new Review(idreview, plateid, description, value);
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return auxReview;
     }
 }

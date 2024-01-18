@@ -39,6 +39,13 @@ public class Singleton {
     private static DB_Helper myDatabase;
     private MqttHandler mosquitto;
 
+    private ArrayList<Review> reviews;
+
+    public void addReviewDB(Review r){
+        myDatabase.addReviewDB(r);
+    }
+
+
     public int getCurrentMealID() {
         return currentMealID;
     }
@@ -644,8 +651,7 @@ public class Singleton {
                     Route.Review(context),
                     response -> {
                         Toast.makeText(context, "Your review was submitted!!", Toast.LENGTH_SHORT).show();
-                        // TODO: Implement response
-
+                        myDatabase.addReviewDB(JsonParser.jsonReviewParser(response));
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
