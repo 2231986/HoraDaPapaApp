@@ -651,7 +651,7 @@ public class Singleton {
                     Route.Review(context),
                     response -> {
                         Toast.makeText(context, "Your review was submitted!!", Toast.LENGTH_SHORT).show();
-                        myDatabase.addReviewDB(JsonParser.jsonReviewParser(response));
+                        //myDatabase.addReviewDB(JsonParser.jsonReviewParser(response));
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
