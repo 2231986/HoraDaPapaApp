@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class DB_Helper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "horadapapa";
-    private static final int DB_VERSION = 6;
+    private static final int DB_VERSION = 7;
     private static final String TABLE_PLATE = "plate";
     private static final String[] TABLE_PLATE_FIELDS = {"id", "title", "description", "price", "image"};
     private static final String TABLE_INVOICE = "invoice";
@@ -53,7 +53,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     private void createTableInvoices(SQLiteDatabase db) {
         String command = "CREATE TABLE " + TABLE_INVOICE + " (" +
                 "id INTEGER PRIMARY KEY, " +
-                "meal_id INTEGER, " +
+                "meal_id INTEGER NOT NULL, " +
                 "price TEXT NOT NULL);";
         db.execSQL(command);
     }
@@ -192,7 +192,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     private void setInvoicesRequests(Invoice invoice) {
         // Delete only the rows where invoice_id matches the specified invoice's id
         String whereClause = "meal_id = ?";
-        String[] whereArgs = {String.valueOf(invoice.getId())};
+        String[] whereArgs = {String.valueOf(invoice.getMeal_id())};
         db.delete(TABLE_INVOICE_REQUESTS, whereClause, whereArgs);
 
         ArrayList<InvoiceRequest> requests = invoice.getInvoiceRequests();

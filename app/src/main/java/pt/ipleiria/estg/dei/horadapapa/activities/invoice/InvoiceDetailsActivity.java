@@ -21,7 +21,7 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
     public static final String ID_INVOICE = "ID_INVOICE";
     Invoice invoice;
 
-    TextView tvInvoiceTotalPrice;
+    TextView tvInvoiceTotalPrice, tvInvoiceID, tvInvoiceMealID;
 
     ListView lvInvoiceRequests;
 
@@ -42,6 +42,8 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
         }
 
         tvInvoiceTotalPrice = findViewById(R.id.tv_InvoiceTotalPrice);
+        tvInvoiceID = findViewById(R.id.textView19);
+        tvInvoiceMealID = findViewById(R.id.textView20);
         lvInvoiceRequests = findViewById(R.id.lv_InvoiceRequests);
 
         loadUI();
@@ -63,7 +65,9 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
 
         if (plates.size() > 0){
             lvInvoiceRequests.setAdapter(new PlateListAdapter(this, plates));
-            tvInvoiceTotalPrice.setText(invoice.getPrice());
+            tvInvoiceTotalPrice.setText(invoice.getPriceFormatted() + "");
+            tvInvoiceID.setText(invoice.getId() + "");
+            tvInvoiceMealID.setText(invoice.getMeal_id() + "");
         }else{
             ProjectHelper.BetterToast(this, "Os Pratos ainda não foram carregados!");
         }

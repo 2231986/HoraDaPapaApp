@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -69,30 +70,21 @@ public class InvoiceListAdapter extends BaseAdapter {
         return view;
     }
 
-
     private class ViewHolderLista {
-    /*    private final TextView tvTitle;
-        private final TextView tvDesc;
-        private final TextView tvPrice;
-        private final ImageView imgCapa;*/
+        private final TextView tvInvoiceID;
+        private final TextView tvMealID;
+        private final TextView tvTotal;
 
         public ViewHolderLista(View view) {
-   /*         tvTitle = view.findViewById(R.id.textView);
-            tvDesc = view.findViewById(R.id.textView2);
-            tvPrice = view.findViewById(R.id.textView3);
-            imgCapa = view.findViewById(R.id.imageView);*/
-
+            tvInvoiceID = view.findViewById(R.id.tv_invoiceID);
+            tvMealID = view.findViewById(R.id.tv_invoice_meal_id);
+            tvTotal = view.findViewById(R.id.tv_invoicePrice);
         }
 
-        public void update(Invoice plate) {
-           /* tvTitle.setText(plate.getTitle());
-            tvDesc.setText(plate.getDescription());
-            tvPrice.setText(plate.getPriceFormatted());
-            Glide.with(context)
-                    .load(plate.getImage())
-                    .placeholder(R.drawable.img)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imgCapa);*/
+        public void update(Invoice invoice) {
+            tvInvoiceID.setText(invoice.getId() + "");
+            tvMealID.setText(invoice.getMeal_id() + "");
+            tvTotal.setText(invoice.getPriceFormatted() + "");
         }
     }
 }
