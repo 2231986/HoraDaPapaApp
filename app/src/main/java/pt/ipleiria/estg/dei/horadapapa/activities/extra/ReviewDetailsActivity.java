@@ -88,11 +88,12 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
                 }
             });
             fabReview.setImageResource(R.drawable.ic_edit);
+            reviewSpinnerPlate.setVisibility(View.GONE);
+
         }else{
             setTitle("Add Review");
             fabReview.setImageResource(R.drawable.ic_add);
             Deletebtn.setVisibility(View.GONE);
-            reviewSpinnerPlate.setVisibility(View.GONE);
         }
 
         spinnerAdapter = new PlateSpinnerAdapter(getApplicationContext(), new ArrayList<>());
