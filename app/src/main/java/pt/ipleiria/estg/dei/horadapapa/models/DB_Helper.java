@@ -244,6 +244,7 @@ public class DB_Helper extends SQLiteOpenHelper {
         }
     }
 
+
     public ArrayList<Plate> getFavorites() {
         ArrayList<Favorite> favorites = new ArrayList<>();
 
@@ -285,4 +286,10 @@ public class DB_Helper extends SQLiteOpenHelper {
             db.insert(TABLE_FAVORITES, null, values);
         }
     }
+
+    public boolean removeReviewDB(int reviewId) {
+        return (this.db.delete(TABLE_REVIEW, reviewId + "= ?",  new String[]{"" + reviewId}) == 1);
+
+    }
+
 }

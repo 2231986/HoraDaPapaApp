@@ -645,6 +645,7 @@ public class Singleton {
                     response -> {
                         Toast.makeText(context, "Your review was submitted!!", Toast.LENGTH_SHORT).show();
                         // TODO: Implement response
+
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
@@ -725,6 +726,7 @@ public class Singleton {
                     Route.Review(context, reviewId), // Assuming Route.Review is correctly implemented to handle review deletion
                     response -> {
                         // Handle successful deletion if needed
+                        myDatabase.removeReviewDB(reviewId);
                     },
                     error -> Route.HandleApiError(context, error)) {
 
