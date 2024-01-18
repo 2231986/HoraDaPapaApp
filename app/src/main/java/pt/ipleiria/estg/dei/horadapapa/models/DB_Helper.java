@@ -292,6 +292,22 @@ public class DB_Helper extends SQLiteOpenHelper {
 
     }
 
+    public boolean updateReviewDB(Review updatedReview) {
+        ContentValues values = new ContentValues();
+
+        values.put("plate_id", updatedReview.getPlate_id());
+        values.put("description", updatedReview.getDescription());
+        values.put("value", updatedReview.getValue());
+
+        String whereClause = "id = ?";
+        String[] whereArgs = {String.valueOf(updatedReview.getId())};
+
+        int rowsAffected = this.db.update(TABLE_REVIEW, values, whereClause, whereArgs);
+
+        return rowsAffected > 0;
+    }
+
+
     public void addReviewDB(Review r) {
         ContentValues values = new ContentValues();
 

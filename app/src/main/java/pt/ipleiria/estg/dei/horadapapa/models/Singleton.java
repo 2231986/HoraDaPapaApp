@@ -647,12 +647,19 @@ public class Singleton {
 
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
+
+            ArrayList<Review> reviews = myDatabase.getReviews();
+
+            if (reviewsListener != null) {
+                reviewsListener.onRefreshReviews(reviews);
+            } else {
+                BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+            }
         } else {
             StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,
                     Route.Review(context),
                     response -> {
-
                         JSONObject jsonObject =  JsonParser.parseRequest(response);
 
                         Review review;
@@ -664,9 +671,10 @@ public class Singleton {
                             throw new RuntimeException(e);
                         }
 
-
                         Toast.makeText(context, "Your review was submitted!!", Toast.LENGTH_SHORT).show();
                         myDatabase.addReviewDB(review);
+
+                        requestReviewGetAll(context);
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
@@ -687,18 +695,6 @@ public class Singleton {
         }
     }
 
-
-    public Review dbGetReview(int id) {
-        ArrayList<Review> items = myDatabase.getReviews();
-
-        for (Review item:items) {
-            if (item.getId() == id)
-                return item;
-        }
-
-        return null;
-    }
-
     public void requestReviewEdit(Context context, int reviewId, int value, String description) {
         if (description.isEmpty()) {
             BetterToast(context, "Descrição vazia!");
@@ -712,13 +708,34 @@ public class Singleton {
 
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
+
+            ArrayList<Review> reviews = myDatabase.getReviews();
+
+            if (reviewsListener != null) {
+                reviewsListener.onRefreshReviews(reviews);
+            } else {
+                BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+            }
         } else {
             StringRequest jsonObjectRequest = new StringRequest(
                     Request.Method.PUT,
                     Route.Review(context, reviewId),
                     response -> {
+                        JSONObject jsonObject =  JsonParser.parseRequest(response);
+
+                        Review review;
+
+                        try {
+                            review = new Review(jsonObject);
+                        } catch (Exception e) {
+                            BetterToast(context, response);
+                            throw new RuntimeException(e);
+                        }
+
+                        myDatabase.updateReviewDB(review);
                         Toast.makeText(context, "Your review was updated!", Toast.LENGTH_SHORT).show();
-                        // TODO: Implement response
+
+                        requestReviewGetAll(context);
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
@@ -741,6 +758,14 @@ public class Singleton {
     public void requestReviewDelete(final Context context, final int reviewId) {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
+
+            ArrayList<Review> reviews = myDatabase.getReviews();
+
+            if (reviewsListener != null) {
+                reviewsListener.onRefreshReviews(reviews);
+            } else {
+                BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+            }
         } else {
             StringRequest jsonObjectRequest = new StringRequest(
                     Request.Method.DELETE,
@@ -748,6 +773,9 @@ public class Singleton {
                     response -> {
                         // Handle successful deletion if needed
                         myDatabase.removeReviewDB(reviewId);
+                        Toast.makeText(context, "Avaliação apagada com sucesso!", Toast.LENGTH_SHORT).show();
+
+                        requestReviewGetAll(context);
                     },
                     error -> Route.HandleApiError(context, error)) {
 
@@ -761,4 +789,14 @@ public class Singleton {
         }
     }
 
+    public Review dbGetReview(int id) {
+        ArrayList<Review> items = myDatabase.getReviews();
+
+        for (Review item:items) {
+            if (item.getId() == id)
+                return item;
+        }
+
+        return null;
+    }
 }

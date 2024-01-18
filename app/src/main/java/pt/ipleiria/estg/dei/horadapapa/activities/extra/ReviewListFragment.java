@@ -1,18 +1,14 @@
-package pt.ipleiria.estg.dei.horadapapa.activities;
+package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,12 +16,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
-import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
-import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
-import pt.ipleiria.estg.dei.horadapapa.adapters.PlateListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.adapters.ReviewsListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.ReviewsListener;
-import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 import pt.ipleiria.estg.dei.horadapapa.models.Review;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 

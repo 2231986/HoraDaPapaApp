@@ -21,7 +21,6 @@ import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.activities.FavouritesListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.MealListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.PlateListFragment;
-import pt.ipleiria.estg.dei.horadapapa.activities.ReviewListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.TableListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.invoice.InvoicesListFragment;
 
