@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,8 +57,8 @@ public class MenuActivity extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
-        //TODO: não encontra o ID
-        tvUserName = findViewById(R.id.tv_menuUserName);
+        View view = navigationView.getHeaderView(0);
+        tvUserName = view.findViewById(R.id.tv_menuUserName);
 
         Intent intent = getIntent();
 
