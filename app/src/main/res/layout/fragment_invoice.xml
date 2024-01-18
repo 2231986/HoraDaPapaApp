@@ -4,27 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".activities.invoice.InvoiceFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginEnd="16dp">
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:src="@drawable/img" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/img"
+                android:scaleType="centerCrop" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -32,39 +36,81 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/invoiceTitle"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_invoice_meal_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/invoice_meal_id" />
-
-            <TextView
-                android:id="@+id/tv_invoicePrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/invoicePrice" />
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_invoiceDate"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textView25"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/invoiceDate" />
+                    android:text="@string/txtIID" />
 
-                <Button
-                    android:id="@+id/button"
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/tv_invoiceID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:layout_weight="0"
-                    android:text="Button"
-                    tools:text="@string/invoiceDetailsButton" />
+                    android:text="@string/txtInvoiceeID"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txtIMID" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/tv_invoice_meal_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invoice_meal_id"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txtTIP" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent" />
+
+
+                <TextView
+                    android:id="@+id/tv_invoicePrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invoicePrice"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
