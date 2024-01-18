@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 public class Review {
 
-
     private int id;
     private int value;
 
@@ -17,6 +16,7 @@ public class Review {
     public Review(JSONObject jsonObject) {
         try {
             this.id = jsonObject.getInt("id");
+            this.plate_id = jsonObject.getInt("plate_id");
             this.description = jsonObject.getString("description");
             this.value = jsonObject.getInt("value");
         } catch (JSONException e) {
@@ -29,13 +29,6 @@ public class Review {
         this.plate_id = cursor.getInt(cursor.getColumnIndexOrThrow("plate_id"));
         this.description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
         this.value = cursor.getInt(cursor.getColumnIndexOrThrow("value"));
-    }
-
-    public Review(int idreview, int plateid, String description, int value) {
-        this.id = idreview;
-        this.plate_id = plateid;
-        this.description = description;
-        this.value = value;
     }
 
     public int getId() {return id;}

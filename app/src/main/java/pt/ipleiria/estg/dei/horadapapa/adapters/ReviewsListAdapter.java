@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.horadapapa.adapters;
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 import static pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity.ID_REVIEW;
+import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +20,9 @@ import java.util.ArrayList;
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
+import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 import pt.ipleiria.estg.dei.horadapapa.models.Review;
+import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
 public class ReviewsListAdapter extends BaseAdapter {
 
@@ -90,25 +94,31 @@ public class ReviewsListAdapter extends BaseAdapter {
 
 
     private class ViewHolderLista {
-        private final TextView tvDesc;
-        private final TextView tvValue;
+        private final TextView tvDesc, tvValue, tvPlateID;
 
         public ViewHolderLista(View view) {
             tvDesc = view.findViewById(R.id.textView12);
             tvValue = view.findViewById(R.id.textView15);
-            //imgCapa = view.findViewById(R.id.imageView);
-
+            tvPlateID = view.findViewById(R.id.textView11);
         }
 
-        public void update(Review review) {
+        public void update(Review review)
+        {
             tvDesc.setText(review.getDescription());
             tvValue.setText(String.valueOf(review.getValue()));
 
-            //Glide.with(context);
-                    //.load(plate.getImage())
-                    //.placeholder(R.drawable.img)
-                    //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                   // .into(imgCapa);
+            int plateID = review.getPlate_id();
+
+            if (plateID > 0)
+            {
+                Plate plate = Singleton.getInstance(context).dbGetPlate(plateID);
+                tvPlateID.setText(String.valueOf(plate.getTitle()));
+            }
+            else
+            {
+                BetterToast(context, "Os pratos ainda não foram carregados!");
+            }
+
         }
 
     }
