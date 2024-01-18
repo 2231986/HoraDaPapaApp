@@ -12,7 +12,7 @@ import pt.ipleiria.estg.dei.horadapapa.models.LoginInfo;
 import pt.ipleiria.estg.dei.horadapapa.models.Review;
 
 public class JsonParser {
-    private static JSONObject parseRequest(String response) {
+    public static JSONObject parseRequest(String response) {
         JSONObject jsonObject = null;
 
         try {

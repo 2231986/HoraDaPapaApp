@@ -18,6 +18,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -646,12 +648,25 @@ public class Singleton {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
         } else {
-            StringRequest jsonObjectRequest = new StringRequest(
+            StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,
                     Route.Review(context),
                     response -> {
+
+                        JSONObject jsonObject =  JsonParser.parseRequest(response);
+
+                        Review review;
+
+                        try {
+                            review = new Review(jsonObject);
+                        } catch (Exception e) {
+                            BetterToast(context, response);
+                            throw new RuntimeException(e);
+                        }
+
+
                         Toast.makeText(context, "Your review was submitted!!", Toast.LENGTH_SHORT).show();
-                        //myDatabase.addReviewDB(JsonParser.jsonReviewParser(response));
+                        myDatabase.addReviewDB(review);
                     },
                     error -> Route.HandleApiError(context, error)) {
                 @Override
@@ -668,7 +683,7 @@ public class Singleton {
                 }
             };
 
-            volleyQueue.add(jsonObjectRequest);
+            volleyQueue.add(stringRequest);
         }
     }
 
