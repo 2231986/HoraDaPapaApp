@@ -21,6 +21,8 @@ public class AppConfingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_config);
         Log.d("Lifecycle", "onCreate() called");
+        setTitle("App Settings");
+
 
 
         AppPreferences appPreferences = new AppPreferences(this);

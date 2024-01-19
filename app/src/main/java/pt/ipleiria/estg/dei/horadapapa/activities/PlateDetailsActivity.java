@@ -31,6 +31,8 @@ public class PlateDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plate_details);
+        setTitle("Plate Details");
+
 
         int id = getIntent().getIntExtra(ID_PLATE, 0);
 

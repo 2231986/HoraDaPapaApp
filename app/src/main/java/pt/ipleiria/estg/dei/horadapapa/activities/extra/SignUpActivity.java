@@ -23,6 +23,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         Log.d("Lifecycle", "onCreate() called");
+        setTitle("Sign Up");
+
 
 
         etUsername = findViewById(R.id.et_Username);

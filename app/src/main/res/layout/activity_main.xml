@@ -55,9 +55,9 @@
         android:id="@+id/btn_SignUpActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:onClick="onClickSignUpActivity"
-        android:text="Registar"
-        android:layout_gravity="center" />
+        android:text="Sign Up" />
 
     <Button
         android:id="@+id/button_AppConfig"
