@@ -2,6 +2,8 @@ package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
 import static java.security.AccessController.getContext;
 
+import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -11,11 +13,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Text;
@@ -29,6 +34,7 @@ import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 import pt.ipleiria.estg.dei.horadapapa.models.Review;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
+import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 
 public class ReviewDetailsActivity extends AppCompatActivity implements PlatesListener {
 
@@ -50,6 +56,8 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
 
     private Button Deletebtn;
 
+    private ImageView plateimg;
+
 
 
     @Override
@@ -66,6 +74,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         stars = findViewById(R.id.ratingBar);
         fabReview = findViewById(R.id.fabReview);
         reviewSpinnerPlate = findViewById(R.id.reviewSpinnerPlate);
+        plateimg = findViewById(R.id.imageView3);
 
         if(review !=null) {
             loadReview();
@@ -173,6 +182,24 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         reviewSpinnerPlate.setSelection(review.getPlate_id());
         txtDescription.setText(review.getDescription());
         stars.setRating(review.getValue());
+
+        int plateID = review.getPlate_id();
+
+        if (plateID > 0)
+        {
+            Plate plate = Singleton.getInstance(getApplicationContext()).dbGetPlate(plateID);
+            AppPreferences appPreferences = new AppPreferences(getApplicationContext());
+
+            Glide.with(getApplicationContext())
+                    .load( "http://" + appPreferences.getApiIP() + plate.getImage())
+                    .placeholder(R.drawable.img)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(plateimg);
+        }
+        else
+        {
+            BetterToast(getApplicationContext(), "Os pratos ainda não foram carregados!");
+        }
     }
 
     @Override
