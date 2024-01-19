@@ -3,6 +3,8 @@ package pt.ipleiria.estg.dei.horadapapa.utilities;
 import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -50,7 +52,7 @@ public class MqttHandler {
                     @Override
                     public void messageArrived(String topic, MqttMessage message) {
                         String payload = new String(message.getPayload());
-                        BetterToast(context, TAG + "Received message on topic " + topic + ": " + payload);
+                        new Handler(Looper.getMainLooper()).post(() -> BetterToast(context, payload));
                     }
 
                     @Override
