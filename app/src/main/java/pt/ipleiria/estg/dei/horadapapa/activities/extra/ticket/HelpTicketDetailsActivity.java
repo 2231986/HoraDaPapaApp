@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa.activities.extra;
+package pt.ipleiria.estg.dei.horadapapa.activities.extra.ticket;
 
 import android.os.Bundle;
 import android.view.View;

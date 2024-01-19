@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa.activities.extra;
+package pt.ipleiria.estg.dei.horadapapa.activities.extra.review;
 
 import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 

@@ -1,6 +1,6 @@
 package pt.ipleiria.estg.dei.horadapapa.adapters;
 
-import static pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketDetailsActivity.ID_TICKET;
+import static pt.ipleiria.estg.dei.horadapapa.activities.extra.ticket.HelpTicketDetailsActivity.ID_TICKET;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
-import pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketDetailsActivity;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.ticket.HelpTicketDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.models.HelpTicket;
 
 public class TicketsListAdapter extends BaseAdapter {

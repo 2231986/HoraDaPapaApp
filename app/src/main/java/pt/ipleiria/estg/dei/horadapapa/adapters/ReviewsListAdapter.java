@@ -1,6 +1,6 @@
 package pt.ipleiria.estg.dei.horadapapa.adapters;
 
-import static pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity.ID_REVIEW;
+import static pt.ipleiria.estg.dei.horadapapa.activities.extra.review.ReviewDetailsActivity.ID_REVIEW;
 import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 
 import android.content.Context;
@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
-import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.review.ReviewDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 import pt.ipleiria.estg.dei.horadapapa.models.Review;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;

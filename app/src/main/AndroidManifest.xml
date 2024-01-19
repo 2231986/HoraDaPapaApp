@@ -17,11 +17,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activities.extra.HelpTicketDetailsActivity"
+            android:name=".activities.extra.ticket.HelpTicketDetailsActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".activities.extra.ReviewDetailsActivity"
+            android:name=".activities.extra.review.ReviewDetailsActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
@@ -29,11 +29,11 @@
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".activities.PlateDetailsActivity"
+            android:name=".activities.plate.PlateDetailsActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".activities.CartActivity"
+            android:name=".activities.meal.CartActivity"
             android:exported="false" />
         <activity
             android:name=".activities.extra.SignUpActivity"

@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
+import pt.ipleiria.estg.dei.horadapapa.activities.plate.PlateListFragment;
 import pt.ipleiria.estg.dei.horadapapa.adapters.DinnerSpinnerAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Dinner;

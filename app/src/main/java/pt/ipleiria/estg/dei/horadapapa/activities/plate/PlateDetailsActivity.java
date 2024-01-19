@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa.activities;
+package pt.ipleiria.estg.dei.horadapapa.activities.plate;
 
 import android.os.Bundle;
 import android.view.View;

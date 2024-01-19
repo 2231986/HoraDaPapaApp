@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa.activities.extra;
+package pt.ipleiria.estg.dei.horadapapa.activities.extra.review;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
 import pt.ipleiria.estg.dei.horadapapa.adapters.ReviewsListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.ReviewsListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Review;

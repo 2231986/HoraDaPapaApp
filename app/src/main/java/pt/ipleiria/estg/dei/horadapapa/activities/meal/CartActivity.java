@@ -1,4 +1,4 @@
-package pt.ipleiria.estg.dei.horadapapa.activities;
+package pt.ipleiria.estg.dei.horadapapa.activities.meal;
 
 import android.content.Intent;
 import android.os.Bundle;
