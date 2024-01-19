@@ -188,13 +188,18 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         if (plateID > 0)
         {
             Plate plate = Singleton.getInstance(getApplicationContext()).dbGetPlate(plateID);
-            AppPreferences appPreferences = new AppPreferences(getApplicationContext());
 
-            Glide.with(getApplicationContext())
-                    .load( "http://" + appPreferences.getApiIP() + plate.getImage())
-                    .placeholder(R.drawable.img)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(plateimg);
+            if (plate != null){
+                AppPreferences appPreferences = new AppPreferences(getApplicationContext());
+
+                Glide.with(getApplicationContext())
+                        .load( "http://" + appPreferences.getApiIP() + plate.getImage())
+                        .placeholder(R.drawable.img)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(plateimg);
+            }else{
+                BetterToast(getApplicationContext(), "Os pratos ainda não foram carregados!");
+            }
         }
         else
         {

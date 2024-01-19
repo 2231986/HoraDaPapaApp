@@ -108,7 +108,12 @@ public class ReviewsListAdapter extends BaseAdapter {
             if (plateID > 0)
             {
                 Plate plate = Singleton.getInstance(context).dbGetPlate(plateID);
-                tvPlateID.setText(String.valueOf(plate.getTitle()));
+
+                if (plate != null){
+                    tvPlateID.setText(String.valueOf(plate.getTitle()));
+                }else{
+                    BetterToast(context, "Os pratos ainda não foram carregados!");
+                }
             }
             else
             {
