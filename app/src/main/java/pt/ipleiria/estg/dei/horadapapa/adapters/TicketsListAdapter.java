@@ -16,51 +16,42 @@ import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
+import pt.ipleiria.estg.dei.horadapapa.models.HelpTicket;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
-import pt.ipleiria.estg.dei.horadapapa.models.Review;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
-public class ReviewsListAdapter extends BaseAdapter {
-
-
+public class TicketsListAdapter extends BaseAdapter {
 
     private final Context context;
     private final LayoutInflater layoutInflater;
 
-    private final ArrayList<Review> reviews;
-
-    public ReviewsListAdapter(Context context, ArrayList<Review> reviews) {
+    private final ArrayList<HelpTicket> tickets;
+    public TicketsListAdapter(Context context, ArrayList<HelpTicket> tickets) {
         this.context = context;
-        this.reviews = reviews;
+        this.tickets = tickets;
         this.layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public int getCount() {
-        return reviews.size();
-    }
+    public int getCount() {return tickets.size();}
 
     @Override
-    public Object getItem(int position) {
-        return reviews.get(position);
-    }
+    public Object getItem(int position) {return tickets.get(position);}
 
     @Override
-    public long getItemId(int position) {
-        return reviews.get(position).getId();
-    }
+    public long getItemId(int position) {return tickets.get(position).getId();}
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ReviewsListAdapter.ViewHolderLista viewHolderLista;
-        final Review currentReview = reviews.get(position);
+        TicketsListAdapter.ViewHolderLista viewHolderLista;
+        final HelpTicket currentTicket = tickets.get(position);
 
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.fragment_review, null);
-            viewHolderLista = new ViewHolderLista(convertView);
+            convertView = layoutInflater.inflate(R.layout.fragment_ticket, null);
+            viewHolderLista = new TicketsListAdapter.ViewHolderLista(convertView);
             convertView.setTag(viewHolderLista);
         } else {
-            viewHolderLista = (ViewHolderLista) convertView.getTag();
+            viewHolderLista = (TicketsListAdapter.ViewHolderLista) convertView.getTag();
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +59,7 @@ public class ReviewsListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Toast.makeText(context, "Detalhe aberto!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, ReviewDetailsActivity.class);
-                intent.putExtra(ID_REVIEW, currentReview.getId());
+                intent.putExtra(ID_REVIEW, currentTicket.getId());
 
                 context.startActivity(intent);
             }
@@ -84,36 +75,21 @@ public class ReviewsListAdapter extends BaseAdapter {
             Singleton.getInstance(context).requestRequestPlate(context, reviewId, observation);
         });*/
 
-        viewHolderLista.update(currentReview);
+        viewHolderLista.update(currentTicket);
         return convertView;
     }
 
-
     private class ViewHolderLista {
-        private final TextView tvDesc, tvValue, tvPlateID;
+        private final TextView tvDesc;
 
         public ViewHolderLista(View view) {
-            tvDesc = view.findViewById(R.id.tv_Des);
-            tvValue = view.findViewById(R.id.textView15);
-            tvPlateID = view.findViewById(R.id.textView11);
+            tvDesc = view.findViewById(R.id.tv_Descr);
         }
 
-        public void update(Review review)
+        public void update(HelpTicket ticket)
         {
-            tvDesc.setText(review.getDescription());
-            tvValue.setText(String.valueOf(review.getValue()));
-
-            int plateID = review.getPlate_id();
-
-            if (plateID > 0)
-            {
-                Plate plate = Singleton.getInstance(context).dbGetPlate(plateID);
-                tvPlateID.setText(String.valueOf(plate.getTitle()));
-            }
-            else
-            {
-                BetterToast(context, "Os pratos ainda não foram carregados!");
-            }
+            tvDesc.setText(ticket.getDescription());
+            tvDesc.setText(String.valueOf(ticket.getDescription()));
 
         }
 

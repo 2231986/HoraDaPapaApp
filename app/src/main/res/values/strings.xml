@@ -48,4 +48,5 @@
     <string name="txtIMID">Meal ID</string>
     <string name="txtTIP">"Price: "</string>
     <string name="txtInvoiceeID">"Invoice ID: "</string>
+    <string name="navTickets">Tickets</string>
 </resources>

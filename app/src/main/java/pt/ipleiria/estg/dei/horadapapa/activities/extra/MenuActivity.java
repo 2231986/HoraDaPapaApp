@@ -92,7 +92,9 @@ public class MenuActivity extends AppCompatActivity {
             setTitle(item.getTitle());
         } else if (item.getItemId() == R.id.navEmail) {
             enviarEmail();
-        }
+        } else if (item.getItemId() == R.id.navTicket) {
+            fragment = new HelpTicketListFragment();
+            setTitle(item.getTitle());        }
 
         if (fragment != null) {
             fragmentManager.beginTransaction().replace(R.id.contentLayout, fragment).commit();

@@ -18,19 +18,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.InvoicesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.ReviewsListener;
+import pt.ipleiria.estg.dei.horadapapa.listeners.TicketsListener;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 import pt.ipleiria.estg.dei.horadapapa.utilities.JsonParser;
 import pt.ipleiria.estg.dei.horadapapa.utilities.MqttHandler;
@@ -60,6 +61,9 @@ public class Singleton {
     private ReviewsListener reviewsListener = null;
     private InvoicesListener invoicesListener = null;
 
+    private TicketsListener ticketsListener = null;
+
+
     private Singleton(Context context) {
         volleyQueue = Volley.newRequestQueue(context);
         myDatabase = new DB_Helper(context);
@@ -79,6 +83,9 @@ public class Singleton {
 
     public void setInvoicesListener(InvoicesListener invoicesListener) {
         this.invoicesListener = invoicesListener;
+    }
+    public void setTicketsListener(TicketsListener ticketsListener) {
+        this.ticketsListener = ticketsListener;
     }
 
     public void setFavoritesListener(FavoritesListener favoritesListener) {
@@ -806,4 +813,44 @@ public class Singleton {
 
         return null;
     }
+
+    public void requestTicketGetAll(Context context) {
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+
+            ArrayList<HelpTicket> helptickets = myDatabase.getTickets();
+
+            if (ticketsListener != null) {
+                ticketsListener.onRefreshTickets(helptickets);
+            } else {
+                BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+            }
+        } else {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.Helpticket(context), null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    ArrayList<HelpTicket> tickets = JsonParser.parseGenericList(response, HelpTicket.class);
+
+                    if (tickets.size() == 0) {
+                        BetterToast(context, "Sem tickets!");
+                    }
+
+                    myDatabase.SetTickets(tickets);
+
+                    if (ticketsListener != null) {
+                        ticketsListener.onRefreshTickets(tickets);
+                    } else {
+                        BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+                    }
+                }
+            }, error -> Route.HandleApiError(context, error)) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    return Route.GetAuthorizationBearerHeader(context);
+                }
+            };
+            volleyQueue.add(jsonArrayRequest);
+        }
+    }
 }
+

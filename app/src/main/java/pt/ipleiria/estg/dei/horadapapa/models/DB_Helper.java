@@ -23,6 +23,13 @@ public class DB_Helper extends SQLiteOpenHelper {
     private static final String TABLE_FAVORITES = "favorites";
     private static final String[] TABLE_FAVORITES_FIELDS = {"id", "plate_id"};
 
+
+    private static final String TABLE_HELP_TICKET = "help_tickets";
+
+    private static final String[] TABLE_HELP_TICKET_FIELDS = {"id","description"};
+
+
+
     private final SQLiteDatabase db;
 
 
@@ -38,6 +45,7 @@ public class DB_Helper extends SQLiteOpenHelper {
         createTableInvoiceRequests(db);
         createTableReviews(db);
         createTableFavorites(db);
+        createTableHelp_Ticket(db);
     }
 
     private void createTablePlates(SQLiteDatabase db) {
@@ -75,6 +83,13 @@ public class DB_Helper extends SQLiteOpenHelper {
         db.execSQL(command);
     }
 
+    private void createTableHelp_Ticket(SQLiteDatabase db) {
+        String command = "CREATE TABLE " + TABLE_HELP_TICKET + " (" +
+                "id INTEGER PRIMARY KEY, " +
+                "description TEXT NOT NULL);";
+        db.execSQL(command);
+    }
+
     private void createTableFavorites(SQLiteDatabase db) {
         String command = "CREATE TABLE " + TABLE_FAVORITES + " (" +
                 "id INTEGER PRIMARY KEY, " +
@@ -89,6 +104,7 @@ public class DB_Helper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVOICE_REQUESTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REVIEW);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HELP_TICKET);
         onCreate(db);
     }
 
@@ -317,5 +333,39 @@ public class DB_Helper extends SQLiteOpenHelper {
         values.put("value", r.getValue());
 
         this.db.insert(TABLE_REVIEW, null, values);
+    }
+
+    public ArrayList<HelpTicket> getTickets() {
+        ArrayList<HelpTicket> tickets = new ArrayList<>();
+
+        Cursor cursor = db.query(TABLE_HELP_TICKET, TABLE_HELP_TICKET_FIELDS,
+                null, null, null, null, "id");
+
+        if (cursor.moveToFirst()) {
+            do {
+                HelpTicket ticket = new HelpTicket(cursor);
+
+                tickets.add(ticket);
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return tickets;
+
+    }
+
+
+
+    public void SetTickets(ArrayList<HelpTicket> tickets) {
+//        db.delete(TABLE_HELP_TICKET, null, null);
+
+        for (HelpTicket ticket : tickets) {
+            ContentValues values = new ContentValues();
+            values.put("id", ticket.getId());
+            values.put("description", ticket.getDescription());
+            db.insert(TABLE_HELP_TICKET, null, values);
+        }
     }
 }
