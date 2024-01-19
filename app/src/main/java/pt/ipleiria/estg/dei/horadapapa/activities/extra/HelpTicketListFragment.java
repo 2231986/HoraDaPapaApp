@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,8 @@ import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 public class HelpTicketListFragment extends Fragment {
 
     private ListView lvHelpTicket;
+    private FloatingActionButton fabadd;
+
 
 
     public HelpTicketListFragment() {
@@ -46,6 +51,16 @@ public class HelpTicketListFragment extends Fragment {
         lvHelpTicket = view.findViewById(R.id.lvTickets);
         Singleton.getInstance(getContext()).setTicketsListener(this::onRefreshTickets);
         Singleton.getInstance(getContext()).requestTicketGetAll(getContext());
+
+        fabadd = view.findViewById(R.id.fabticketlistadd);
+        fabadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), HelpTicketDetailsActivity.class);
+                startActivityForResult(intent, MenuActivity.ADD);
+            }
+        });
+
 
         return view;
     }

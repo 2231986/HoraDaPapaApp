@@ -852,5 +852,73 @@ public class Singleton {
             volleyQueue.add(jsonArrayRequest);
         }
     }
+
+    public void requestTicketAdd(Context context, String description) {
+
+        if (description == "") {
+            BetterToast(context, "Descrição vazia!");
+            return;
+        }
+
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+
+            ArrayList<HelpTicket> tickets = myDatabase.getTickets();
+
+            if (ticketsListener != null) {
+                ticketsListener.onRefreshTickets(tickets);
+            } else {
+                BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+            }
+        } else {
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    Route.Helpticket(context),
+                    response -> {
+                        JSONObject jsonObject =  JsonParser.parseRequest(response);
+
+                        HelpTicket ticket;
+
+                        try {
+                            ticket = new HelpTicket(jsonObject);
+                        } catch (Exception e) {
+                            BetterToast(context, response);
+                            throw new RuntimeException(e);
+                        }
+
+                        Toast.makeText(context, "Your review was submitted!!", Toast.LENGTH_SHORT).show();
+                        myDatabase.addTicketDB(ticket);
+
+                        requestTicketGetAll(context);
+                    },
+                    error -> Route.HandleApiError(context, error)) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    return Route.GetAuthorizationBearerHeader(context);
+                }
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("description", description);
+                    return params;
+                }
+            };
+
+            volleyQueue.add(stringRequest);
+        }
+    }
+
+
+
+    public HelpTicket dbGetTicket(int id) {
+        ArrayList<HelpTicket> items = myDatabase.getTickets();
+
+        for (HelpTicket item:items) {
+            if (item.getId() == id)
+                return item;
+        }
+
+        return null;
+    }
 }
 

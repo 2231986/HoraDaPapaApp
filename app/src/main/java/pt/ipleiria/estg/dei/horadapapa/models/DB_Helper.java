@@ -359,7 +359,7 @@ public class DB_Helper extends SQLiteOpenHelper {
 
 
     public void SetTickets(ArrayList<HelpTicket> tickets) {
-//        db.delete(TABLE_HELP_TICKET, null, null);
+        db.delete(TABLE_HELP_TICKET, null, null);
 
         for (HelpTicket ticket : tickets) {
             ContentValues values = new ContentValues();
@@ -367,5 +367,13 @@ public class DB_Helper extends SQLiteOpenHelper {
             values.put("description", ticket.getDescription());
             db.insert(TABLE_HELP_TICKET, null, values);
         }
+    }
+
+    public void addTicketDB(HelpTicket ticket) {
+        ContentValues values = new ContentValues();
+
+        values.put("description", ticket.getDescription());
+
+        this.db.insert(TABLE_HELP_TICKET, null, values);
     }
 }
