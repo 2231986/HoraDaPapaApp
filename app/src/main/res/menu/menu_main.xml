@@ -28,6 +28,12 @@
             android:icon="@drawable/ic_meal"
             android:id="@+id/navMeal"/>
         <item
+            android:id="@+id/navTicket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_hand"
+            android:title="@string/navTickets" />
+        <item
             android:id="@+id/navFavourites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,12 +52,6 @@
             android:icon="@drawable/ic_invoice"
             android:title="@string/navInvoice" />
 
-        <item
-            android:id="@+id/navTicket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_invoice"
-            android:title="@string/navTickets" />
     </group>
     <item
         android:layout_width="wrap_content"
