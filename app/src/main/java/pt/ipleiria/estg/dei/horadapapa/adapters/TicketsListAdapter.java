@@ -80,15 +80,17 @@ public class TicketsListAdapter extends BaseAdapter {
     }
 
     private class ViewHolderLista {
-        private final TextView tvDesc;
+        private final TextView tvDesc, tvTicketID;
 
         public ViewHolderLista(View view) {
             tvDesc = view.findViewById(R.id.tv_Descr);
+            tvTicketID = view.findViewById(R.id.tv_ticketID);
         }
 
         public void update(HelpTicket ticket)
         {
-            tvDesc.setText(ticket.getDescription());
+            tvTicketID.setText(String.valueOf(ticket.getId()));
+
             tvDesc.setText(String.valueOf(ticket.getDescription()));
 
         }
