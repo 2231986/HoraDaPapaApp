@@ -650,7 +650,7 @@ public class Singleton {
             return;
         }
 
-        if (description == "") {
+        if (description.isEmpty()) {
             BetterToast(context, "Descrição vazia!");
             return;
         }
@@ -856,7 +856,7 @@ public class Singleton {
 
     public void requestTicketAdd(Context context, String description) {
 
-        if (description == "") {
+        if (description.isEmpty()) {
             BetterToast(context, "Descrição vazia!");
             return;
         }
@@ -887,7 +887,7 @@ public class Singleton {
                             throw new RuntimeException(e);
                         }
 
-                        Toast.makeText(context, "Your review was submitted!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Your ticket was submitted!!", Toast.LENGTH_SHORT).show();
                         myDatabase.addTicketDB(ticket);
 
                         requestTicketGetAll(context);
@@ -908,8 +908,6 @@ public class Singleton {
             volleyQueue.add(stringRequest);
         }
     }
-
-
 
     public HelpTicket dbGetTicket(int id) {
         ArrayList<HelpTicket> items = myDatabase.getTickets();

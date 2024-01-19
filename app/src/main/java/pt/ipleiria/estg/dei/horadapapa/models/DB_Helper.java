@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class DB_Helper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "horadapapa";
-    private static final int DB_VERSION = 7;
+    private static final int DB_VERSION = 8;
     private static final String TABLE_PLATE = "plate";
     private static final String[] TABLE_PLATE_FIELDS = {"id", "title", "description", "price", "image"};
     private static final String TABLE_INVOICE = "invoice";
