@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.horadapapa.adapters;
 
+import static pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketDetailsActivity.ID_TICKET;
 import static pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity.ID_REVIEW;
 import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.models.HelpTicket;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
@@ -58,8 +60,8 @@ public class TicketsListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Detalhe aberto!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, ReviewDetailsActivity.class);
-                intent.putExtra(ID_REVIEW, currentTicket.getId());
+                Intent intent = new Intent(context, HelpTicketDetailsActivity.class);
+                intent.putExtra(ID_TICKET, currentTicket.getId());
 
                 context.startActivity(intent);
             }
