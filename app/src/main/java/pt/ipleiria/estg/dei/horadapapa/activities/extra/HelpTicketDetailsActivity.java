@@ -53,6 +53,16 @@ public class HelpTicketDetailsActivity extends AppCompatActivity {
             btndelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // DELETE
+                    Toast.makeText(HelpTicketDetailsActivity.this, "Processing delete", Toast.LENGTH_SHORT).show();
+
+                    // Use the review.getId() directly in the requestReviewDelete method
+                    Singleton.getInstance(getApplicationContext()).requestTicketDelete(
+                            HelpTicketDetailsActivity.this,
+                            ticket.getId()
+                    );
+
+                    finish();
 
                 }
             });

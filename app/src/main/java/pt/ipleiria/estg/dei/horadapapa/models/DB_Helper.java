@@ -376,4 +376,9 @@ public class DB_Helper extends SQLiteOpenHelper {
 
         this.db.insert(TABLE_HELP_TICKET, null, values);
     }
+
+    public boolean removeTicketDB(int ticketId) {
+        return (this.db.delete(TABLE_HELP_TICKET, ticketId + "= ?",  new String[]{"" + ticketId}) == 1);
+
+    }
 }

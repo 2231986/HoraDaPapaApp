@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
@@ -919,6 +920,40 @@ public class Singleton {
         }
 
         return null;
+    }
+
+    public void requestTicketDelete(final Context context, final int ticketId) {
+        if (!isConnected(context)) {
+            BetterToast(context, "Sem internet!");
+
+            ArrayList<HelpTicket> tickets = myDatabase.getTickets();
+
+            if (ticketsListener != null) {
+                ticketsListener.onRefreshTickets(tickets);
+            } else {
+                BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+            }
+        } else {
+            StringRequest jsonObjectRequest = new StringRequest(
+                    Request.Method.DELETE,
+                    Route.Helpticket(context, ticketId), // Assuming Route.Review is correctly implemented to handle review deletion
+                    response -> {
+                        // Handle successful deletion if needed
+                        myDatabase.removeTicketDB(ticketId);
+                        Toast.makeText(context, "Ticket Deleted!", Toast.LENGTH_SHORT).show();
+
+                        requestTicketGetAll(context);
+                    },
+                    error -> Route.HandleApiError(context, error)) {
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    return Route.GetAuthorizationBearerHeader(context);
+                }
+            };
+
+            volleyQueue.add(jsonObjectRequest);
+        }
     }
 }
 
