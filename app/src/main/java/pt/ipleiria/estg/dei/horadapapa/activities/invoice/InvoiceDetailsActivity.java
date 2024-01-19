@@ -64,7 +64,7 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
         }
 
         if (plates.size() > 0){
-            lvInvoiceRequests.setAdapter(new PlateListAdapter(this, plates));
+            lvInvoiceRequests.setAdapter(new PlateListAdapter(this, plates, true));
             tvInvoiceTotalPrice.setText(invoice.getPriceFormatted() + "");
             tvInvoiceID.setText(invoice.getId() + "");
             tvInvoiceMealID.setText(invoice.getMeal_id() + "");

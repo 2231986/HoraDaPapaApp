@@ -336,6 +336,13 @@ public class Singleton {
                         Toast.makeText(context, "Fatura criada!", Toast.LENGTH_SHORT).show();
                         currentMealID = 0;
 
+                        //Limpa a lista
+                        if (platesListener != null) {
+                            platesListener.onRefreshPlates(new ArrayList<>());
+                        } else {
+                            BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
+                        }
+
                         try {
                             mosquitto.disconnect();
                         } catch (Exception e) {
