@@ -108,52 +108,46 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
             }
         });
 
-        Singleton.getInstance(getApplicationContext()).setPlatesListener(this);
-        Singleton.getInstance(getApplicationContext()).requestPlateGetAll(getApplicationContext());
+        fabReview.setOnClickListener(v -> {
+            if (review != null) {
+                // EDITAR
+                Toast.makeText(ReviewDetailsActivity.this, "Processing update", Toast.LENGTH_SHORT).show();
 
-        fabReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (review != null) {
-                    // EDITAR
-                    Toast.makeText(ReviewDetailsActivity.this, "Processing update", Toast.LENGTH_SHORT).show();
+                // Descrição
+                String description = txtDescription.getText().toString();
 
-                    // Descrição
+                // Buscar valor float
+                float rating = stars.getRating();
+
+                // Conversão para int
+                int value = Math.round(rating);
+                // Usamos review.getId() diretamente no request
+                Singleton.getInstance(getApplicationContext()).requestReviewEdit(
+                        ReviewDetailsActivity.this,
+                        review.getId(),
+                        value,
+                        description
+                );
+
+                finish();
+            } else {
+                //ADICIONAR
+
+                // ver se prato foi selecionado
+                if (selectedPlate != null) {
+                    // Use selectedDinner.getId()
+                    int selectedPlateId = selectedPlate.getId();
+                    //Descriçao
                     String description = txtDescription.getText().toString();
-
-                    // Buscar valor float
+                    // buscar valor float
                     float rating = stars.getRating();
-
-                    // Conversão para int
+                    // conversao para int
                     int value = Math.round(rating);
-                    // Usamos review.getId() diretamente no request
-                    Singleton.getInstance(getApplicationContext()).requestReviewEdit(
-                            ReviewDetailsActivity.this,
-                            review.getId(),
-                            value,
-                            description
-                    );
-
+                    //Faz request à API para guardar review
+                    Singleton.getInstance(getApplicationContext()).requestReviewAdd(ReviewDetailsActivity.this, selectedPlateId, value, description);
                     finish();
                 } else {
-                    //ADICIONAR
-
-                    // ver se prato foi selecionado
-                    if (selectedPlate != null) {
-                        // Use selectedDinner.getId()
-                        int selectedPlateId = selectedPlate.getId();
-                        //Descriçao
-                        String description = txtDescription.getText().toString();
-                        // buscar valor float
-                        float rating = stars.getRating();
-                        // conversao para int
-                        int value = Math.round(rating);
-                        //Faz request à API para guardar review
-                        Singleton.getInstance(getApplicationContext()).requestReviewAdd(ReviewDetailsActivity.this, selectedPlateId, value, description);
-                        finish();
-                    } else {
-                        Toast.makeText(ReviewDetailsActivity.this, "Please select a plate before sending a review!", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(ReviewDetailsActivity.this, "Please select a plate before sending a review!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

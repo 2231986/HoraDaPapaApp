@@ -172,8 +172,6 @@ public class Singleton {
 
             if (platesListener != null) {
                 platesListener.onRefreshPlates(plates);
-            } else {
-                BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
             }
         } else {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Route.PlateGetAll(context), null, new Response.Listener<JSONArray>() {
@@ -184,8 +182,6 @@ public class Singleton {
 
                     if (platesListener != null) {
                         platesListener.onRefreshPlates(plates);
-                    } else {
-                        BetterToast(context, "Ocorreu um erro ao colocar no Listener!");
                     }
                 }
             }, error -> Route.HandleApiError(context, error)) {

@@ -26,6 +26,7 @@ import pt.ipleiria.estg.dei.horadapapa.activities.meal.MealListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.plate.PlateListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.TableListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.invoice.InvoicesListFragment;
+import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -69,6 +70,9 @@ public class MenuActivity extends AppCompatActivity {
             if (tvUserName != null)
                 tvUserName.setText(tvUserName.getText() + " " + username);
         }
+
+        //Dependencia de dados Obrigatória para o resta da APP
+        Singleton.getInstance(getApplicationContext()).requestPlateGetAll(getApplicationContext());
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
