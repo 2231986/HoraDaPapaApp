@@ -11,9 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProjectHelper {
-    public static boolean isConnected(Context context)
-    {
-        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean isConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
@@ -21,26 +20,19 @@ public class ProjectHelper {
     public static void BetterToast(Context context, String message) {
         JSONObject jsonObject = null;
 
-        try
-        {
+        try {
             jsonObject = new JSONObject(message);
-        }
-        catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         if (jsonObject != null) //is JSON
         {
-            try
-            {
-                if (jsonObject.getString("status").contains("success"))
-                {
+            try {
+                if (jsonObject.getString("status").contains("success")) {
                     String msgContent = jsonObject.getString("message");
                     Toast.makeText(context, msgContent, Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     JSONArray errorsArray = jsonObject.getJSONArray("errors");
 
                     if (errorsArray.length() > 0) {
@@ -54,14 +46,11 @@ public class ProjectHelper {
                         Toast.makeText(context, firstErrorTextArray.getString(0), Toast.LENGTH_SHORT).show();
                     }
                 }
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 Toast.makeText(context, "Ocorreu um erro ao interpertar o pedido!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
-        }
-        else //is String
+        } else //is String
         {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         }
@@ -69,25 +58,19 @@ public class ProjectHelper {
 
     public static boolean isUsernameValid(String username) {
         //TODO: Colocar validações melhores, talvez usar as regras do Yii2
-        if (username == null || username.length() <= 2)
-            return false;
-        else
-            return true;
+        return username != null && username.length() > 2;
     }
 
     public static boolean isPasswordValid(String password) {
         //TODO: Colocar validações melhores, talvez usar as regras do Yii2
-        if (password == null || password.length() <= 2)
-            return false;
-        else
-            return true;
+        return password != null && password.length() > 2;
     }
 
-    public static boolean isEmailValid(String email){
+    public static boolean isEmailValid(String email) {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public static boolean isNifValid(String nif){
+    public static boolean isNifValid(String nif) {
         return nif.matches("[0-9]{9}");
     }
 }

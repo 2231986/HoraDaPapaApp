@@ -26,8 +26,7 @@ public class DB_Helper extends SQLiteOpenHelper {
 
     private static final String TABLE_HELP_TICKET = "help_tickets";
 
-    private static final String[] TABLE_HELP_TICKET_FIELDS = {"id","description"};
-
+    private static final String[] TABLE_HELP_TICKET_FIELDS = {"id", "description"};
 
 
     private final SQLiteDatabase db;
@@ -165,6 +164,22 @@ public class DB_Helper extends SQLiteOpenHelper {
         return invoices;
     }
 
+    public void setInvoices(ArrayList<Invoice> invoices) {
+        db.delete(TABLE_INVOICE, null, null);
+
+        for (Invoice invoice : invoices) {
+            ContentValues values = new ContentValues();
+
+            values.put("id", invoice.getId());
+            values.put("meal_id", invoice.getMeal_id());
+            values.put("price", invoice.getPrice());
+
+            db.insert(TABLE_INVOICE, null, values);
+
+            setInvoicesRequests(invoice);
+        }
+    }
+
     private ArrayList<InvoiceRequest> getInvoiceRequests(Invoice invoice) {
         ArrayList<InvoiceRequest> requests = new ArrayList<>();
 
@@ -186,25 +201,6 @@ public class DB_Helper extends SQLiteOpenHelper {
         return requests;
     }
 
-
-    public void setInvoices(ArrayList<Invoice> invoices)
-    {
-        db.delete(TABLE_INVOICE, null, null);
-
-        for (Invoice invoice : invoices)
-        {
-            ContentValues values = new ContentValues();
-
-            values.put("id", invoice.getId());
-            values.put("meal_id", invoice.getMeal_id());
-            values.put("price", invoice.getPrice());
-
-            db.insert(TABLE_INVOICE, null, values);
-
-            setInvoicesRequests(invoice);
-        }
-    }
-
     private void setInvoicesRequests(Invoice invoice) {
         // Delete only the rows where invoice_id matches the specified invoice's id
         String whereClause = "meal_id = ?";
@@ -213,8 +209,7 @@ public class DB_Helper extends SQLiteOpenHelper {
 
         ArrayList<InvoiceRequest> requests = invoice.getInvoiceRequests();
 
-        if (requests != null)
-        {
+        if (requests != null) {
             for (InvoiceRequest request : requests) {
                 ContentValues values = new ContentValues();
 
@@ -280,10 +275,9 @@ public class DB_Helper extends SQLiteOpenHelper {
 
         ArrayList<Plate> plates = new ArrayList<>();
 
-        for (Favorite favorite: favorites) {
-            for (Plate plate:getPlates()) {
-                if (plate.getId() == favorite.getPlate_id())
-                {
+        for (Favorite favorite : favorites) {
+            for (Plate plate : getPlates()) {
+                if (plate.getId() == favorite.getPlate_id()) {
                     plates.add(plate);
                 }
             }
@@ -304,7 +298,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     }
 
     public boolean removeReviewDB(int reviewId) {
-        return (this.db.delete(TABLE_REVIEW, reviewId + "= ?",  new String[]{"" + reviewId}) == 1);
+        return (this.db.delete(TABLE_REVIEW, reviewId + "= ?", new String[]{"" + reviewId}) == 1);
 
     }
 
@@ -357,7 +351,6 @@ public class DB_Helper extends SQLiteOpenHelper {
     }
 
 
-
     public void SetTickets(ArrayList<HelpTicket> tickets) {
         db.delete(TABLE_HELP_TICKET, null, null);
 
@@ -378,7 +371,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     }
 
     public boolean removeTicketDB(int ticketId) {
-        return (this.db.delete(TABLE_HELP_TICKET, ticketId + "= ?",  new String[]{"" + ticketId}) == 1);
+        return (this.db.delete(TABLE_HELP_TICKET, ticketId + "= ?", new String[]{"" + ticketId}) == 1);
 
     }
 }

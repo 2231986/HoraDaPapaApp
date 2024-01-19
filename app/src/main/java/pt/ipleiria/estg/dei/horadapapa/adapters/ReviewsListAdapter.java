@@ -23,7 +23,6 @@ import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 public class ReviewsListAdapter extends BaseAdapter {
 
 
-
     private final Context context;
     private final LayoutInflater layoutInflater;
 
@@ -98,25 +97,21 @@ public class ReviewsListAdapter extends BaseAdapter {
             tvPlateID = view.findViewById(R.id.textView11);
         }
 
-        public void update(Review review)
-        {
+        public void update(Review review) {
             tvDesc.setText(review.getDescription());
             tvValue.setText(String.valueOf(review.getValue()));
 
             int plateID = review.getPlate_id();
 
-            if (plateID > 0)
-            {
+            if (plateID > 0) {
                 Plate plate = Singleton.getInstance(context).dbGetPlate(plateID);
 
-                if (plate != null){
+                if (plate != null) {
                     tvPlateID.setText(String.valueOf(plate.getTitle()));
-                }else{
+                } else {
                     BetterToast(context, "Os pratos ainda não foram carregados!");
                 }
-            }
-            else
-            {
+            } else {
                 BetterToast(context, "Os pratos ainda não foram carregados!");
             }
 

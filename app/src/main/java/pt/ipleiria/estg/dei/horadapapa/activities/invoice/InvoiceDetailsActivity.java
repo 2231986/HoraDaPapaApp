@@ -1,10 +1,10 @@
 package pt.ipleiria.estg.dei.horadapapa.activities.invoice;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -60,17 +60,17 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
 
             Plate plate = Singleton.getInstance(this).dbGetPlate(request.getPlate_id());
 
-            if (plate != null){
+            if (plate != null) {
                 plates.add(plate);
             }
         }
 
-        if (plates.size() > 0){
+        if (plates.size() > 0) {
             lvInvoiceRequests.setAdapter(new PlateListAdapter(this, plates, true));
             tvInvoiceTotalPrice.setText(invoice.getPriceFormatted() + "");
             tvInvoiceID.setText(invoice.getId() + "");
             tvInvoiceMealID.setText(invoice.getMeal_id() + "");
-        }else{
+        } else {
             ProjectHelper.BetterToast(this, "Os Pratos ainda não foram carregados!");
         }
     }

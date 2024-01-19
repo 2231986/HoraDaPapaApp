@@ -9,18 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
-import pt.ipleiria.estg.dei.horadapapa.activities.invoice.InvoicesListFragment;
 import pt.ipleiria.estg.dei.horadapapa.adapters.PlateListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
@@ -35,8 +32,7 @@ public class MealListFragment extends Fragment implements PlatesListener {
 
     private SearchView searchView;
 
-    private boolean isMealStarted = false; // Variable to track meal status
-
+    private final boolean isMealStarted = false; // Variable to track meal status
 
 
     private ListView lvPlates;
@@ -51,7 +47,6 @@ public class MealListFragment extends Fragment implements PlatesListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_cart, container, false);
         setHasOptionsMenu(true);
-
 
 
         FloatingActionButton fab_createPayment = view.findViewById(R.id.btnCartPay);
@@ -78,7 +73,7 @@ public class MealListFragment extends Fragment implements PlatesListener {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
+        inflater.inflate(R.menu.menu_search, menu);
         MenuItem itemPesquisa = menu.findItem(R.id.itemSearch);
         searchView = (SearchView) itemPesquisa.getActionView();
 

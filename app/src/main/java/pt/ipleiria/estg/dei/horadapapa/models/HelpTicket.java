@@ -14,15 +14,6 @@ public class HelpTicket {
     private String description;
 
 
-
-    public int getId() {return id;}
-
-    public void setId(int id) {this.id = id;}
-
-    public String getDescription() {return description;}
-
-    public void setDescription(String description) {this.description = description;}
-
     public HelpTicket(JSONObject jsonObject) {
         try {
             this.id = jsonObject.getInt("id");
@@ -35,5 +26,21 @@ public class HelpTicket {
     public HelpTicket(Cursor cursor) {
         this.id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
         this.description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

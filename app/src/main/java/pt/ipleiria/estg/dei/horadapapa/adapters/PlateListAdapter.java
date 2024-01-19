@@ -19,21 +19,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
-import pt.ipleiria.estg.dei.horadapapa.activities.FavouritesListFragment;
-import pt.ipleiria.estg.dei.horadapapa.activities.MealListFragment;
-import pt.ipleiria.estg.dei.horadapapa.activities.PlateDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.R;
-import pt.ipleiria.estg.dei.horadapapa.activities.PlateListFragment;
-import pt.ipleiria.estg.dei.horadapapa.models.Favorite;
+import pt.ipleiria.estg.dei.horadapapa.activities.PlateDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 
 public class PlateListAdapter extends BaseAdapter {
 
-    private Context context;
-    private LayoutInflater layoutInflater;
-    private ArrayList<Plate> plates;
+    private final Context context;
+    private final LayoutInflater layoutInflater;
+    private final ArrayList<Plate> plates;
     private boolean hideUiRequest = false;
 
 
@@ -42,7 +38,8 @@ public class PlateListAdapter extends BaseAdapter {
         this.plates = plates;
         this.layoutInflater = LayoutInflater.from(context);
     }
-    public PlateListAdapter(Context context, ArrayList<Plate> plates , boolean hideUiRequest) {
+
+    public PlateListAdapter(Context context, ArrayList<Plate> plates, boolean hideUiRequest) {
         this.context = context;
         this.plates = plates;
         this.layoutInflater = LayoutInflater.from(context);
@@ -88,21 +85,17 @@ public class PlateListAdapter extends BaseAdapter {
         });
 
 
-
-
         EditText et_RequestQuantity = view.findViewById(R.id.et_RequestQuantity);
         EditText et_plateObs = view.findViewById(R.id.et_plateObs);
         TextView textView18 = view.findViewById(R.id.textView18);
-
-
 
 
         Button btn_addRequest = view.findViewById(R.id.btn_addRequest);
 
         // Mostrar UI Request
         if (
-                (Singleton.getInstance(context.getApplicationContext()).getCurrentMealID() == 0 && this.hideUiRequest == false) || //Regra de Pratos
-                (this.hideUiRequest == true) //Regra de Invoices
+                (Singleton.getInstance(context.getApplicationContext()).getCurrentMealID() == 0 && !this.hideUiRequest) || //Regra de Pratos
+                        (this.hideUiRequest) //Regra de Invoices
         ) {
             btn_addRequest.setVisibility(View.GONE);
             et_RequestQuantity.setVisibility(View.GONE);
@@ -148,16 +141,16 @@ public class PlateListAdapter extends BaseAdapter {
 
             Plate favoritePlate = Singleton.getInstance(context).dbGetFavorite(plate.getId());
 
-            if (favoritePlate != null){
+            if (favoritePlate != null) {
                 favoriteStar.setImageResource(R.drawable.ic_favourite_full);
-            }else{
+            } else {
                 favoriteStar.setImageResource(R.drawable.ic_favourite_empty);
             }
 
             AppPreferences appPreferences = new AppPreferences(context);
 
             Glide.with(context)
-                    .load( "http://" + appPreferences.getApiIP() + plate.getImage())
+                    .load("http://" + appPreferences.getApiIP() + plate.getImage())
                     .placeholder(R.drawable.img)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgCapa);

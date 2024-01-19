@@ -4,6 +4,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Meal {
+    private int id, dinnerID;
+    private boolean checkout;
+
+    public Meal(JSONObject jsonObject) {
+        try {
+            this.id = jsonObject.getInt("id");
+            this.dinnerID = jsonObject.getInt("id");
+            this.checkout = jsonObject.getBoolean("checkout");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int getId() {
         return id;
     }
@@ -26,19 +39,5 @@ public class Meal {
 
     public void setCheckout(boolean checkout) {
         this.checkout = checkout;
-    }
-
-    private int id, dinnerID;
-    private boolean checkout;
-
-    public Meal(JSONObject jsonObject)
-    {
-        try {
-            this.id = jsonObject.getInt("id");
-            this.dinnerID = jsonObject.getInt("id");
-            this.checkout = jsonObject.getBoolean("checkout");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 }

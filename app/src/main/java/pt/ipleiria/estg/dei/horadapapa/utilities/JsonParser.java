@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.models.LoginInfo;
-import pt.ipleiria.estg.dei.horadapapa.models.Review;
 
 public class JsonParser {
     public static JSONObject parseRequest(String response) {

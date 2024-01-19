@@ -1,7 +1,5 @@
 package pt.ipleiria.estg.dei.horadapapa.models;
 
-import android.database.Cursor;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

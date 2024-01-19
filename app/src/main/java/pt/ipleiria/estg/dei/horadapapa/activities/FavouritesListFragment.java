@@ -1,13 +1,12 @@
 package pt.ipleiria.estg.dei.horadapapa.activities;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -24,13 +23,11 @@ import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
  */
 public class FavouritesListFragment extends Fragment implements FavoritesListener {
 
-    private ListView lvFavorites;
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private ListView lvFavorites;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;

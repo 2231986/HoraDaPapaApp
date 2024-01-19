@@ -26,7 +26,6 @@ public class SignUpActivity extends AppCompatActivity {
         setTitle("Sign Up");
 
 
-
         etUsername = findViewById(R.id.et_Username);
         etEmail = findViewById(R.id.et_Email);
         etPassword = findViewById(R.id.et_Password);
@@ -46,25 +45,25 @@ public class SignUpActivity extends AppCompatActivity {
         //Guard clauses
         if (!ProjectHelper.isUsernameValid(username)) {
             etUsername.setError("Invalid Username");
-            BetterToast(getBaseContext(),"Invalid Username");
+            BetterToast(getBaseContext(), "Invalid Username");
             return;
         }
 
         if (!ProjectHelper.isEmailValid(email)) {
             etEmail.setError("Invalid Email");
-            BetterToast(getBaseContext(),"Invalid Email");
+            BetterToast(getBaseContext(), "Invalid Email");
             return;
         }
 
         if (!ProjectHelper.isPasswordValid(password)) {
             etPassword.setError("Invalid Password");
-            BetterToast(getBaseContext(),"Invalid Password");
+            BetterToast(getBaseContext(), "Invalid Password");
             return;
         }
 
         if (!nif.isEmpty() && !ProjectHelper.isNifValid(nif)) {
             etNIF.setError("Invalid NIF");
-            BetterToast(getBaseContext(),"Invalid NIF");
+            BetterToast(getBaseContext(), "Invalid NIF");
             return;
         }
 

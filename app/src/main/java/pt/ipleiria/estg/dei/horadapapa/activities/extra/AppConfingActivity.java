@@ -1,11 +1,11 @@
 package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
@@ -24,7 +24,6 @@ public class AppConfingActivity extends AppCompatActivity {
         setTitle("App Settings");
 
 
-
         AppPreferences appPreferences = new AppPreferences(this);
 
         et_ApiHost = findViewById(R.id.et_ApiHost);
@@ -34,9 +33,9 @@ public class AppConfingActivity extends AppCompatActivity {
         et_MqttHost = findViewById(R.id.et_MqttHost);
         String mqttHost = appPreferences.getMqttIP();
 
-        if (mqttHost != null && !mqttHost.isEmpty()){
+        if (mqttHost != null && !mqttHost.isEmpty()) {
             et_MqttHost.setText(mqttHost);
-        }else {
+        } else {
             et_MqttHost.setText(MqttHandler.MQTT_BROKER_URI);
         }
     }
@@ -47,13 +46,13 @@ public class AppConfingActivity extends AppCompatActivity {
 
         String apiHost = et_ApiHost.getText().toString();
 
-        if (apiHost != null && !apiHost.isEmpty()){
+        if (apiHost != null && !apiHost.isEmpty()) {
             appPreferences.setApiIP(apiHost);
         }
 
         String mqttHost = et_MqttHost.getText().toString();
 
-        if (mqttHost != null && !mqttHost.isEmpty()){
+        if (mqttHost != null && !mqttHost.isEmpty()) {
             appPreferences.setMqttIP(mqttHost);
         }
 
@@ -61,6 +60,7 @@ public class AppConfingActivity extends AppCompatActivity {
 
         finish();
     }
+
     @Override
     protected void onStart() {
         super.onStart();

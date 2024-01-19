@@ -7,21 +7,8 @@ import org.json.JSONObject;
 
 public class Favorite {
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getPlate_id() {
-        return plate_id;
-    }
-
-    public void setPlate_id(int plate_id) {
-        this.plate_id = plate_id;
-    }
+    private int id;
+    private int plate_id;
 
     public Favorite(JSONObject jsonObject) {
         try {
@@ -37,7 +24,19 @@ public class Favorite {
         this.plate_id = cursor.getInt(cursor.getColumnIndexOrThrow("plate_id"));
     }
 
-    private int id;
+    public int getId() {
+        return id;
+    }
 
-    private int plate_id;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPlate_id() {
+        return plate_id;
+    }
+
+    public void setPlate_id(int plate_id) {
+        this.plate_id = plate_id;
+    }
 }

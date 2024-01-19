@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketDetailsActivity;
-import pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketListFragment;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.MenuActivity;
 import pt.ipleiria.estg.dei.horadapapa.listeners.DinnersListener;
 import pt.ipleiria.estg.dei.horadapapa.listeners.FavoritesListener;
@@ -44,27 +42,13 @@ public class Singleton {
     private MqttHandler mosquitto;
 
     private ArrayList<Review> reviews;
-
-    public void addReviewDB(Review r){
-        myDatabase.addReviewDB(r);
-    }
-
-
-    public int getCurrentMealID() {
-        return currentMealID;
-    }
-
     private int currentMealID = 0; //Guarda o ID da Meal atual
-
     private PlatesListener platesListener = null;
     private FavoritesListener favoritesListener = null;
     private DinnersListener dinnersListener = null;
     private ReviewsListener reviewsListener = null;
     private InvoicesListener invoicesListener = null;
-
     private TicketsListener ticketsListener = null;
-
-
     private Singleton(Context context) {
         volleyQueue = Volley.newRequestQueue(context);
         myDatabase = new DB_Helper(context);
@@ -78,6 +62,14 @@ public class Singleton {
         return singleton_instance;
     }
 
+    public void addReviewDB(Review r) {
+        myDatabase.addReviewDB(r);
+    }
+
+    public int getCurrentMealID() {
+        return currentMealID;
+    }
+
     public void setPlatesListener(PlatesListener platesListener) {
         this.platesListener = platesListener;
     }
@@ -85,6 +77,7 @@ public class Singleton {
     public void setInvoicesListener(InvoicesListener invoicesListener) {
         this.invoicesListener = invoicesListener;
     }
+
     public void setTicketsListener(TicketsListener ticketsListener) {
         this.ticketsListener = ticketsListener;
     }
@@ -247,27 +240,29 @@ public class Singleton {
     public Plate dbGetFavorite(int id) {
         ArrayList<Plate> items = myDatabase.getFavorites();
 
-        for (Plate item:items) {
+        for (Plate item : items) {
             if (item.getId() == id)
                 return item;
         }
 
         return null;
     }
+
     public Plate dbGetPlate(int id) {
         ArrayList<Plate> items = myDatabase.getPlates();
 
-        for (Plate item:items) {
+        for (Plate item : items) {
             if (item.getId() == id)
                 return item;
         }
 
         return null;
     }
+
     public Invoice dbGetInvoice(int id) {
         ArrayList<Invoice> invoices = myDatabase.getInvoices();
 
-        for (Invoice invoice:invoices) {
+        for (Invoice invoice : invoices) {
             if (invoice.getId() == id)
                 return invoice;
         }
@@ -487,22 +482,17 @@ public class Singleton {
 
                     myDatabase.setFavorites(favorites);
 
-                    if (favorites.size() > 0)
-                    {
+                    if (favorites.size() > 0) {
                         ArrayList<Plate> plates = myDatabase.getFavorites();
 
                         if (plates.size() > 0) {
                             if (favoritesListener != null) {
                                 favoritesListener.onRefreshFavorites(plates);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             BetterToast(context, "Os pratos ainda não foram carregados!");
                         }
-                    }
-                    else
-                    {
+                    } else {
                         BetterToast(context, "Sem favoritos!");
                     }
                 }
@@ -562,16 +552,13 @@ public class Singleton {
                         }
 
                         // Initialize MQTT client
-                        try
-                        {
+                        try {
                             AppPreferences appPreferences = new AppPreferences(context);
                             String clientID = appPreferences.getUserID();
 
                             mosquitto = new MqttHandler(context, clientID);
-                            mosquitto.subscribeToTopic(context,"topic_" + clientID);
-                        }
-                        catch (Exception ex)
-                        {
+                            mosquitto.subscribeToTopic(context, "topic_" + clientID);
+                        } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     },
@@ -675,7 +662,7 @@ public class Singleton {
                     Request.Method.POST,
                     Route.Review(context),
                     response -> {
-                        JSONObject jsonObject =  JsonParser.parseRequest(response);
+                        JSONObject jsonObject = JsonParser.parseRequest(response);
 
                         Review review;
 
@@ -696,6 +683,7 @@ public class Singleton {
                 public Map<String, String> getHeaders() {
                     return Route.GetAuthorizationBearerHeader(context);
                 }
+
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
@@ -736,7 +724,7 @@ public class Singleton {
                     Request.Method.PUT,
                     Route.Review(context, reviewId),
                     response -> {
-                        JSONObject jsonObject =  JsonParser.parseRequest(response);
+                        JSONObject jsonObject = JsonParser.parseRequest(response);
 
                         Review review;
 
@@ -770,6 +758,7 @@ public class Singleton {
             volleyQueue.add(jsonObjectRequest);
         }
     }
+
     public void requestReviewDelete(final Context context, final int reviewId) {
         if (!isConnected(context)) {
             BetterToast(context, "Sem internet!");
@@ -807,7 +796,7 @@ public class Singleton {
     public Review dbGetReview(int id) {
         ArrayList<Review> items = myDatabase.getReviews();
 
-        for (Review item:items) {
+        for (Review item : items) {
             if (item.getId() == id)
                 return item;
         }
@@ -876,7 +865,7 @@ public class Singleton {
                     Request.Method.POST,
                     Route.Helpticket(context),
                     response -> {
-                        JSONObject jsonObject =  JsonParser.parseRequest(response);
+                        JSONObject jsonObject = JsonParser.parseRequest(response);
 
                         HelpTicket ticket;
 
@@ -897,6 +886,7 @@ public class Singleton {
                 public Map<String, String> getHeaders() {
                     return Route.GetAuthorizationBearerHeader(context);
                 }
+
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
@@ -912,7 +902,7 @@ public class Singleton {
     public HelpTicket dbGetTicket(int id) {
         ArrayList<HelpTicket> items = myDatabase.getTickets();
 
-        for (HelpTicket item:items) {
+        for (HelpTicket item : items) {
             if (item.getId() == id)
                 return item;
         }

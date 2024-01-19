@@ -37,7 +37,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private TextView tvUserName;
 
-    private String email = "";
+    private final String email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +94,8 @@ public class MenuActivity extends AppCompatActivity {
             enviarEmail();
         } else if (item.getItemId() == R.id.navTicket) {
             fragment = new HelpTicketListFragment();
-            setTitle(item.getTitle());        }
+            setTitle(item.getTitle());
+        }
 
         if (fragment != null) {
             fragmentManager.beginTransaction().replace(R.id.contentLayout, fragment).commit();

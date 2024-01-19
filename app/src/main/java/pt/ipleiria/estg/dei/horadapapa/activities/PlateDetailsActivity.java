@@ -55,12 +55,9 @@ public class PlateDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Plate plate = Singleton.getInstance(getApplicationContext()).dbGetFavorite(id);
-                if (plate == null)
-                {
+                if (plate == null) {
                     Singleton.getInstance(getApplicationContext()).requestPlateAddFavorite(getApplicationContext(), id);
-                }
-                else
-                {
+                } else {
                     Singleton.getInstance(getApplicationContext()).requestPlateRemoveFavorite(getApplicationContext(), id);
                 }
             }
@@ -75,7 +72,7 @@ public class PlateDetailsActivity extends AppCompatActivity {
         AppPreferences appPreferences = new AppPreferences(this);
 
         Glide.with(this)
-                .load( "http://" + appPreferences.getApiIP() + plate.getImage())
+                .load("http://" + appPreferences.getApiIP() + plate.getImage())
                 .placeholder(R.drawable.img)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgCover);

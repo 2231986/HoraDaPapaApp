@@ -31,9 +31,13 @@ public class Review {
         this.value = cursor.getInt(cursor.getColumnIndexOrThrow("value"));
     }
 
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) {this.id = id;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getPlate_id() {
         return plate_id;
@@ -43,11 +47,19 @@ public class Review {
         this.plate_id = plate_id;
     }
 
-    public int getValue() {return value;}
+    public int getValue() {
+        return value;
+    }
 
-    public void setValue(int value) {this.value = value;}
+    public void setValue(int value) {
+        this.value = value;
+    }
 
-    public String getDescription() {return description;}
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) {this.description = description;}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -4,6 +4,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Dinner {
+    private int id;
+    private String name;
+
+    public Dinner(JSONObject jsonObject) {
+        try {
+            this.id = jsonObject.getInt("id");
+            this.name = jsonObject.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int getId() {
         return id;
     }
@@ -18,18 +30,5 @@ public class Dinner {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    private int id;
-    private String name;
-
-    public Dinner(JSONObject jsonObject)
-    {
-        try {
-            this.id = jsonObject.getInt("id");
-            this.name = jsonObject.getString("name");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 }

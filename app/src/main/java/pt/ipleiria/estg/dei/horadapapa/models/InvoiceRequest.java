@@ -9,23 +9,6 @@ public class InvoiceRequest {
 
     int id;
     int plate_id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getPlate_id() {
-        return plate_id;
-    }
-
-    public int getMeal_id() {
-        return meal_id;
-    }
-
     int meal_id;
 
     public InvoiceRequest(int mealID, JSONObject jsonObject) {
@@ -42,5 +25,21 @@ public class InvoiceRequest {
         this.id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
         this.plate_id = cursor.getInt(cursor.getColumnIndexOrThrow("plate_id"));
         this.meal_id = cursor.getInt(cursor.getColumnIndexOrThrow("meal_id"));
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPlate_id() {
+        return plate_id;
+    }
+
+    public int getMeal_id() {
+        return meal_id;
     }
 }

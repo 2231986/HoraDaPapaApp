@@ -1,8 +1,6 @@
 package pt.ipleiria.estg.dei.horadapapa.adapters;
 
 import static pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketDetailsActivity.ID_TICKET;
-import static pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity.ID_REVIEW;
-import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +15,7 @@ import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
 import pt.ipleiria.estg.dei.horadapapa.activities.extra.HelpTicketDetailsActivity;
-import pt.ipleiria.estg.dei.horadapapa.activities.extra.ReviewDetailsActivity;
 import pt.ipleiria.estg.dei.horadapapa.models.HelpTicket;
-import pt.ipleiria.estg.dei.horadapapa.models.Plate;
-import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
 public class TicketsListAdapter extends BaseAdapter {
 
@@ -28,6 +23,7 @@ public class TicketsListAdapter extends BaseAdapter {
     private final LayoutInflater layoutInflater;
 
     private final ArrayList<HelpTicket> tickets;
+
     public TicketsListAdapter(Context context, ArrayList<HelpTicket> tickets) {
         this.context = context;
         this.tickets = tickets;
@@ -35,13 +31,19 @@ public class TicketsListAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {return tickets.size();}
+    public int getCount() {
+        return tickets.size();
+    }
 
     @Override
-    public Object getItem(int position) {return tickets.get(position);}
+    public Object getItem(int position) {
+        return tickets.get(position);
+    }
 
     @Override
-    public long getItemId(int position) {return tickets.get(position).getId();}
+    public long getItemId(int position) {
+        return tickets.get(position).getId();
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -89,8 +91,7 @@ public class TicketsListAdapter extends BaseAdapter {
             tvTicketID = view.findViewById(R.id.tv_ticketID);
         }
 
-        public void update(HelpTicket ticket)
-        {
+        public void update(HelpTicket ticket) {
             tvTicketID.setText(String.valueOf(ticket.getId()));
 
             tvDesc.setText(String.valueOf(ticket.getDescription()));

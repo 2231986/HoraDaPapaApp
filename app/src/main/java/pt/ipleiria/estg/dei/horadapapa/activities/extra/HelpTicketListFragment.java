@@ -2,24 +2,20 @@ package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
-import pt.ipleiria.estg.dei.horadapapa.adapters.ReviewsListAdapter;
 import pt.ipleiria.estg.dei.horadapapa.adapters.TicketsListAdapter;
-import pt.ipleiria.estg.dei.horadapapa.listeners.TicketsListener;
 import pt.ipleiria.estg.dei.horadapapa.models.HelpTicket;
-import pt.ipleiria.estg.dei.horadapapa.models.Review;
 import pt.ipleiria.estg.dei.horadapapa.models.Singleton;
 
 /**
@@ -31,7 +27,6 @@ public class HelpTicketListFragment extends Fragment {
 
     private ListView lvHelpTicket;
     private FloatingActionButton fabadd;
-
 
 
     public HelpTicketListFragment() {

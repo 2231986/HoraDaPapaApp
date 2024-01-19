@@ -1,13 +1,7 @@
 package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
-import static java.security.AccessController.getContext;
-
 import static pt.ipleiria.estg.dei.horadapapa.utilities.ProjectHelper.BetterToast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,16 +13,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.horadapapa.R;
-import pt.ipleiria.estg.dei.horadapapa.activities.PlateListFragment;
 import pt.ipleiria.estg.dei.horadapapa.adapters.PlateSpinnerAdapter;
 import pt.ipleiria.estg.dei.horadapapa.listeners.PlatesListener;
 import pt.ipleiria.estg.dei.horadapapa.models.Plate;
@@ -38,26 +31,18 @@ import pt.ipleiria.estg.dei.horadapapa.utilities.AppPreferences;
 
 public class ReviewDetailsActivity extends AppCompatActivity implements PlatesListener {
 
+    public static final String ID_REVIEW = "ID_REVIEW";
     Spinner reviewSpinnerPlate;
     PlateSpinnerAdapter spinnerAdapter;
-
     Plate selectedPlate;
-
     private EditText txtDescription;
-
     private TextView tvplatename;
-
     private RatingBar stars;
-
     private FloatingActionButton fabReview;
     private Review review; // This will hold the existing review data if editing
-
-    public static final String ID_REVIEW = "ID_REVIEW";
-
     private Button Deletebtn;
 
     private ImageView plateimg;
-
 
 
     @Override
@@ -76,7 +61,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         reviewSpinnerPlate = findViewById(R.id.reviewSpinnerPlate);
         plateimg = findViewById(R.id.imageView3);
 
-        if(review !=null) {
+        if (review != null) {
             loadReview();
             stars.setNumStars(10);
 
@@ -99,7 +84,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
             fabReview.setImageResource(R.drawable.ic_edit);
             reviewSpinnerPlate.setVisibility(View.GONE);
 
-        }else{
+        } else {
             setTitle("Add Review");
             fabReview.setImageResource(R.drawable.ic_add);
             Deletebtn.setVisibility(View.GONE);
@@ -129,8 +114,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         fabReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(review!=null)
-                {
+                if (review != null) {
                     // EDITAR
                     Toast.makeText(ReviewDetailsActivity.this, "Processing update", Toast.LENGTH_SHORT).show();
 
@@ -151,8 +135,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
                     );
 
                     finish();
-                } else
-                {
+                } else {
                     //ADICIONAR
 
                     // ver se prato foi selecionado
@@ -185,24 +168,21 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
 
         int plateID = review.getPlate_id();
 
-        if (plateID > 0)
-        {
+        if (plateID > 0) {
             Plate plate = Singleton.getInstance(getApplicationContext()).dbGetPlate(plateID);
 
-            if (plate != null){
+            if (plate != null) {
                 AppPreferences appPreferences = new AppPreferences(getApplicationContext());
 
                 Glide.with(getApplicationContext())
-                        .load( "http://" + appPreferences.getApiIP() + plate.getImage())
+                        .load("http://" + appPreferences.getApiIP() + plate.getImage())
                         .placeholder(R.drawable.img)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(plateimg);
-            }else{
+            } else {
                 BetterToast(getApplicationContext(), "Os pratos ainda não foram carregados!");
             }
-        }
-        else
-        {
+        } else {
             BetterToast(getApplicationContext(), "Os pratos ainda não foram carregados!");
         }
     }

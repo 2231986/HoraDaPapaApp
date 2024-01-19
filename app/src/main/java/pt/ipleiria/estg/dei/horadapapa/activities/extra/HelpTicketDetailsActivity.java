@@ -1,13 +1,12 @@
 package pt.ipleiria.estg.dei.horadapapa.activities.extra;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -21,12 +20,11 @@ public class HelpTicketDetailsActivity extends AppCompatActivity {
     public FloatingActionButton fabTicket;
     public Button btndelete;
 
-    private boolean hideUiRequest = false;
+    private final boolean hideUiRequest = false;
 
     private HelpTicket ticket;
 
     private EditText txtDescription;
-
 
 
     @Override
@@ -39,15 +37,12 @@ public class HelpTicketDetailsActivity extends AppCompatActivity {
         ticket = Singleton.getInstance(getApplicationContext()).dbGetTicket(id);
 
 
-
-
         fabTicket = findViewById(R.id.fabTicket);
         btndelete = findViewById(R.id.btnDeleteTicket);
-        txtDescription=findViewById(R.id.et_ticket);
+        txtDescription = findViewById(R.id.et_ticket);
 
 
-        if(ticket!=null)
-        {
+        if (ticket != null) {
             loadTicket();
             fabTicket.setVisibility(View.GONE);
             btndelete.setOnClickListener(new View.OnClickListener() {
@@ -67,9 +62,7 @@ public class HelpTicketDetailsActivity extends AppCompatActivity {
                 }
             });
 
-        }
-        else
-        {
+        } else {
             btndelete.setVisibility(View.GONE);
             fabTicket.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,7 +77,6 @@ public class HelpTicketDetailsActivity extends AppCompatActivity {
             });
 
         }
-
 
 
     }

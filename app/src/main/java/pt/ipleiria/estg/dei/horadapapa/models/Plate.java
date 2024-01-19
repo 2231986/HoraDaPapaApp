@@ -51,7 +51,7 @@ public class Plate {
     }
 
     public String getPriceFormatted() {
-      return price + " €"; //TODO: trocar na API de String para Double
+        return price + " €"; //TODO: trocar na API de String para Double
     }
 
     public void setPrice(String price) {
