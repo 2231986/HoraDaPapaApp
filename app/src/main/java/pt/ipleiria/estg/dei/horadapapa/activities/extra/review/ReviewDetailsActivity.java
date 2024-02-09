@@ -50,6 +50,9 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_details);
 
+        Singleton.getInstance(getApplicationContext()).setPlatesListener(this);
+        Singleton.getInstance(getApplicationContext()).requestPlateGetAll(getApplicationContext());
+
         int id = getIntent().getIntExtra(ID_REVIEW, 0);
         review = Singleton.getInstance(getApplicationContext()).dbGetReview(id);
 
@@ -89,6 +92,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements PlatesLi
             fabReview.setImageResource(R.drawable.ic_add);
             Deletebtn.setVisibility(View.GONE);
         }
+
 
         spinnerAdapter = new PlateSpinnerAdapter(getApplicationContext(), new ArrayList<>());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
